@@ -14,4 +14,5 @@ dependencies:
   - pip
   - pip:
      - streamlit-authenticator==0.2.1
+     - python-statemachine==1.0.2
   
