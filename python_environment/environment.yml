@@ -15,4 +15,5 @@ dependencies:
   - pip:
      - streamlit-authenticator==0.2.1
      - python-statemachine==1.0.2
+     - pip streamlit-image-select==0.5.1
   
