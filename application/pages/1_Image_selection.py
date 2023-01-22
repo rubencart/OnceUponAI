@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 from statemachine import StateMachine, State
-
+import glob
 
 class UserExperience(StateMachine):
     "The user experience state machine"
@@ -9,11 +9,25 @@ class UserExperience(StateMachine):
     prompt = State("prompt")
     digestion = State("digestion")
 
-
+    # transitions
     to_prompt = picture.to(prompt) | digestion.to(prompt)
     to_digestion = prompt.to(digestion)
     to_picture = digestion.to(picture)
 
+def find_images(path):
+    images = {}
+    for filename in glob.glob(f'{path}/*.jpg'):
+        im = Image.open(filename)
+        images[filename] = im
+    for filename in glob.glob(f'{path}/*.png'):
+        im = Image.open(filename)
+        images[filename] = im
+    return images
+
+def subsets_of_images(images):
+    # Group images per original and adaptations
+    # structure: original_name: {original_file_name: image}, {adaptations: [image]}
+    
 
 
 # Keep state within session
@@ -25,9 +39,10 @@ st.markdown("""# Welcome!""")
 
 match steps.current_state_value:
     case "picture":
-        st.markdown("Choose a picture")
-        image = Image.open("pages/fish.jpg")
-        st.image(image)
+        images = find_images("data")
+        subsets = subsets_of_images(images)
+        print(subsets)
+
 
         if st.button(label="Go to prompt"):
             steps.to_prompt()
@@ -40,8 +55,8 @@ match steps.current_state_value:
             st.experimental_rerun()
     
     case "digestion":
-        image = Image.open("pages/fish_digested.png")
-        st.image(image)
+        image = Image.open("data/fish_digested.png")
+        st.image(image,width=500)
         if st.button(label="Back to start"):
             steps.to_picture()
             st.experimental_rerun()
@@ -49,7 +64,6 @@ match steps.current_state_value:
         if st.button(label="Back to prompt"):
             steps.to_prompt()
             st.experimental_rerun()
-
 
 
 
