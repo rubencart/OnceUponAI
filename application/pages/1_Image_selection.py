@@ -3,6 +3,9 @@ from PIL import Image
 from statemachine import StateMachine, State
 import glob
 import os
+#import schedule
+import time
+import random
 
 class UserExperience(StateMachine):
     "The user experience state machine"
@@ -16,23 +19,17 @@ class UserExperience(StateMachine):
     to_picture = digestion.to(picture)
 
 def find_images(path):
-    images = {}
-    for filename in glob.glob(f'{path}/*.jpg'):
-        im = Image.open(filename)
-        images[filename] = im
-    for filename in glob.glob(f'{path}/*.png'):
-        im = Image.open(filename)
-        images[filename] = im
-    return images
-
-def find_images(path):
     folders = [name for name in os.listdir(path) if os.path.isdir(os.path.join(path, name))]
     subset = {}
     for folder in folders:
-        image_paths = glob.glob(path + "//" + folder + "/*")
+        image_paths = glob.glob(path + "\\" + folder + "/*")
         subset[folder] = image_paths
     return subset
 
+def get_random_image(subset):
+    picture_name = random.choice(list(subset.keys()))
+    picture_path = subset[picture_name][0]
+    return picture_path
 
 # Keep state within session
 if "steps" not in st.session_state:
@@ -44,13 +41,16 @@ st.markdown("""# Welcome!""")
 match steps.current_state_value:
     case "picture":
         images = find_images(".\\data")
-        st.image(images["fish"][0])
-        print(images)
+        image_path = get_random_image(images)
 
+        
+        # schedule.every(3).seconds.do(get_random_picture(images))
 
         if st.button(label="Go to prompt"):
             steps.to_prompt()
+            st.session_state["image_to_digest"] = image_path
             st.experimental_rerun()
+        st.image(image_path,width=200)
     
     case "prompt":
         prompt_input = st.text_input("Fill in your prompt",value="a fish on a white background in pointilism")
