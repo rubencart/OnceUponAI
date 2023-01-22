@@ -27,7 +27,7 @@ def generate_image(prompt: str, image_path, style: str = ""):
                 f"Input to StableDiffusion: '{prompt}' path: '{image_path}'\n"
             )
 
-            data = {"promptText":prompt + "in a photorealistic high quality style","url":image_path,"similarity":0.6}
+            data = {"promptText":prompt + "in a photorealistic high quality style","url":image_path,"similarity":0.5}
             image = requests.post("http://192.168.0.37:4444/create",json=data,stream=True)
             with open("./responses/0.png", 'wb') as f:
                 image.raw.decode_content = True
@@ -86,7 +86,9 @@ st.markdown(
 )
 image_path =  get_random_image()
 st.image(image_path,width=200)
-topic = st.text_input(label="Prompt", placeholder="AI")
+topic = st.text_input(label="Prompt", placeholder="Make a robot")
+if topic == "":
+    topic = "Make a robot"
 
 
 
