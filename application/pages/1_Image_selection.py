@@ -4,7 +4,7 @@ from statemachine import StateMachine, State
 import glob
 import os
 import random
-import sched,time
+import pickle
 
 # State machine
 class UserExperience(StateMachine):
@@ -16,12 +16,20 @@ class UserExperience(StateMachine):
     # transitions
     to_prompt = picture.to(prompt) | digestion.to(prompt)
     to_digestion = prompt.to(digestion)
-    to_picture = digestion.to(picture) 
+    to_picture = digestion.to(picture) | picture.to(picture)
 
     def on_exit_picture(self,image):
-        print("Exit picture")
         st.session_state["image_to_digest"] = image
-        
+
+class LogObserver(object):
+    def __init__(self, name):
+        self.name = name
+
+    def after_transition(self, event, source, target):
+        print("{} after: {}--({})-->{}".format(self.name, source.id, event, target.id))
+
+    def on_enter_state(self, target, event):
+        print("{} enter: {} from {}".format(self.name, target.id, event))       
         
 
 # Image handling
@@ -39,47 +47,32 @@ def get_random_image(subset):
     return picture_path
 
 
-
-# Keep state within session
-if "steps" not in st.session_state.keys():
-    print("New statemachine is made")
-    st.session_state["steps"] = UserExperience()
-    print(st.session_state)
-steps = st.session_state["steps"]
-
 st.title("""Explore the collection""")
-st.write("Scroll through the pictures")
 
+if os.path.exists("save.p"):
+    image_path = pickle.load(open( "save.p", "rb" ))
+    st.write(image_path)
 
-match steps.current_state_value: 
-    case "picture":
-        print("Picture image ran")
+    if st.button("Again!"):
+        os.remove("save.p")
+else:
+    st.button("Refresh!")
+    with st.form("Collectie van Gent"):
         images = find_images(".\\data")
         image_path = get_random_image(images)
-
-        st.button(label="New picture")
-
-        def go_to_prompt():
-            steps.to_prompt(image_path)
-        st.button(label="Go to prompt",on_click=go_to_prompt)
         st.image(image_path,width=400)
 
-    
-    case "prompt":
-        print("Prompt image ran")
-        prompt_input = st.text_input("Fill in your prompt",value=st.session_state["image_to_digest"])
-        if st.button(label="Digest!"):
-            steps.to_digestion()
-    
-    case "digestion":
-        image = Image.open("data/fish_digested.png")
-        st.image(image,width=500)
-        if st.button(label="Back to start"):
-            steps.to_picture()
 
-        
-        if st.button(label="Back to prompt"):
-            steps.to_prompt()
+        genre = st.radio("Add a",('toilet', 'flamingo', 'astronaut'))
+
+        # Every form must have a submit button.
+        submitted = st.form_submit_button("Submit")
+        if submitted:
+            pickle.dump(image_path, open( "save.p", "wb" ))
+
+
+
+
 
 
 
