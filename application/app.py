@@ -27,7 +27,7 @@ def generate_image(prompt: str, image_path, style: str = ""):
                 f"Input to StableDiffusion: '{prompt}' path: '{image_path}'\n"
             )
 
-            data = {"promptText":prompt + "in the style of Jules De Bruycker","url":image_path,"similarity":0.4}
+            data = {"promptText":prompt + "in the style of Jules De Bruycker","url":image_path,"similarity":0.6}
             image = requests.post("http://192.168.0.37:4444/create",json=data,stream=True)
             with open("./responses/0.png", 'wb') as f:
                 image.raw.decode_content = True
@@ -72,23 +72,23 @@ st.write(
 
 # Render Streamlit page
 
-if not st.session_state.output:
-    st.title("Digest the Collection of Ghent")
-    st.markdown(
-        "This mini-app generates alterations of the collection of Ghent. Have Fun!"
-    )
-    image_path =  get_random_image()
-    st.image(image_path,width=200)
-    topic = st.text_input(label="Prompt", placeholder="AI")
+
+st.title("Digest the Collection of Ghent")
+st.markdown(
+    "This mini-app generates alterations of the collection of Ghent. Have Fun!"
+)
+image_path =  get_random_image()
+st.image(image_path,width=200)
+topic = st.text_input(label="Prompt", placeholder="AI")
 
 
 
-    st.session_state.feeling_lucky = not st.button(
-        label="Generate text",
-        type="primary",
-        on_click=generate_image,
-        args=(topic, image_path),
-    )
+st.session_state.feeling_lucky = not st.button(
+    label="Generate text",
+    type="primary",
+    on_click=generate_image,
+    args=(topic, image_path),
+)
 
 
 text_spinner_placeholder = st.empty()
@@ -97,19 +97,17 @@ if st.session_state.text_error:
 
 if st.session_state.output:
     st.markdown("""---""")
-    st.title("Your personalized collection item")
+    st.title("Your digested collection item")
     col1, col2 = st.columns(2)
 
     with col1:
         st.write("Original")
         st.image(st.session_state.input,width=300) 
     with col2:
-        st.write("Personalized")
+        st.write("Digested")
         st.image("./responses/0.png",width=300)
     
     image_spinner_placeholder = st.empty()
+    st.audio("toilet.mp3")
     st.markdown("""---""")
 
-    if st.button("Restart"):
-        st.session_state.output = None
-        st.experimental_rerun()
