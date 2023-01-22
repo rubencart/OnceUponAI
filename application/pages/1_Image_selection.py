@@ -3,10 +3,10 @@ from PIL import Image
 from statemachine import StateMachine, State
 import glob
 import os
-#import schedule
-import time
 import random
+import sched,time
 
+# State machine
 class UserExperience(StateMachine):
     "The user experience state machine"
     picture = State("picture", initial=True)
@@ -16,8 +16,15 @@ class UserExperience(StateMachine):
     # transitions
     to_prompt = picture.to(prompt) | digestion.to(prompt)
     to_digestion = prompt.to(digestion)
-    to_picture = digestion.to(picture)
+    to_picture = digestion.to(picture) 
 
+    def on_exit_picture(self,image):
+        print("Exit picture")
+        st.session_state["image_to_digest"] = image
+        
+        
+
+# Image handling
 def find_images(path):
     folders = [name for name in os.listdir(path) if os.path.isdir(os.path.join(path, name))]
     subset = {}
@@ -31,43 +38,50 @@ def get_random_image(subset):
     picture_path = subset[picture_name][0]
     return picture_path
 
+
+
 # Keep state within session
-if "steps" not in st.session_state:
+if "steps" not in st.session_state.keys():
+    print("New statemachine is made")
     st.session_state["steps"] = UserExperience()
+    print(st.session_state)
 steps = st.session_state["steps"]
 
-st.markdown("""# Welcome!""")
+st.title("""Explore the collection""")
+st.write("Scroll through the pictures")
 
-match steps.current_state_value:
+
+match steps.current_state_value: 
     case "picture":
+        print("Picture image ran")
         images = find_images(".\\data")
         image_path = get_random_image(images)
 
-        
-        # schedule.every(3).seconds.do(get_random_picture(images))
+        st.button(label="New picture")
 
-        if st.button(label="Go to prompt"):
-            steps.to_prompt()
-            st.session_state["image_to_digest"] = image_path
-            st.experimental_rerun()
-        st.image(image_path,width=200)
+        def go_to_prompt():
+            steps.to_prompt(image_path)
+        st.button(label="Go to prompt",on_click=go_to_prompt)
+        st.image(image_path,width=400)
+
     
     case "prompt":
-        prompt_input = st.text_input("Fill in your prompt",value="a fish on a white background in pointilism")
+        print("Prompt image ran")
+        prompt_input = st.text_input("Fill in your prompt",value=st.session_state["image_to_digest"])
         if st.button(label="Digest!"):
             steps.to_digestion()
-            st.experimental_rerun()
     
     case "digestion":
         image = Image.open("data/fish_digested.png")
         st.image(image,width=500)
         if st.button(label="Back to start"):
             steps.to_picture()
-            st.experimental_rerun()
+
         
         if st.button(label="Back to prompt"):
             steps.to_prompt()
-            st.experimental_rerun()
+
+
 
 
 
