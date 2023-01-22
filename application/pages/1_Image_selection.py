@@ -2,6 +2,7 @@ import streamlit as st
 from PIL import Image
 from statemachine import StateMachine, State
 import glob
+import os
 
 class UserExperience(StateMachine):
     "The user experience state machine"
@@ -24,10 +25,13 @@ def find_images(path):
         images[filename] = im
     return images
 
-def subsets_of_images(images):
-    # Group images per original and adaptations
-    # structure: original_name: {original_file_name: image}, {adaptations: [image]}
-    
+def find_images(path):
+    folders = [name for name in os.listdir(path) if os.path.isdir(os.path.join(path, name))]
+    subset = {}
+    for folder in folders:
+        image_paths = glob.glob(path + "//" + folder + "/*")
+        subset[folder] = image_paths
+    return subset
 
 
 # Keep state within session
@@ -39,9 +43,9 @@ st.markdown("""# Welcome!""")
 
 match steps.current_state_value:
     case "picture":
-        images = find_images("data")
-        subsets = subsets_of_images(images)
-        print(subsets)
+        images = find_images(".\\data")
+        st.image(images["fish"][0])
+        print(images)
 
 
         if st.button(label="Go to prompt"):
