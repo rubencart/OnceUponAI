@@ -9,4 +9,6 @@ dependencies:
   - plotly=5.10.0
   - httpx=0.23.0
   - ciso8601=2.2.0
+  - pip:
+    - jsonpath-ng
   
