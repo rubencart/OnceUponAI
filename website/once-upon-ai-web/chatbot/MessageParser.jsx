@@ -2,7 +2,13 @@ import React from "react";
 
 const MessageParser = ({ children, actions }) => {
   const parse = (message) => {
-    console.log(message);
+    // In case we need any predefined responses
+    if (message.includes("hello")) {
+      actions.handleHello();
+    } else {
+      // Otherwise pass the message to get our GPT response
+      actions.handleGPT(message);
+    }
   };
 
   return (

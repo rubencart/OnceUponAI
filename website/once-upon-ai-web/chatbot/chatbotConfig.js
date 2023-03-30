@@ -1,7 +1,8 @@
 import { createChatBotMessage } from "react-chatbot-kit";
 
-const config = {
+const chatbotConfig = {
+  botName: "GentGPT",
   initialMessages: [createChatBotMessage(`Hello world`)],
 };
 
-export default config;
+export default chatbotConfig;
