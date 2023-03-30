@@ -4,7 +4,8 @@ export default async function handler(req, res) {
   const prompt = req.body.prompt;
   console.log("Calling gpt3 api with prompt:", prompt);
 
-  const apiKey = "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";
+
+  const apiKey = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";  // HERE YOU NEED TO ADD YOUR API KEY
   // const apiUrl = "https://api.openai.com/v1/completions"; // GPT
   const apiUrl = "https://api.openai.com/v1/chat/completions"; // ChatGPT
 
