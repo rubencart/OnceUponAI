@@ -1,8 +1,18 @@
 import React from "react";
 
-async function sendMessageToGPT3(prompt) {
+async function sendMessageToChatbot(prompt) {
   try {
-    const response = await fetch("/api/gpt3", {
+    // const gpt3_response = await fetch("/api/gpt3", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ prompt: prompt }),
+    // });
+
+    // select which api to use
+    console.log("Before response: " + prompt)
+    const response = await fetch("/api/chatgpt", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,16 +41,18 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
       ...prev,
       messages: [...prev.messages, botMessage],
     }));
+    console.log('test: ', botMessage)
   };
 
-  const handleHello = () => {
-    const botMessage = createChatBotMessage("Hello. Nice to meet you.");
+  const handleName = (message) => {
+    const botMessage = createChatBotMessage("Hallo " + message + "! Fijn je te ontmoeten! Waarmee kan ik je helpen?");
     addResponse(botMessage);
   };
 
   const handleGPT = async (message) => {
-    // TODO: Get GPT response
-    const response = await sendMessageToGPT3(message);
+    console.log("Message:", message)
+    const response = await sendMessageToChatbot(message);
+    console.log("Response:", response)
     const botMessage = createChatBotMessage(response);
     addResponse(botMessage);
   };
@@ -49,7 +61,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     <div>
       {React.Children.map(children, (child) => {
         return React.cloneElement(child, {
-          actions: { handleHello, handleGPT },
+          actions: { handleName, handleGPT },
         });
       })}
     </div>
