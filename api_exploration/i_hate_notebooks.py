@@ -1,6 +1,11 @@
+import argparse
 import itertools
+import multiprocessing
+import os
 import re
 import traceback
+from argparse import ArgumentParser
+from itertools import repeat
 from typing import Dict, Tuple, Optional, Set
 
 import httpx
@@ -12,7 +17,7 @@ def get_next_url(next_resp: Dict) -> Tuple[Optional[str], Optional[int]]:
     for rel in next_resp['tree:relation']:
         if rel['@type'] == 'tree:LessThanRelation':
             return rel['tree:node'], rel['tree:remainingItems']
-    return None, None
+    return None, 0
 
 
 def get_ids_from_response(resp: Dict) -> Set[str]:
@@ -26,16 +31,11 @@ def get_urls_from_response(resp: Dict) -> Set[str]:
     return set(o['dcterms:isVersionOf'] for o in resp['@included'])
 
 
-def get_manifest_url_from_obj(obj: Dict) -> Optional[str]:
-    # todo multiple options?
-    if 'Entiteit.isHetOnderwerpVan' in obj:
-        for element in obj['Entiteit.isHetOnderwerpVan']:
-            if element['@type'] == 'DigitalObject' and any('iiif' in c['@id'] for c in element['conforms_to']):
-                return element['@id']
-    return None
+def work():
+    pass
 
 
-def run():
+def run(args: argparse.Namespace):
     """
         https://github.com/TREEcg/event-stream-client/tree/main/packages/actor-init-ldes-client
         Download script using LDES client: https://github.com/rubencart/OUAI-Gent/blob/main/draft/fetch.sh
@@ -84,14 +84,24 @@ def run():
         remaining_items = total_items
         duplicates = 0
         url_duplicates = 0
+        i = 0
+
+        # with multiprocessing.Pool(args.num_workers) as pool:
+        #     result = pool.starmap(work,
+        #                           tqdm(zip(lines, repeat(num_words), repeat(tg_encoding), repeat(rb)),
+        #                                total=total),
+        #                           chunksize=chunksize)
+
 
         # try:
         with tqdm(total=total_items) as pbar:
             while next_node_url is not None:
+                i += 1
+                if args.debug and i >= 20: break
 
-                next_node_url, next_remaining_items = get_next_url(next_resp)
-                pbar.update(remaining_items - next_remaining_items)
-                remaining_items = next_remaining_items
+                # next_node_url, next_remaining_items = get_next_url(next_resp)
+                # pbar.update(remaining_items - next_remaining_items)
+                # remaining_items = next_remaining_items
 
                 # next_resp = httpx.get(next_node_url, follow_redirects=True).json()
 
@@ -128,18 +138,19 @@ def run():
                 #     #  (doesn't matter anymore now)
                 #     **unique_objects[n],
                 # }
-                unique_objects[n].update({
-                    url: {
-                        'object': obj,
-                        'manifest_url': get_manifest_url_from_obj(obj),
-                    }
-                    for url, obj in new_objects.items()
-                })
+                # unique_objects[n].update({
+                #     url: {
+                #         'object': obj,
+                #         'manifest_url': get_manifest_url_from_obj(obj),
+                #     }
+                #     for url, obj in new_objects.items()
+                # })
+                unique_objects[n].update(new_objects)
 
                 next_resp = httpx.get(next_node_url, follow_redirects=True).json()
-                # next_node_url, next_remaining_items = get_next_url(next_resp)
-                # pbar.update(remaining_items - next_remaining_items)
-                # remaining_items = next_remaining_items
+                next_node_url, next_remaining_items = get_next_url(next_resp)
+                pbar.update(remaining_items - next_remaining_items)
+                remaining_items = next_remaining_items
 
         # except Exception as e:
         #     print(e)
@@ -148,11 +159,11 @@ def run():
         # finally:
         print('# duplicates found for %s: %s' % (n, duplicates))
         print('# unique objects found for %s: %s' % (n, len(unique_objects[n])))
-        nb_manifests = len([obj['manifest_url'] for (oid, obj) in unique_objects[n].items()
-                            if obj['manifest_url'] is not None])
-        print('# manifest urls found for %s: %s' % (n, nb_manifests))
+        # nb_manifests = len([obj['manifest_url'] for (oid, obj) in unique_objects[n].items()
+        #                     if obj['manifest_url'] is not None])
+        # print('# manifest urls found for %s: %s' % (n, nb_manifests))
 
-    p = 'output/most_recent_objects.json'
+    p = os.path.join(args.output_dir, 'most_recent_objects.json')
     with open(p, 'w') as f:
         json.dump(unique_objects, f)
     print('Saved objects to %s' % p)
@@ -172,4 +183,19 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    p = ArgumentParser()
+    # p.add_argument('--run_name', type=str, default='debug')
+    # p.add_argument('--in_dir', type=str, default='')
+    # p.add_argument('--in_name', type=str, default='')
+    # p.add_argument('--not_in_dir', type=str, default='NOT_IN_DIR')
+    # p.add_argument('--start', type=int, default=-1)
+    # p.add_argument('--filter_errors', action='store_true')
+    # p.add_argument('--errors', type=int, default=0)
+    # p.add_argument('--save_train_predictions', type=int, default=1)
+
+    p.add_argument('--debug', action='store_true')
+    p.add_argument('--output_dir', type=str, default='output/')
+    p.add_argument('--num_workers', type=int, default=0)
+    args = p.parse_args()
+
+    run(args)
