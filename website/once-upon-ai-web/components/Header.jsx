@@ -1,24 +1,58 @@
+import React, { useState } from "react";
+import {
+  HeaderContainer,
+  Top,
+  Title,
+  NavList,
+  NavItem,
+  NavLink,
+  MenuItems,
+  HeaderWrapper,
+} from "./styled/HeaderStyles";
 import styled from "@emotion/styled";
+import Hamburger from "hamburger-react";
 
-const HEADER_HEIGHT = "80px";
-
-const BackgroundContainer = styled.header`
-  background-color: #ececec;
+const Hide = styled.div`
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;
 
-const ContentContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: ${HEADER_HEIGHT};
-`;
+const Header = () => {
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
-export default function Header() {
+  const handleHamburgerClick = () => {
+    setIsNavOpen(!isNavOpen);
+  };
+
+  const navItems = [
+    { name: "Start Your Tour", path: "/start-your-tour" },
+    { name: "Discover Artworks", path: "/discover-artworks" },
+    { name: "About Nerdlab", path: "/about-nerdlab" },
+    { name: "FAQ & Help", path: "/faq-help" },
+  ];
+
   return (
-    <BackgroundContainer>
-      <ContentContainer>
-        <h1>Nerdlab</h1>
-      </ContentContainer>
-    </BackgroundContainer>
+    <HeaderWrapper>
+      <HeaderContainer>
+        <Top>
+          <Title>Once Upon AI</Title>
+          <Hide>
+            <Hamburger toggled={isNavOpen} toggle={handleHamburgerClick} />
+          </Hide>
+        </Top>
+        <MenuItems>
+          <NavList isOpen={isNavOpen}>
+            {navItems.map((item, index) => (
+              <NavItem key={index}>
+                <NavLink href={item.path}>{item.name}</NavLink>
+              </NavItem>
+            ))}
+          </NavList>
+        </MenuItems>
+      </HeaderContainer>
+    </HeaderWrapper>
   );
-}
+};
+
+export default Header;

@@ -24,7 +24,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
+      <header>
+        <Header />
+      </header>
       <main>
         <Container>
           <CenterContainer>
