@@ -18,14 +18,13 @@ import utils
 def work(object_id: str, object: Dict, args: argparse.Namespace) -> bool:
     # if possible, download the image from the manifest url in the object dict
     #  see https://ronallo.com/iiif-workshop-new/image-api/uri-parameters.html
-
-    # find the manifest url in the object data
-    manifest_url = utils.get_manifest_url_from_obj(object)
-    # query it
-    manifest_response = httpx.get(manifest_url, follow_redirects=True).json()
-
-    # find the image url in the manifest response
     try:
+        # find the manifest url in the object data
+        manifest_url = utils.get_manifest_url_from_obj(object)
+        # query it
+        manifest_response = httpx.get(manifest_url, follow_redirects=True).json()
+
+        # find the image url in the manifest response
         if 'sequences' in manifest_response:
             canv = manifest_response['sequences'][0]['canvases'][0]
             if 'images' in canv:
