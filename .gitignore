@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+LDES-API/api_exploration/output/
+LDES-API/api_exploration/output/*
+api_exploration/output/
+api_exploration/output/*
