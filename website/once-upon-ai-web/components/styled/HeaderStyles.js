@@ -41,8 +41,9 @@ export const MenuItems = styled.nav`
   justify-content: center;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.a`
   font-size: 1.5rem;
+  font-weight: bold;
   color: #333;
   margin: 0;
 `;
@@ -51,17 +52,22 @@ export const NavList = styled.ul`
   text-align: center;
   display: flex;
   list-style: none;
-  gap: 4px;
+  gap: 1.5rem;
 
   @media (max-width: 768px) {
     display: ${(props) => (props.isOpen ? "flex" : "none")};
     flex-direction: column;
     margin-top: ${(props) => (props.isOpen ? "16px" : "")};
+    gap: 4px;
   }
 `;
 
 export const NavItem = styled.li`
-  margin-left: 1.5rem;
+  border-bottom: 3px solid transparent;
+
+  &:hover {
+    border-bottom: 3px solid black;
+  }
 
   @media (max-width: 768px) {
     margin-left: 0;
@@ -72,8 +78,5 @@ export const NavItem = styled.li`
 export const NavLink = styled.a`
   color: #333;
   text-decoration: none;
-
-  &:hover {
-    font-weight: bold;
-  }
+  font-weight: bold;
 `;

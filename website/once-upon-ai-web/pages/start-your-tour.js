@@ -1,12 +1,11 @@
 import Head from "next/head";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Container from "../components/Container";
 import Chatbot from "react-chatbot-kit";
 import ActionProvider from "../chatbot/ActionProvider";
 import MessageParser from "../chatbot/MessageParser";
 import chatbotConfig from "../chatbot/chatbotConfig";
 import styled from "@emotion/styled";
+import WidthContainer from "../components/WidthContainer";
+import PageContainer from "../components/PageContainer";
 
 const CenterContainer = styled.div`
   display: flex;
@@ -24,19 +23,14 @@ export default function StartYourTour() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header>
-        <Header />
-      </header>
-      <main>
-        <Container>
+      <PageContainer>
+        <WidthContainer>
           <CenterContainer>
             <h2>Star Your Tour</h2>
             <Chatbot config={chatbotConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
           </CenterContainer>
-        </Container>
-      </main>
-
-      <Footer />
+        </WidthContainer>
+      </PageContainer>
     </div>
   );
 }

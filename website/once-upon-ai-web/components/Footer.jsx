@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { MenuItems, NavItem, NavLink } from "./styled/HeaderStyles";
+import { MenuItems, NavItem } from "./styled/HeaderStyles";
 
 const StyledFooter = styled.footer`
   background-color: #ececec;
@@ -14,14 +14,24 @@ const StyledFooter = styled.footer`
   }
 `;
 
-export const NavList = styled.ul`
+const NavList = styled.ul`
   text-align: center;
   display: flex;
   list-style: none;
+  gap: 1.5rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
     text-align: right;
+  }
+`;
+
+const NavLink = styled.a`
+  color: #333;
+  text-decoration: none;
+
+  &:hover {
+    color: blue;
   }
 `;
 

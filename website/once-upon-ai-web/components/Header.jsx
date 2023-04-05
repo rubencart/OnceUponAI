@@ -36,7 +36,7 @@ const Header = () => {
     <HeaderWrapper>
       <HeaderContainer>
         <Top>
-          <Title>Once Upon AI</Title>
+          <Title href="/">Once Upon AI</Title>
           <Hide>
             <Hamburger toggled={isNavOpen} toggle={handleHamburgerClick} />
           </Hide>
