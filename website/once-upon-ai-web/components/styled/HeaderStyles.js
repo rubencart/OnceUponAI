@@ -17,7 +17,6 @@ export const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: space-between;
-  flex-direction: row;
 
   @media (max-width: 768px) {
     flex-direction: column;
