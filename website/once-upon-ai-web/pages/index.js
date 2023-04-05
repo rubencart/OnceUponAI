@@ -1,11 +1,13 @@
 import Head from "next/head";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Container from "../components/Container";
 import styled from "@emotion/styled";
+import PageContainer from "../components/PageContainer";
+import WidthContainer from "../components/WidthContainer";
 
-const HeroContainer = styled.div`
+const HeroWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.1);
+`;
+
+const HeroContainer = styled(WidthContainer)`
   height: 400px;
   display: flex;
   flex-direction: column;
@@ -14,7 +16,7 @@ const HeroContainer = styled.div`
   gap: 32px;
 `;
 
-const TitleWrapper = styled.div`
+const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,13 +30,16 @@ const Subtitle = styled.h2`
   font-size: 1rem;
 `;
 
-const StepsContainer = styled.div`
+const StepsWrapper = styled.div`
+  background: lightgrey;
+`;
+
+const StepsContainer = styled(WidthContainer)`
   display: flex;
   flex-direction: column;
   gap: 32px;
   align-items: center;
   padding: 64px 16px;
-  background: lightgrey;
 `;
 
 const Steps = styled.div`
@@ -95,18 +100,17 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header>
-        <Header />
-      </header>
-      <main>
-        <Container>
+      <PageContainer>
+        <HeroWrapper>
           <HeroContainer>
-            <TitleWrapper>
+            <TitleContainer>
               <Title>Once Upon AI</Title>
               <Subtitle>AI gegenereerde Gentse wandelingen</Subtitle>
-            </TitleWrapper>
+            </TitleContainer>
             <button>Start de gids</button>
           </HeroContainer>
+        </HeroWrapper>
+        <StepsWrapper>
           <StepsContainer>
             <h1>Hoe werkt het?</h1>
             <Steps>
@@ -118,10 +122,8 @@ export default function Home() {
               ))}
             </Steps>
           </StepsContainer>
-        </Container>
-      </main>
-
-      <Footer />
+        </StepsWrapper>
+      </PageContainer>
     </div>
   );
 }

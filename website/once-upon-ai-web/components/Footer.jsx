@@ -4,14 +4,10 @@ const FOOTER_HEIGHT = "50px";
 
 const StyledFooter = styled.footer`
   height: ${FOOTER_HEIGHT};
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
   background-color: #ececec;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 1rem 2rem;
+  text-align: center;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 export default function Footer() {
