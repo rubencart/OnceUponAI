@@ -29,10 +29,6 @@ const NavList = styled.ul`
 const NavLink = styled.a`
   color: #333;
   text-decoration: none;
-
-  &:hover {
-    color: blue;
-  }
 `;
 
 export default function Footer() {

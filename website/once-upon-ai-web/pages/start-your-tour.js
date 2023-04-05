@@ -18,7 +18,7 @@ export default function StartYourTour() {
   return (
     <div>
       <Head>
-        <title>Once Upon AI</title>
+        <title>Start Your Tour</title>
         <meta name="description" content="Start Your Tour" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -26,7 +26,7 @@ export default function StartYourTour() {
       <PageContainer>
         <WidthContainer>
           <CenterContainer>
-            <h2>Star Your Tour</h2>
+            <h2>Start Your Tour</h2>
             <Chatbot config={chatbotConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
           </CenterContainer>
         </WidthContainer>

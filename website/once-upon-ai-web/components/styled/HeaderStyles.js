@@ -66,7 +66,7 @@ export const NavItem = styled.li`
   border-bottom: 3px solid transparent;
 
   &:hover {
-    border-bottom: 3px solid black;
+    border-bottom: 2px solid black;
   }
 
   @media (max-width: 768px) {
