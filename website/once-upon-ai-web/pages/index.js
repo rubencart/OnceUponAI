@@ -2,6 +2,7 @@ import Head from "next/head";
 import styled from "@emotion/styled";
 import PageContainer from "../components/PageContainer";
 import WidthContainer from "../components/WidthContainer";
+import Link from "next/link";
 
 const HeroWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.1);
@@ -28,6 +29,16 @@ const Title = styled.h1``;
 const Subtitle = styled.h2`
   opacity: 0.67;
   font-size: 1rem;
+`;
+
+const StartGuide = styled(Link)`
+  border: 1px solid black;
+  padding: 8px 16px;
+
+  &:hover {
+    opacity: 0.67;
+    transform: scale(0.95);
+  }
 `;
 
 const StepsWrapper = styled.div`
@@ -107,7 +118,7 @@ export default function Home() {
               <Title>Once Upon AI</Title>
               <Subtitle>AI gegenereerde Gentse wandelingen</Subtitle>
             </TitleContainer>
-            <button>Start de gids</button>
+            <StartGuide href="/start-your-tour">Start de gids</StartGuide>
           </HeroContainer>
         </HeroWrapper>
         <StepsWrapper>
