@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { MenuItems, NavItem } from "./styled/HeaderStyles";
+import { MenuItems, NavItem, Title } from "./styled/HeaderStyles";
 
 const StyledFooter = styled.footer`
   background-color: #ececec;
@@ -41,7 +41,7 @@ export default function Footer() {
 
   return (
     <StyledFooter>
-      <h1>Once Upon AI</h1>
+      <Title href="/">Once Upon AI</Title>
       <MenuItems>
         <NavList>
           {navItems.map((item, index) => (
