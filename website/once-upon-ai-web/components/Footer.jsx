@@ -41,7 +41,7 @@ export default function Footer() {
 
   return (
     <StyledFooter>
-      <Title href="/">Once Upon AI</Title>
+      <Title href="/">Once Upon AI by Nerdlab</Title>
       <MenuItems>
         <NavList>
           {navItems.map((item, index) => (
