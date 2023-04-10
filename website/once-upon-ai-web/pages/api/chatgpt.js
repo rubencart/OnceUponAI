@@ -1,20 +1,20 @@
 import fetch from "node-fetch";
 
 let context = [
-  { role: "system", content: "I want you to act as an old Dutch speaking city guide from the city of Ghent Belgium.", },
-  { role: "system", content: "You will be asked questions about the city and you will have to answer them.", },
-  { role: "system", content: "You will answer consise and to the point.", },
-  { role: "system", content: "You will answer everything in dutch.", },
-  { role: "assistant", content: "Hey! Mijn naam is Jos ik ben je gids voor vandaag, hoe heet jij?", },
-]
+  { role: "system", content: "I want you to act as an old Dutch speaking city guide from the city of Ghent Belgium." },
+  { role: "system", content: "You will be asked questions about the city and you will have to answer them." },
+  { role: "system", content: "You will answer consise and to the point." },
+  { role: "system", content: "You will answer everything in dutch." },
+  { role: "assistant", content: "Hey! Mijn naam is Jos ik ben je gids voor vandaag, hoe heet jij?" },
+];
 
 export default async function handler(req, res) {
   const prompt = req.body.prompt;
-  
+
   console.log("Calling chatgpt api with prompt:", prompt);
 
   // configure api key and url
-  const apiKey = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+  const apiKey = process.env.OPEN_AI_API_KEY;
   const apiUrl = "https://api.openai.com/v1/chat/completions"; // ChatGPT
 
   // headers
@@ -32,19 +32,19 @@ export default async function handler(req, res) {
   // });
 
   function addPromptToContext(text) {
-    context.push({ role: "user", content: text, });
+    context.push({ role: "user", content: text });
     // if (context.length > 5) {
     //   context.shift();
     // }
   }
 
   try {
-    console.log("chatgpt: prompt: ", prompt)
-    
+    console.log("chatgpt: prompt: ", prompt);
+
     // add user prompt to context
     addPromptToContext(prompt);
 
-    console.log("chatgpt: context: ", context)
+    console.log("chatgpt: context: ", context);
 
     const response = await fetch(apiUrl, {
       method: "POST",
@@ -56,7 +56,7 @@ export default async function handler(req, res) {
         temperature: 0.3,
       }),
     });
-    
+
     console.log("chatgpt api response: ", response);
 
     if (response.ok) {
