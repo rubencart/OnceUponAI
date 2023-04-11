@@ -62,8 +62,18 @@ const StartRoute = styled(Link)`
 export default function Chat() {
   const router = useRouter();
 
-  // TODO: Implement setHasFinishedChatting in chatbot
   const [hasFinishedChatting, setHasFinishedChatting] = useState(false);
+
+  // FIXME: Not sure if this is the best way to call the func but it works
+  const updatedConfig = {
+    ...chatbotConfig,
+    widgets: [
+      {
+        widgetName: "setHasFinishedChattingTrue",
+        widgetFunc: () => setHasFinishedChatting(true),
+      },
+    ],
+  };
 
   return (
     <div>
@@ -79,7 +89,7 @@ export default function Chat() {
             <ChatWrapper>
               <Image src="./../robot.svg" width={300} height={200} alt="Robot Image" />
               <ChatbotContainer>
-                <Chatbot config={chatbotConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
+                <Chatbot config={updatedConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
                 {hasFinishedChatting && (
                   <>
                     <StartRoute href="/start-your-tour/route">Start Route</StartRoute>

@@ -11,7 +11,7 @@ async function sendMessageToChatbot(prompt) {
     // });
 
     // select which api to use
-    console.log("Before response: " + prompt)
+    console.log("Before response: " + prompt);
     const response = await fetch("/api/chatgpt", {
       method: "POST",
       headers: {
@@ -41,7 +41,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
       ...prev,
       messages: [...prev.messages, botMessage],
     }));
-    console.log('test: ', botMessage)
+    console.log("test: ", botMessage);
   };
 
   const handleName = (message) => {
@@ -50,10 +50,20 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
   };
 
   const handleGPT = async (message) => {
-    console.log("Message:", message)
+    console.log("Message:", message);
     const response = await sendMessageToChatbot(message);
-    console.log("Response:", response)
+    console.log("Response:", response);
     const botMessage = createChatBotMessage(response);
+    addResponse(botMessage);
+  };
+
+  const handleLastMessage = () => {
+    const botMessage = createChatBotMessage(
+      "Bedankt om met me te praten, ik weet genoeg! Als je wil kan je nu je gepersonaliseerde route bekijken.",
+      {
+        widget: "setHasFinishedChattingTrue",
+      }
+    );
     addResponse(botMessage);
   };
 
@@ -61,7 +71,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     <div>
       {React.Children.map(children, (child) => {
         return React.cloneElement(child, {
-          actions: { handleName, handleGPT },
+          actions: { handleName, handleGPT, handleLastMessage },
         });
       })}
     </div>
