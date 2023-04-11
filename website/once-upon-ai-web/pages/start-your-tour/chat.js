@@ -17,6 +17,11 @@ const CenterContainer = styled.div`
   justify-content: center;
   width: 100%;
   height: 80vh;
+
+  @media (max-width: 768px) {
+    margin: 16px 0px;
+    height: 100%;
+  }
 `;
 
 const ChatWrapper = styled.div`
@@ -59,6 +64,12 @@ const StartRoute = styled(Link)`
   }
 `;
 
+const RobotImage = styled(Image)`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
 export default function Chat() {
   const router = useRouter();
 
@@ -87,7 +98,7 @@ export default function Chat() {
         <WidthContainer>
           <CenterContainer>
             <ChatWrapper>
-              <Image src="./../robot.svg" width={300} height={200} alt="Robot Image" />
+              <RobotImage src="./../robot.svg" width={300} height={200} alt="Robot Image" />
               <ChatbotContainer>
                 <Chatbot config={updatedConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
                 {hasFinishedChatting && (
