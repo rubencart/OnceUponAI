@@ -28,6 +28,8 @@ const ChatWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -70,6 +72,31 @@ const RobotImage = styled(Image)`
   }
 `;
 
+const Sidebar = styled.div`
+  width: 400px;
+  border-left: 1px solid black;
+  padding: 16px;
+  margin-left: 32px;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    border-left: none;
+    border-top: 1px solid black;
+    margin-left: 0;
+  }
+`;
+
+const FaqItem = styled.div`
+  margin: 8px 0;
+
+  h2,
+  p {
+    font-size: 0.9rem;
+  }
+`;
+
 export default function Chat() {
   const router = useRouter();
 
@@ -86,6 +113,34 @@ export default function Chat() {
     ],
   };
 
+  const FaqItems = [
+    {
+      question: "Why?",
+      answer:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+    },
+    {
+      question: "How does this work?",
+      answer:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+    },
+    {
+      question: "What is ChatGPT?",
+      answer:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+    },
+    {
+      question: "Is my personal data safe?",
+      answer:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+    },
+    {
+      question: "Other questions?",
+      answer:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+    },
+  ];
+
   return (
     <div>
       <Head>
@@ -98,7 +153,7 @@ export default function Chat() {
         <WidthContainer>
           <CenterContainer>
             <ChatWrapper>
-              <RobotImage src="./../robot.svg" width={300} height={200} alt="Robot Image" />
+              <RobotImage src="./../robot.svg" width={250} height={250} alt="Robot Image" />
               <ChatbotContainer>
                 <Chatbot config={updatedConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
                 {hasFinishedChatting && (
@@ -109,14 +164,17 @@ export default function Chat() {
                     </StopChatting>
                   </>
                 )}
-                {!hasFinishedChatting && (
-                  // TODO: Remove "Start Route" button
-                  <>
-                    <StartRoute href="/start-your-tour/route">Start Route</StartRoute>
-                    <StopChatting href="/start-your-tour">Stop met praten</StopChatting>
-                  </>
-                )}
+                {!hasFinishedChatting && <StopChatting href="/start-your-tour">Stop met praten</StopChatting>}
               </ChatbotContainer>
+              <Sidebar>
+                <h1>Veelgestelde vragen</h1>
+                {FaqItems.map((item, index) => (
+                  <FaqItem key={index}>
+                    <h2>{item.question}</h2>
+                    <p>{item.answer}</p>
+                  </FaqItem>
+                ))}
+              </Sidebar>
             </ChatWrapper>
           </CenterContainer>
         </WidthContainer>
