@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styled from "@emotion/styled";
 import WidthContainer from "../components/WidthContainer";
-import PageContainer from "../components/PageContainer";
+import CenteredPageContainer from "@/components/CenteredPageContainer";
 
 const CenterContainer = styled.div`
   display: flex;
@@ -9,7 +9,6 @@ const CenterContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 16px;
-  height: 80vh;
 `;
 
 const FaqItem = styled.div`
@@ -58,7 +57,7 @@ export default function FaqHelp() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <PageContainer>
+      <CenteredPageContainer>
         <WidthContainer>
           <CenterContainer>
             <h2>Faq & Help</h2>
@@ -72,7 +71,7 @@ export default function FaqHelp() {
             </div>
           </CenterContainer>
         </WidthContainer>
-      </PageContainer>
+      </CenteredPageContainer>
     </div>
   );
 }

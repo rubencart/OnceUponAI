@@ -6,23 +6,10 @@ import ActionProvider from "@/chatbot/ActionProvider";
 import MessageParser from "@/chatbot/MessageParser";
 import chatbotConfig from "@/chatbot/chatbotConfig";
 import WidthContainer from "@/components/WidthContainer";
-import PageContainer from "@/components/PageContainer";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
-
-const CenterContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 80vh;
-
-  @media (max-width: 768px) {
-    margin: 16px 0px;
-    height: 100%;
-  }
-`;
+import CenteredPageContainer from "@/components/CenteredPageContainer";
 
 const ChatWrapper = styled.div`
   display: flex;
@@ -149,36 +136,34 @@ export default function Chat() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <PageContainer>
+      <CenteredPageContainer>
         <WidthContainer>
-          <CenterContainer>
-            <ChatWrapper>
-              <RobotImage src="./../robot.svg" width={250} height={250} alt="Robot Image" />
-              <ChatbotContainer>
-                <Chatbot config={updatedConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
-                {hasFinishedChatting && (
-                  <>
-                    <StartRoute href="/start-your-tour/route">Start Route</StartRoute>
-                    <StopChatting href="/start-your-tour/chat" onClick={() => router.reload()}>
-                      Begin opnieuw
-                    </StopChatting>
-                  </>
-                )}
-                {!hasFinishedChatting && <StopChatting href="/start-your-tour">Stop met praten</StopChatting>}
-              </ChatbotContainer>
-              <Sidebar>
-                <h1>Veelgestelde vragen</h1>
-                {FaqItems.map((item, index) => (
-                  <FaqItem key={index}>
-                    <h2>{item.question}</h2>
-                    <p>{item.answer}</p>
-                  </FaqItem>
-                ))}
-              </Sidebar>
-            </ChatWrapper>
-          </CenterContainer>
+          <ChatWrapper>
+            <RobotImage src="./../robot.svg" width={250} height={250} alt="Robot Image" />
+            <ChatbotContainer>
+              <Chatbot config={updatedConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
+              {hasFinishedChatting && (
+                <>
+                  <StartRoute href="/start-your-tour/route">Start Route</StartRoute>
+                  <StopChatting href="/start-your-tour/chat" onClick={() => router.reload()}>
+                    Begin opnieuw
+                  </StopChatting>
+                </>
+              )}
+              {!hasFinishedChatting && <StopChatting href="/start-your-tour">Stop met praten</StopChatting>}
+            </ChatbotContainer>
+            <Sidebar>
+              <h1>Veelgestelde vragen</h1>
+              {FaqItems.map((item, index) => (
+                <FaqItem key={index}>
+                  <h2>{item.question}</h2>
+                  <p>{item.answer}</p>
+                </FaqItem>
+              ))}
+            </Sidebar>
+          </ChatWrapper>
         </WidthContainer>
-      </PageContainer>
+      </CenteredPageContainer>
     </div>
   );
 }

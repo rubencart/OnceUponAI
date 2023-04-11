@@ -4,13 +4,17 @@ import WidthContainer from "../components/WidthContainer";
 import PageContainer from "../components/PageContainer";
 import Link from "next/link";
 import Image from "next/image";
+import CenteredPageContainer from "@/components/CenteredPageContainer";
 
 const CenterContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 80vh;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const ContentContainer = styled.div`
@@ -40,7 +44,7 @@ export default function StartYourTour() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <PageContainer>
+      <CenteredPageContainer>
         <WidthContainer>
           <CenterContainer>
             <Image src="./robot.svg" width={300} height={200} alt="Robot Image" />
@@ -52,11 +56,9 @@ export default function StartYourTour() {
               </p>
               <StartChat href="/start-your-tour/chat">Start met praten</StartChat>
             </ContentContainer>
-            {/* <h2>Start Your Tour</h2>
-            <Chatbot config={chatbotConfig} messageParser={MessageParser} actionProvider={ActionProvider} /> */}
           </CenterContainer>
         </WidthContainer>
-      </PageContainer>
+      </CenteredPageContainer>
     </div>
   );
 }
