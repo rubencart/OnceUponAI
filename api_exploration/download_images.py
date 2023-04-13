@@ -22,7 +22,7 @@ def work(object_id: str, object: Dict, args: argparse.Namespace) -> bool:
         # find the manifest url in the object data
         manifest_url = utils.get_manifest_url_from_obj(object)
         # query it
-        manifest_response = httpx.get(manifest_url, follow_redirects=True).json()
+        manifest_response = httpx.get(manifest_url, follow_redirects=True, timeout=30).json()
 
         # find the image url in the manifest response
         if 'sequences' in manifest_response:
@@ -31,30 +31,35 @@ def work(object_id: str, object: Dict, args: argparse.Namespace) -> bool:
                 img_dict = canv['images'][0]
                 img_url = img_dict['resource']['service']['@id']
 
-                # add image formatting params
-                img_url += '/' if img_url[-1] != '/' else ''
-                # region/w,h/rotation/quality.format
-                # (scales the height proportionally)
-                img_url += f'full/{args.image_width},/0/default.jpg'
-
-                # get the image
-                response = httpx.get(img_url)
-
-                # save the image
+                # generate filename
                 # filename = f"{manifest_url.split('/')[-1].replace(':', '__')}.jpg"
                 if 'http' in object_id:
                     oid_split = object_id.split('/')
                     filename = f"{oid_split[-2]}_{oid_split[-1]}.jpg"
                 else:
                     filename = f"{object_id}.jpg"
-
                 path = os.path.join(args.output_dir, filename)
-                with open(path, 'wb') as f:
-                    f.write(response.content)
+
+                # check if file already exists
+                if not os.path.isfile(path):
+
+                    # add image formatting params
+                    img_url += '/' if img_url[-1] != '/' else ''
+                    # region/w,h/rotation/quality.format
+                    # (scales the height proportionally)
+                    img_url += f'full/{args.image_width},/0/default.jpg'
+
+                    # get the image
+                    response = httpx.get(img_url, follow_redirects=True, timeout=30)
+
+                    # save the image
+                    with open(path, 'wb') as f:
+                        f.write(response.content)
 
                 return True
     except Exception as e:
-        print(object_id, e, traceback.format_exc())
+        # print(object_id, e, traceback.format_exc())
+        print(object_id, e)
         return False
     return False
 
@@ -65,6 +70,11 @@ def run(args: argparse.Namespace):
     with open(args.input_objects) as f:
         dsets = json.load(f)
 
+    old_failed = None
+    if os.path.isfile(args.failed_ids):
+        with open(args.failed_ids) as f:
+            old_failed = json.load(f)
+
     failed = {}
     # distribute the downloading work over a pool of worker processes
     with multiprocessing.Pool(args.num_workers) as pool:
@@ -73,7 +83,15 @@ def run(args: argparse.Namespace):
         for dset_name, obj_dict in dsets.items():
             print(dset_name)
 
+            # if provided path to collection of failed ids from previous run, only try
+            #   to download those ids
+            if old_failed and dset_name in old_failed and len(old_failed[dset_name]) > 0:
+                print('Filtering failed ids')
+                obj_dict = {oid: obj for (oid, obj) in obj_dict.items() if oid in old_failed[dset_name]}
+
+            print('Downloading %s images' % len(obj_dict))
             if len(obj_dict) > 0:
+
                 object_ids, objects = zip(*obj_dict.items())
 
                 if args.debug:  # if debugging, don't use parallel processes
@@ -91,14 +109,14 @@ def run(args: argparse.Namespace):
                 print('# images download failed for collection %s: %s' % (dset_name, counts[False]))
 
                 if counts[False] > 0:
-                    failed_ids = [oid for (oid, downloaded) in zip(object_ids, result) if downloaded]
+                    failed_ids = [oid for (oid, downloaded) in zip(object_ids, result) if not downloaded]
                     failed[dset_name] = failed_ids
 
     if len(failed) > 0:
-        failed_path = os.path.join(args.input_objects.split['/'][0], 'failed_ids.json')
+        failed_path = os.path.join(os.path.split(args.input_objects)[0], 'failed_ids.json')
         print('Saving failed ids to %s' % failed_path)
         with open(failed_path, 'w') as f:
-            json.dump(failed_ids, f)
+            json.dump(failed, f)
 
     print('Done.')
 
@@ -111,8 +129,10 @@ if __name__ == '__main__':
     p.add_argument('--chunksize', type=int, default=50)
     p.add_argument('--image_width', type=int, default=300)
 
-    obj_path = '/cw/liir/NoCsBack/testliir/rubenc/OUAI-pt2/LDES-API/api_exploration/output/most_recent_objects.json'
+    obj_path = '/cw/liir/NoCsBack/testliir/rubenc/OUAI-pt2/LDES-API/api_exploration/output/most_recent_objects_v2.json'
     p.add_argument('--input_objects', type=str, default=obj_path)
+    # failed_path =
+    p.add_argument('--failed_ids', type=str, default='/cw/liir/NoCsBack/testliir/rubenc/OUAI-pt2/failed_ids.json')
     args = p.parse_args()
 
     if args.output_dir == '':

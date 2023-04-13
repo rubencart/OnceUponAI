@@ -8,6 +8,8 @@ import httpx
 import json
 from tqdm import tqdm
 
+import utils
+
 
 def get_next_url(next_resp: Dict) -> Tuple[Optional[str], Optional[int]]:
     for rel in next_resp['tree:relation']:
@@ -92,7 +94,7 @@ def run(args: argparse.Namespace):
 
                 unique_objects[n].update(new_objects)
 
-                next_resp = httpx.get(next_node_url, follow_redirects=True).json()
+                next_resp = httpx.get(next_node_url, follow_redirects=True, timeout=30).json()
                 # will be None when all objects in a collection have been returned
                 next_node_url, next_remaining_items = get_next_url(next_resp)
                 # update the progress bar
@@ -118,5 +120,6 @@ if __name__ == '__main__':
     p.add_argument('--debug', action='store_true')
     p.add_argument('--output_dir', type=str, default='output/')
     args = p.parse_args()
+    utils.mkdir_p(args.output_dir)
 
     run(args)
