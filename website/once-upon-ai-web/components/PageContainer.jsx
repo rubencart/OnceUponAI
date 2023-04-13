@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import Header from "./Header";
 import Footer from "./Footer";
-
+import BackgroundCanvas from "./BackgroundCanvas";
 const LayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -16,10 +16,13 @@ const MainContent = styled.main`
 const PageContainer = ({ children }) => {
   return (
     <LayoutContainer>
+      <BackgroundCanvas />
       <Header />
       <MainContent>{children}</MainContent>
       <Footer />
+      <script type="text/javascript" src="./js/background.js" />
     </LayoutContainer>
+
   );
 };
 
