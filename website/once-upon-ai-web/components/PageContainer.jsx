@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import Header from "./Header";
 import Footer from "./Footer";
 import BackgroundCanvas from "./BackgroundCanvas";
+import Script from "next/script";
 const LayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,9 +21,8 @@ const PageContainer = ({ children }) => {
       <Header />
       <MainContent>{children}</MainContent>
       <Footer />
-      <script type="text/javascript" src="./js/background.js" />
+      <Script type="text/javascript" src="./js/background.js" async />
     </LayoutContainer>
-
   );
 };
 
