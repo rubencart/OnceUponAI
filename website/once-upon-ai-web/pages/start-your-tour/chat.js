@@ -102,29 +102,29 @@ export default function Chat() {
 
   const FaqItems = [
     {
-      question: "Why?",
+      question: "Waarom?",
       answer:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
     },
     {
-      question: "How does this work?",
+      question: "Hoe werkt dit?",
       answer:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
     },
     {
-      question: "What is ChatGPT?",
+      question: "Wat is ChatGPT?",
       answer:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
     },
     {
-      question: "Is my personal data safe?",
+      question: "Is mijn persoonlijke data veilig bij jullie?",
       answer:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
     },
     {
-      question: "Other questions?",
+      question: "Andere vragen?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+        "Contacteer de makers van dit project, dit kan via de Discord van Nerdlab",
     },
   ];
 
