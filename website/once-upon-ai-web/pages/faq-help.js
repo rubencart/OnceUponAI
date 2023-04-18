@@ -2,6 +2,8 @@ import Head from "next/head";
 import styled from "@emotion/styled";
 import WidthContainer from "../components/WidthContainer";
 import CenteredPageContainer from "@/components/CenteredPageContainer";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const CenterContainer = styled.div`
   display: flex;
@@ -20,39 +22,42 @@ const FaqItem = styled.div`
   }
 `;
 
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"])),
+  },
+});
+
 export default function FaqHelp() {
+  const { t } = useTranslation();
+
   const FaqItems = [
     {
-      question: "Why?",
-      answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+      title: t("index_faq_1_question"),
+      description: t("index_faq_1_answer"),
     },
     {
-      question: "How does this work?",
-      answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+      title: t("index_faq_2_question"),
+      description: t("index_faq_2_answer"),
     },
     {
-      question: "What is ChatGPT?",
-      answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+      title: t("index_faq_3_question"),
+      description: t("index_faq_3_answer"),
     },
     {
-      question: "Is my personal data safe?",
-      answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+      title: t("index_faq_4_question"),
+      description: t("index_faq_4_answer"),
     },
     {
-      question: "Other questions?",
-      answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+      title: t("index_faq_5_question"),
+      description: t("index_faq_5_answer"),
     },
   ];
 
   return (
     <div>
       <Head>
-        <title>Faq & Help</title>
+        <title>{t("faq_and_help")}</title>
         <meta name="description" content="Faq & Help" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -60,7 +65,7 @@ export default function FaqHelp() {
       <CenteredPageContainer>
         <WidthContainer>
           <CenterContainer>
-            <h2>Faq & Help</h2>
+            <h2>{t("faq_and_help")}</h2>
             <div>
               {FaqItems.map((item, index) => (
                 <FaqItem key={index}>

@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import { MenuItems, NavItem, Title } from "./styled/HeaderStyles";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from "next-i18next";
 
 const StyledFooter = styled.footer`
   background-color: #ececec;
@@ -32,11 +34,12 @@ const NavLink = styled.a`
 `;
 
 export default function Footer() {
+  const { t } = useTranslation();
   const navItems = [
-    { name: "Privacy Policy", path: "/privacy-policy" },
-    { name: "Terms & Conditions", path: "/terms-and-conditions" },
-    { name: "About Nerdlab", path: "/about-nerdlab" },
-    { name: "FAQ & Help", path: "/faq-help" },
+    { name: "privacy_policy", path: "/privacy-policy" },
+    { name: "terms_and_conditions", path: "/terms-and-conditions" },
+    { name: "nav_about", path: "/about-nerdlab" },
+    { name: "nav_faq", path: "/faq-help" },
   ];
 
   return (
@@ -46,9 +49,10 @@ export default function Footer() {
         <NavList>
           {navItems.map((item, index) => (
             <NavItem key={index}>
-              <NavLink href={item.path}>{item.name}</NavLink>
+              <NavLink href={item.path}>{t(item.name)}</NavLink>
             </NavItem>
           ))}
+          <LanguageSwitcher />
         </NavList>
       </MenuItems>
     </StyledFooter>

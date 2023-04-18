@@ -1,0 +1,60 @@
+{
+  "nav_start_tour": "Start Je Route",
+  "nav_discover_artworks": "Ontdek Kunst",
+  "nav_about": "Over Nerdlab",
+  "nav_faq": "FAQ & Help",
+
+  "terms_and_conditions": "Terms & Conditions",
+  "privacy_policy": "Privacy Policy",
+  "discover_artworks": "Discover Artworks",
+  "about_nerdlab": "About Nerdlab",
+  "faq_and_help": "Faq & Help",
+  "faq_title_long": "Veelgestelde vragen",
+
+  "index_step_1_title": "Chat met Jos",
+  "index_step_1_description": "In de app 'Once Upon an AI' kun je praten met een AI genaamd Jos om je voorkeuren te leren kennen. Geef Jos antwoord op zijn vragen en hij zal je voorkeuren onthouden voor toekomstige interacties.",
+
+  "index_step_2_title": "Genereer uw route",
+  "index_step_2_description": "Met de AI-navigatiefunctie van de app 'Once Upon an AI' kun je de route bepalen om te wandelen door Gent. Geef je voorkeuren aan Jos door en hij zal de beste route voorstellen.",
+
+  "index_step_3_title": "Verken de stad",
+  "index_step_3_description": "Laat je verrassen en verken de stad op een nieuwe manier met een gegenereerde route in de app 'Once Upon an AI'. Ontdek onverwachte pareltjes en maak herinneringen die je nooit zult vergeten!",
+
+  "index_step_4_title": "Scan de QR-codes",
+  "index_step_4_description": "Work in Progress. De QR-codes zullen je meer informatie geven over objecten die je toevallig in de stad kan tegenkomen. Hiermee krijg je dan ook toegang tot bepaalde routes.",
+
+  "index_faq_1_question": "Waarom?",
+  "index_faq_1_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+
+  "index_faq_2_question": "Hoe werkt dit?",
+  "index_faq_2_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+
+  "index_faq_3_question": "Wat is ChatGPT?",
+  "index_faq_3_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+
+  "index_faq_4_question": "Is mijn persoonlijke data veilig bij jullie?",
+  "index_faq_4_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+
+  "index_faq_5_question": "Andere vragen?",
+  "index_faq_5_answer": "Contacteer de makers van dit project, dit kan via de Discord van Nerdlab",
+
+  "ai_generated_routes": "AI gegenereerde Gentse wandelingen",
+  "start_guide": "Start de gids",
+  "how_does_it_work": "Hoe werkt het?",
+  "chatbot_route_intro_title": "Hallo, mijn naam is Jos!",
+  "chatbot_route_intro_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum. Aliquam erat volutpat. Sed aliquam ligula massa, sit amet ultricies leo fringilla vitae.",
+  "chatbot_route_intro_start_button": "Start met praten",
+
+  "chat_with_jos": "Chat met Jos",
+
+  "start_route": "Start Route",
+  "start_again": "Begin opnieuw",
+  "stop_talking": "Stop met praten",
+
+  "route": "Route",
+  "back_to_beginning": "Terug naar begin",
+  "walking_route_title": "Wandelroute",
+  "walking_route_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida, justo a posuere tincidunt, enim odio ullamcorper odio, nec sollicitudin libero quam ut velit. Cras bibendum feugiat massa, vitae malesuada tellus bibendum a.",
+  "art_pieces": "Kunstwerken",
+  "more_info": "Meer info"
+}
