@@ -12,5 +12,5 @@ dependencies:
   - pip
   - pip:
     - jsonpath-ng
-    - json-schema-for-humans
+    - sparql-dataframe
   
