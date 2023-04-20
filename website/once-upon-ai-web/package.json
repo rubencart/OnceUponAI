@@ -18,6 +18,8 @@
     "i18next-http-backend": "^2.2.0",
     "language-icons": "^0.3.0",
     "leaflet": "^1.9.3",
+    "leaflet-easybutton": "^2.4.0",
+    "leaflet-gps": "^1.7.8",
     "mongodb": "^5.2.0",
     "next": "^13.2.4",
     "next-i18next": "^13.2.2",
