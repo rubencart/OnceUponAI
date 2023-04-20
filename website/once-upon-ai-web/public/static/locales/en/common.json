@@ -1,0 +1,60 @@
+{
+  "nav_start_tour": "Start Your Tour",
+  "nav_discover_artworks": "Discover Artworks",
+  "nav_about": "About Nerdlab",
+  "nav_faq": "FAQ & Help",
+
+  "terms_and_conditions": "Terms & Conditions",
+  "privacy_policy": "Privacy Policy",
+  "discover_artworks": "Discover Artworks",
+  "about_nerdlab": "About Nerdlab",
+  "faq_and_help": "Faq & Help",
+  "faq_title_long": "Frequently Asked Questions",
+
+  "index_step_1_title": "Chat with Jos",
+  "index_step_1_description": "In the 'Once Upon an AI' app, you can chat with an AI named Jos to get to know your preferences. Answer Jos's questions and he will remember your preferences for future interactions.",
+
+  "index_step_2_title": "Generate your route",
+  "index_step_2_description": "With the AI navigation feature of the 'Once Upon an AI' app, you can determine the route to walk through Ghent. Share your preferences with Jos and he will suggest the best route.",
+
+  "index_step_3_title": "Explore the city",
+  "index_step_3_description": "Be surprised and explore the city in a new way with a generated route in the 'Once Upon an AI' app. Discover unexpected gems and create memories you'll never forget!",
+
+  "index_step_4_title": "Scan the QR codes",
+  "index_step_4_description": "Work in Progress. The QR codes will give you more information about objects you may encounter in the city. This will also give you access to certain routes.",
+
+  "index_faq_1_question": "Why?",
+  "index_faq_1_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+
+  "index_faq_2_question": "How does this work?",
+  "index_faq_2_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+
+  "index_faq_3_question": "What is ChatGPT?",
+  "index_faq_3_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+
+  "index_faq_4_question": "Is my personal data safe?",
+  "index_faq_4_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+
+  "index_faq_5_question": "Other questions?",
+  "index_faq_5_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+
+  "ai_generated_routes": "AI generated Ghent walks",
+  "start_guide": "Start the guide",
+  "how_does_it_work": "How does it work?",
+  "chatbot_route_intro_title": "Hello, my name is Jos!",
+  "chatbot_route_intro_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum. Aliquam erat volutpat. Sed aliquam ligula massa, sit amet ultricies leo fringilla vitae.",
+  "chatbot_route_intro_start_button": "Start chatting",
+
+  "chat_with_jos": "Chat with Jos",
+
+  "start_route": "Start Route",
+  "start_again": "Start again",
+  "stop_talking": "Stop talking",
+
+  "route": "Route",
+  "back_to_beginning": "Back to beginning",
+  "walking_route_title": "Walking route",
+  "walking_route_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida, justo a posuere tincidunt, enim odio ullamcorper odio, nec sollicitudin libero quam ut velit. Cras bibendum feugiat massa, vitae malesuada tellus bibendum a.",
+  "art_pieces": "Art pieces",
+  "more_info": "More info"
+}

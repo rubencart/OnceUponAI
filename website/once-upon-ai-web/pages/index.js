@@ -3,9 +3,10 @@ import styled from "@emotion/styled";
 import PageContainer from "../components/PageContainer";
 import WidthContainer from "../components/WidthContainer";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-const HeroWrapper = styled.div`
-`;
+const HeroWrapper = styled.div``;
 
 const HeroContainer = styled(WidthContainer)`
   height: 75vh;
@@ -33,7 +34,7 @@ const Subtitle = styled.h2`
 `;
 
 const Division = styled.h2`
-  font-family: 'Mazius Review Extra', sans-serif;
+  font-family: "Mazius Review Extra", sans-serif;
   color: var(--pink);
   box-sizing: border-box;
   position: relative;
@@ -41,8 +42,9 @@ const Division = styled.h2`
   padding: 8px 32px;
   width: 100vw;
   text-align: center;
-  &:before, &:after{
-    content: '';
+  &:before,
+  &:after {
+    content: "";
     aspect-ratio: 1 / 1;
     height: calc(3px + 100%);
     -moz-border-radius: 50%;
@@ -52,16 +54,15 @@ const Division = styled.h2`
     position: absolute;
     box-sizing: border-box;
   }
-  &:after{
+  &:after {
     right: 0;
     transform: translate(50%, -9.5px);
-   
   }
-  &:before{
+  &:before {
     left: 0;
     transform: translate(-50%, -9.5px);
-  } 
-`
+  }
+`;
 
 const StartGuide = styled(Link)`
   border: 1.5px solid white;
@@ -73,9 +74,9 @@ const StartGuide = styled(Link)`
     transform: scale(0.95);
   }
 
-
-  &:before, &:after{
-    content: '';
+  &:before,
+  &:after {
+    content: "";
     aspect-ratio: 1 / 1;
     height: calc(3px + 100%);
     -moz-border-radius: 50%;
@@ -85,19 +86,17 @@ const StartGuide = styled(Link)`
     position: absolute;
     box-sizing: border-box;
   }
-  &:after{
+  &:after {
     right: 0;
     transform: translate(50%, -9.5px);
-   
   }
-  &:before{
+  &:before {
     left: 0;
     transform: translate(-50%, -9.5px);
   }
 `;
 
-const StepsWrapper = styled.div`
-`;
+const StepsWrapper = styled.div``;
 
 const StepsContainer = styled(WidthContainer)`
   display: flex;
@@ -118,38 +117,38 @@ const StepContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex: 0 1 250px;
-  `;
+`;
 
 const GraphicElement = styled.div`
-position:relative;
-min-width: 25px;
-border: 1.5px solid white;
-box-sizing: border-box;
-height: calc(-25px + 100%);
-transform: translate(0, 12.5px);
-&:before, &:after{
-  content: '';
-  aspect-ratio: 1 / 1;
-  width: calc(3px + 100%);
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
+  position: relative;
+  min-width: 25px;
   border: 1.5px solid white;
-  position: absolute;
   box-sizing: border-box;
-  transform: translate(-1.5px, -50%);
-}
-&:after{
-  bottom: 0;
-  transform: translate(-1.5px, 50%);
-}
-&:before{
-  top: 0;
-}
+  height: calc(-25px + 100%);
+  transform: translate(0, 12.5px);
+  &:before,
+  &:after {
+    content: "";
+    aspect-ratio: 1 / 1;
+    width: calc(3px + 100%);
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    border: 1.5px solid white;
+    position: absolute;
+    box-sizing: border-box;
+    transform: translate(-1.5px, -50%);
+  }
+  &:after {
+    bottom: 0;
+    transform: translate(-1.5px, 50%);
+  }
+  &:before {
+    top: 0;
+  }
 `;
 
 const Step = styled.div`
-  
   padding: 0 16px;
 
   & h2 {
@@ -166,27 +165,31 @@ const Step = styled.div`
   }
 `;
 
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"])),
+  },
+});
+
 export default function Home() {
+  const { t } = useTranslation();
+
   const StepsItems = [
     {
-      title: "Chat met Jos",
-      description:
-        "In de app 'Once Upon an AI' kun je praten met een AI genaamd Jos om je voorkeuren te leren kennen. Geef Jos antwoord op zijn vragen en hij zal je voorkeuren onthouden voor toekomstige interacties.",
+      title: t("index_step_1_title"),
+      description: t("index_step_1_description"),
     },
     {
-      title: "Genereer uw route",
-      description:
-        "Met de AI-navigatiefunctie van de app 'Once Upon an AI' kun je de route bepalen om te wandelen door Gent. Geef je voorkeuren aan Jos door en hij zal de beste route voorstellen.",
+      title: t("index_step_2_title"),
+      description: t("index_step_2_description"),
     },
     {
-      title: "Verken de stad",
-      description:
-        "Laat je verrassen en verken de stad op een nieuwe manier met een gegenereerde route in de app 'Once Upon an AI'. Ontdek onverwachte pareltjes en maak herinneringen die je nooit zult vergeten!",
+      title: t("index_step_3_title"),
+      description: t("index_step_3_description"),
     },
     {
-      title: "Scan de QR-codes",
-      description:
-        "Work in Progress. De QR-codes zullen je meer informatie geven over objecten die je toevallig in de stad kan tegenkomen. Hiermee krijg je dan ook toegang tot bepaalde routes.",
+      title: t("index_step_4_title"),
+      description: t("index_step_4_description"),
     },
   ];
 
@@ -203,21 +206,21 @@ export default function Home() {
           <HeroContainer>
             <TitleContainer>
               <Title>Once Upon AI</Title>
-              <Subtitle>AI gegenereerde Gentse wandelingen</Subtitle>
+              <Subtitle>{t("ai_generated_routes")}</Subtitle>
             </TitleContainer>
-            <StartGuide href="/start-your-tour">Start de gids</StartGuide>
+            <StartGuide href="/start-your-tour">{t("start_guide")}</StartGuide>
           </HeroContainer>
         </HeroWrapper>
         <StepsWrapper>
           <StepsContainer>
-            <Division>Hoe werkt het?</Division>
+            <Division>{t("how_does_it_work")}</Division>
             <Steps>
               {StepsItems.map((item, index) => (
                 <StepContainer key={index}>
                   <GraphicElement></GraphicElement>
                   <Step key={index}>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
                   </Step>
                 </StepContainer>
               ))}

@@ -10,6 +10,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import CenteredPageContainer from "@/components/CenteredPageContainer";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const ChatWrapper = styled.div`
   display: flex;
@@ -84,7 +86,14 @@ const FaqItem = styled.div`
   }
 `;
 
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"])),
+  },
+});
+
 export default function Chat() {
+  const { t } = useTranslation();
   const router = useRouter();
 
   const [hasFinishedChatting, setHasFinishedChatting] = useState(false);
@@ -102,36 +111,31 @@ export default function Chat() {
 
   const FaqItems = [
     {
-      question: "Waarom?",
-      answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+      question: t("index_faq_1_question"),
+      answer: t("index_faq_1_answer"),
     },
     {
-      question: "Hoe werkt dit?",
-      answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+      question: t("index_faq_2_question"),
+      answer: t("index_faq_2_answer"),
     },
     {
-      question: "Wat is ChatGPT?",
-      answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+      question: t("index_faq_3_question"),
+      answer: t("index_faq_3_answer"),
     },
     {
-      question: "Is mijn persoonlijke data veilig bij jullie?",
-      answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+      question: t("index_faq_4_question"),
+      answer: t("index_faq_4_answer"),
     },
     {
-      question: "Andere vragen?",
-      answer:
-        "Contacteer de makers van dit project, dit kan via de Discord van Nerdlab",
+      question: t("index_faq_5_question"),
+      answer: t("index_faq_5_answer"),
     },
   ];
 
   return (
     <div>
       <Head>
-        <title>Chat met Jos</title>
+        <title>{t("chat_with_jos")}</title>
         <meta name="description" content="Chat met Jos" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -139,21 +143,21 @@ export default function Chat() {
       <CenteredPageContainer>
         <WidthContainer>
           <ChatWrapper>
-            <RobotImage src="./../robot.svg" width={250} height={250} alt="Robot Image" />
+            <RobotImage src="/robot.svg" width={250} height={250} alt="Robot Image" />
             <ChatbotContainer>
               <Chatbot config={updatedConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
               {hasFinishedChatting && (
                 <>
-                  <StartRoute href="/start-your-tour/route">Start Route</StartRoute>
+                  <StartRoute href="/start-your-tour/route">{t("start_route")}</StartRoute>
                   <StopChatting href="/start-your-tour/chat" onClick={() => router.reload()}>
-                    Begin opnieuw
+                    {t("start_again")}
                   </StopChatting>
                 </>
               )}
-              {!hasFinishedChatting && <StopChatting href="/start-your-tour">Stop met praten</StopChatting>}
+              {!hasFinishedChatting && <StopChatting href="/start-your-tour">{t("stop_talking")}</StopChatting>}
             </ChatbotContainer>
             <Sidebar>
-              <h1>Veelgestelde vragen</h1>
+              <h1>{t("faq_title_long")}</h1>
               {FaqItems.map((item, index) => (
                 <FaqItem key={index}>
                   <h2>{item.question}</h2>

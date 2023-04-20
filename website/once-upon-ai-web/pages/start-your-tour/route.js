@@ -5,6 +5,8 @@ import PageContainer from "@/components/PageContainer";
 import { IoIosArrowBack } from "react-icons/io";
 import Link from "next/link";
 import dynamic from 'next/dynamic'
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const Container = styled.div`
   display: flex;
@@ -103,7 +105,15 @@ const MoreInfoButton = styled.button`
   align-self: center;
 `;
 
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"])),
+  },
+});
+
 export default function Route() {
+  const { t } = useTranslation();
+
   const Artworks = [
     {
       title: "Artwork 1",
@@ -130,7 +140,7 @@ export default function Route() {
   return (
     <div>
       <Head>
-        <title>Route</title>
+        <title>{t("route")}</title>
         <meta name="description" content="Route" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -140,25 +150,21 @@ export default function Route() {
           <Container>
             <BackButton href="/start-your-tour">
               <IoIosArrowBack />
-              Back to beginning
+              {t("back_to_beginning")}
             </BackButton>
             <Content>
               <LeftBlock>
-                <Title>Wandelroute</Title>
-                <Description>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida, justo a posuere tincidunt, enim
-                  odio ullamcorper odio, nec sollicitudin libero quam ut velit. Cras bibendum feugiat massa, vitae
-                  malesuada tellus bibendum a.
-                </Description>
+                <Title>{t("walking_route_title")}</Title>
+                <Description>{t("walking_route_description")}</Description>
                   <Map />
               </LeftBlock>
               <RightBlock>
-                <Title>Kunstwerken</Title>
+                <Title>{t("art_pieces")}</Title>
                 {Artworks.map((artwork, index) => (
                   <Artwork key={index}>
                     <Distance>{artwork.distance}</Distance>
                     <ArtworkTitle>{artwork.title}</ArtworkTitle>
-                    <MoreInfoButton>Meer info</MoreInfoButton>
+                    <MoreInfoButton>{t("more_info")}</MoreInfoButton>
                   </Artwork>
                 ))}
               </RightBlock>
