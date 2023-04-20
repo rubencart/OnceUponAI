@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { MenuItems, NavItem, Title } from "./styled/HeaderStyles";
 
 const StyledFooter = styled.footer`
-  background-color: #ececec;
+  /* background-color: #ececec; */
   padding: 1rem 2rem;
   text-align: center;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);

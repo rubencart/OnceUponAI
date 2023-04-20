@@ -4,6 +4,7 @@ import WidthContainer from "@/components/WidthContainer";
 import PageContainer from "@/components/PageContainer";
 import { IoIosArrowBack } from "react-icons/io";
 import Link from "next/link";
+import dynamic from 'next/dynamic'
 
 const Container = styled.div`
   display: flex;
@@ -118,6 +119,14 @@ export default function Route() {
     },
   ];
 
+  const Map = dynamic(
+    () => import('@/components/LeafletMap'), // replace '@components/map' with your component's location
+    { 
+      loading: () => <p>A map is loading</p>,
+      ssr: false // This line is important. It's what prevents server-side render
+    }
+  )
+
   return (
     <div>
       <Head>
@@ -141,10 +150,7 @@ export default function Route() {
                   odio ullamcorper odio, nec sollicitudin libero quam ut velit. Cras bibendum feugiat massa, vitae
                   malesuada tellus bibendum a.
                 </Description>
-                <MapContainer>
-                  {/* Google Maps implementation */}
-                  <h1>Google Maps</h1>
-                </MapContainer>
+                  <Map />
               </LeftBlock>
               <RightBlock>
                 <Title>Kunstwerken</Title>
@@ -160,6 +166,7 @@ export default function Route() {
           </Container>
         </WidthContainer>
       </PageContainer>
+      
     </div>
   );
 }

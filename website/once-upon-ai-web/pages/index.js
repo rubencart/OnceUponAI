@@ -8,7 +8,7 @@ const HeroWrapper = styled.div`
 `;
 
 const HeroContainer = styled(WidthContainer)`
-  height: 500px;
+  height: 75vh;
   display: flex;
   flex-direction: column;
   align-items: center;
