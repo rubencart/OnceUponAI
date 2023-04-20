@@ -4,7 +4,7 @@ import { useTranslation } from "next-i18next";
 import English from "language-icons/icons/en.svg";
 import Dutch from "language-icons/icons/nl.svg";
 import Image from "next/image";
-
+ 
 function LanguageSwitcher() {
   const { i18n } = useTranslation();
   const router = useRouter();

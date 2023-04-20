@@ -2,6 +2,10 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
 import React, { useEffect, useState } from "react";
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-gps';
+import GeolocationButton from './GeolocationButton';
+import Poi from './Poi';
+import pois from './pois.json';
+
 
 // Classes used by Leaflet to position controls
 const POSITION_CLASSES = {
@@ -11,7 +15,14 @@ const POSITION_CLASSES = {
 	topright: 'leaflet-top leaflet-right',
   }
 
+	const getLocations = async () => {
+		const response = await fetch("./test.json");
+		const data = await response.json();
+		setLocations(data);
+		return data;
+	}
 const LeafletMap = () => {
+	const [locations, setLocations] = useState([]);
 	const LocationMarker = () => {
 		const [position, setPosition] = useState(null);
 	
@@ -30,41 +41,13 @@ const LeafletMap = () => {
 			</Marker>
 		);
 	}
-	
-	const GeolocatingButton = () => {
-		const [map, setMap] = useState(null);
-		const [location, setLocation] = useState(null);
-		
-		useEffect(() => {
-		  if (map) {
-			map.locate();
-			map.on('locationfound', handleLocationFound);
-		  }
-		}, [map]);
-		
-		const handleLocationFound = (e) => {
-		  const { lat, lng } = e.latlng;
-		  setLocation([lat, lng]);
-		};
-		
-		const handleClick = () => {
-		  if (map) {
-			map.locate();
-		  }
-		};
-		
-		return (
-		  <div>
-			<button onClick={handleClick}>Get location</button>
-			{location && (
-			  <Map center={location} zoom={15} style={{ height: '400px' }} ref={setMap}>
-				<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-				<Marker position={location} />
-			  </Map>
-			)}
-		  </div>
-		);
-	  };
+	// useEffect(() => {
+  //   fetch('./test.json')
+  //     .then(response => response.json())
+  //     .then(data => setLocations(data))
+  //     .catch(error => console.error(error));
+  // }, []);
+
 	
   return (
     <MapContainer center={[51.05314,3.72626]} zoom={13} scrollWheelZoom={false} style={{height: 400, width: "100%"}}>
@@ -77,7 +60,13 @@ const LeafletMap = () => {
           A pretty CSS3 popup. <br /> Easily customizable.
         </Popup>
       </Marker> */}
-	  		<GeolocatingButton position="topright"/>
+			<Poi locations={pois} />
+			<GeolocationButton position="topright"
+        title={"Get Location"}
+        markerPosition={[20.27, -157]}
+        description="This is a custom description!"
+      />
+			
     </MapContainer>
   )
 }
