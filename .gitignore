@@ -134,3 +134,4 @@ LDES-API/api_exploration/output/*
 api_exploration/output/
 api_exploration/output/*
 api_exploration/data/
+.DS_Store
