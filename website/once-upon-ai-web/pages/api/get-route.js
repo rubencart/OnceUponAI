@@ -18,18 +18,20 @@ import { MongoClient, ObjectId } from "mongodb";
  *
  * {
  *   "_id": "614f60f1a90e8d8aa09b7fde",
- *   "routes": [
+ *   "routeObjects": [
  *     {
- *       "name": "Route 1",
- *       "address": "123 Main St",
- *       "latitude": "37.7749",
- *       "longitude": "-122.4194"
+ *       "object_id": "aaa",
+ *       "coordinates": [1.0101, 5.002],
+ *       "description": "lqlqlqlq",
+ *       "image_url": "https://loremflickr.com/640/480/gent,art",
+ *       "tags": ["19e eeuw", "lol"]
  *     },
  *     {
- *       "name": "Route 2",
- *       "address": "456 Main St",
- *       "latitude": "37.7749",
- *       "longitude": "-122.4194"
+ *       "object_id": "aaa",
+ *       "coordinates": [1.0101, 5.002],
+ *       "description": "lqlqlqlq",
+ *       "image_url": "https://loremflickr.com/640/480/gent,art",
+ *       "tags": ["19e eeuw", "lol"]
  *     }
  *   ],
  *   "createdAt": "2021-09-24T14:16:33.145Z",
@@ -41,14 +43,16 @@ import { MongoClient, ObjectId } from "mongodb";
  * @param {*} res The response object
  */
 export default async function handler(req, res) {
+  console.log("in get-route");
   if (req.method !== "GET") {
     res.status(400).json({ message: "Invalid request method" });
     return;
   }
 
-  const { id } = req.query;
+  const { routeId } = req.query;
+  console.log("getting route for id:", routeId);
 
-  if (!id) {
+  if (!routeId) {
     res.status(400).json({ message: "Missing route group ID" });
     return;
   }
@@ -65,7 +69,7 @@ export default async function handler(req, res) {
     const collection = db.collection("routes");
 
     // Get the document with the specified ID
-    const result = await collection.findOne({ _id: new ObjectId(id) });
+    const result = await collection.findOne({ _id: new ObjectId(routeId) });
 
     // Respond with the document
     res.status(200).json(result);

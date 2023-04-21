@@ -62,10 +62,11 @@ const Description = (props) => {
 };
 
 const withMap = (Component) => {
-  return (props) => {
+  const WithMap = (props) => {
     const map = useMap();
     return <Component {...props} map={map} />;
   };
+  return WithMap;
 };
 
 export default withMap(Description);

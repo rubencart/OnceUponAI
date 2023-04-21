@@ -7,11 +7,13 @@ import MessageParser from "@/chatbot/MessageParser";
 import chatbotConfig from "@/chatbot/chatbotConfig";
 import WidthContainer from "@/components/WidthContainer";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import CenteredPageContainer from "@/components/CenteredPageContainer";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import pois from "@/components/pois.json";
+import { RouteContext } from "@/context/RouteContext";
 
 const ChatWrapper = styled.div`
   display: flex;
@@ -44,7 +46,7 @@ const StopChatting = styled(Link)`
   }
 `;
 
-const StartRoute = styled(Link)`
+const StartRoute = styled.button`
   border: 1px solid black;
   padding: 8px 16px;
   margin-top: 8px;
@@ -95,6 +97,7 @@ export const getServerSideProps = async ({ locale }) => ({
 export default function Chat() {
   const { t } = useTranslation();
   const router = useRouter();
+  const { setRouteObjects } = useContext(RouteContext);
 
   const [hasFinishedChatting, setHasFinishedChatting] = useState(false);
 
@@ -132,6 +135,12 @@ export default function Chat() {
     },
   ];
 
+  function goToRoute() {
+    // TODO: Replace pois with objects from route generating API call
+    setRouteObjects(pois);
+    router.push("/start-your-tour/route");
+  }
+
   return (
     <div>
       <Head>
@@ -148,7 +157,7 @@ export default function Chat() {
               <Chatbot config={updatedConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
               {hasFinishedChatting && (
                 <>
-                  <StartRoute href="/start-your-tour/route">{t("start_route")}</StartRoute>
+                  <StartRoute onClick={goToRoute}>{t("start_route")}</StartRoute>
                   <StopChatting href="/start-your-tour/chat" onClick={() => router.reload()}>
                     {t("start_again")}
                   </StopChatting>

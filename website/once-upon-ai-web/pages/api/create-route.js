@@ -13,18 +13,20 @@ import { MongoClient } from "mongodb";
  * Content-Type: application/json
  *
  * {
- *   "routes": [
+ *   "routeObjects": [
  *     {
- *       "name": "Route 1",
- *       "address": "123 Main St",
- *       "latitude": "37.7749",
- *       "longitude": "-122.4194"
+ *       "object_id": "aaa",
+ *       "coordinates": [1.0101, 5.002],
+ *       "description": "lqlqlqlq",
+ *       "image_url": "https://loremflickr.com/640/480/gent,art",
+ *       "tags": ["19e eeuw", "lol"]
  *     },
  *     {
- *       "name": "Route 2",
- *       "address": "456 Main St",
- *       "latitude": "37.7749",
- *       "longitude": "-122.4194"
+ *       "object_id": "aaa",
+ *       "coordinates": [1.0101, 5.002],
+ *       "description": "lqlqlqlq",
+ *       "image_url": "https://loremflickr.com/640/480/gent,art",
+ *       "tags": ["19e eeuw", "lol"]
  *     }
  *   ]
  * }
@@ -48,9 +50,9 @@ export default async function handler(req, res) {
     return;
   }
 
-  const { routes } = req.body;
+  const { routeObjects } = req.body;
 
-  if (!Array.isArray(routes)) {
+  if (!Array.isArray(routeObjects)) {
     res.status(400).json({ message: "Invalid payload format" });
     return;
   }
@@ -67,7 +69,7 @@ export default async function handler(req, res) {
     const collection = db.collection("routes");
 
     // Create a new document in the collection
-    const result = await collection.insertOne({ routes });
+    const result = await collection.insertOne({ routeObjects });
 
     // Respond with the new document
     res.status(201).json({ message: "Route created", routeId: result.insertedId });

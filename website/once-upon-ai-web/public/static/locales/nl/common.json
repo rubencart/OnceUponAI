@@ -56,5 +56,8 @@
   "walking_route_title": "Wandelroute",
   "walking_route_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida, justo a posuere tincidunt, enim odio ullamcorper odio, nec sollicitudin libero quam ut velit. Cras bibendum feugiat massa, vitae malesuada tellus bibendum a.",
   "art_pieces": "Kunstwerken",
-  "more_info": "Meer info"
+  "more_info": "Meer info",
+
+  "save-route": "Route Opslaan",
+  "saved": "Opgeslagen!"
 }

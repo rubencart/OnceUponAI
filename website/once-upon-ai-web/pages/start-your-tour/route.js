@@ -4,115 +4,78 @@ import WidthContainer from "@/components/WidthContainer";
 import PageContainer from "@/components/PageContainer";
 import { IoIosArrowBack } from "react-icons/io";
 import Link from "next/link";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import { useContext, useState } from "react";
+import { RouteContext } from "@/context/RouteContext";
+import { useRouter } from "next/router";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-  gap: 16px;
-`;
+import {
+  Container,
+  BackButton,
+  Content,
+  LeftBlock,
+  RightBlock,
+  Title,
+  Description,
+  MapContainer,
+  Artwork,
+  Distance,
+  ArtworkTitle,
+  MoreInfoButton,
+  RouteContainer,
+  SaveRoutebutton,
+} from "@/components/styled/RouteStyles";
 
-const BackButton = styled(Link)`
-  border: 1px solid black;
-  padding: 8px 16px;
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
+export async function getServerSideProps({ locale, query }) {
+  console.log("route query:", query);
 
-  &:hover {
-    opacity: 0.67;
-    transform: scale(0.95);
+  let routeObjects = null;
+  if (query.routeId) {
+    console.log("found routeId:", query.routeId);
+    let route = await getRouteById(query.routeId);
+    routeObjects = route.routeObjects;
   }
-`;
 
-const Content = styled.div`
-  display: flex;
-  gap: 32px;
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+      routeObjects,
+    },
+  };
+}
 
-  @media (max-width: 768px) {
-    flex-direction: column;
+async function getRouteById(id) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-route?routeId=${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    // TODO: Handle error
+    throw new Error(res.statusText);
   }
-`;
 
-const LeftBlock = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
+  const data = await res.json();
+  return data;
+}
 
-const RightBlock = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-const Title = styled.h2`
-  margin-bottom: 8px;
-`;
-
-const Description = styled.p`
-  display: flex;
-  column-count: 2;
-  column-gap: 16px;
-`;
-
-const MapContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  min-height: 400px;
-  background-color: #f0f0f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Artwork = styled.div`
-  position: relative;
-  width: 100%;
-  height: 200px;
-  background-image: url("your-image-url-here");
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 16px;
-  box-sizing: border-box;
-
-  background-color: lightgrey;
-`;
-
-const Distance = styled.span`
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: 4px 8px;
-  font-size: 0.8rem;
-`;
-
-const ArtworkTitle = styled.h3`
-  margin: auto;
-  align-self: center;
-`;
-
-const MoreInfoButton = styled.button`
-  align-self: center;
-`;
-
-export const getServerSideProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ["common"])),
-  },
-});
-
-export default function Route() {
+export default function Route({ routeObjects }) {
   const { t } = useTranslation();
+  const router = useRouter();
+
+  const { routeObjects: objectsFromContext } = useContext(RouteContext);
+  const [saveButtonText, setSaveButtonText] = useState(t("save-route"));
+  const [savedRouteId, setSavedRouteId] = useState("");
+
+  // Objects fetched from db using a specific routeId take precedence over objects in context
+  if (!routeObjects) {
+    console.log("Using objects from context");
+    routeObjects = objectsFromContext;
+  }
 
   const Artworks = [
     {
@@ -129,13 +92,41 @@ export default function Route() {
     },
   ];
 
-  const Map = dynamic(
-    () => import('@/components/LeafletMap'), // replace '@components/map' with your component's location
-    { 
-      loading: () => <p>A map is loading</p>,
-      ssr: false // This line is important. It's what prevents server-side render
+  const Map = dynamic(() => import("@/components/LeafletMap"), {
+    loading: () => <p>A map is loading</p>,
+    ssr: false, // This line is important. It's what prevents server-side render
+  });
+
+  async function onSaveRoute(routeObjects) {
+    // Only save route once
+    if (routeObjects.length == 0 || savedRouteId) return;
+
+    console.log("saving routeObjects:", routeObjects);
+
+    const res = await fetch("/api/create-route", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ routeObjects }),
+    });
+
+    if (!res.ok) {
+      // TODO: Show error message on screen
+      const error = await res.json();
+      throw new Error(error.message);
     }
-  )
+
+    const { message, routeId } = await res.json();
+    console.log(message, routeId);
+
+    setSavedRouteId(routeId);
+    setSaveButtonText(t("saved"));
+  }
+
+  function getSavedRouteLink() {
+    return `${window.location.origin}/${router.locale}${router.asPath}?routeId=${savedRouteId}`;
+  }
 
   return (
     <div>
@@ -156,7 +147,15 @@ export default function Route() {
               <LeftBlock>
                 <Title>{t("walking_route_title")}</Title>
                 <Description>{t("walking_route_description")}</Description>
-                  <Map />
+                <RouteContainer>
+                  {router.query.routeId == null && (
+                    <SaveRoutebutton onClick={() => onSaveRoute(routeObjects)}>{saveButtonText}</SaveRoutebutton>
+                  )}
+                  {router.query.routeId == null && savedRouteId && (
+                    <Link href={getSavedRouteLink()}>Route link: {getSavedRouteLink()}</Link>
+                  )}
+                  <Map pois={routeObjects} />
+                </RouteContainer>
               </LeftBlock>
               <RightBlock>
                 <Title>{t("art_pieces")}</Title>
@@ -172,7 +171,6 @@ export default function Route() {
           </Container>
         </WidthContainer>
       </PageContainer>
-      
     </div>
   );
 }

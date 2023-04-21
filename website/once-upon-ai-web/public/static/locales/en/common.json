@@ -56,5 +56,8 @@
   "walking_route_title": "Walking route",
   "walking_route_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida, justo a posuere tincidunt, enim odio ullamcorper odio, nec sollicitudin libero quam ut velit. Cras bibendum feugiat massa, vitae malesuada tellus bibendum a.",
   "art_pieces": "Art pieces",
-  "more_info": "More info"
+  "more_info": "More info",
+
+  "save-route": "Save Route",
+  "saved": "Saved!"
 }
