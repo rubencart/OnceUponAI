@@ -47,6 +47,8 @@ export async function getServerSideProps({ locale, query }) {
 }
 
 async function getRouteById(id) {
+  console.log("Fetching route from: ", `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-route?routeId=${id}`);
+
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-route?routeId=${id}`, {
     method: "GET",
     headers: {
