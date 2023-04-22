@@ -48,5 +48,6 @@ if __name__ == '__main__':
                 json.dump(pls, f)
             print('saved payloads to %s' % p)
             cnt = 0
+            pls = []
 
     print('done')
