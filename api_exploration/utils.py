@@ -73,7 +73,7 @@ def chat_gpt_address_from_txt(title: str, description: str = None, openai_key: s
     return address, explanation
 
 
-def payload_from_obj_and_coords(obj_id, coords, title, desc, address, img_url, tags=None) -> Dict[str, Any]:
+def payload_from_obj_and_coords(obj_id, coords, title, desc, address, img_url, link, tags=None) -> Dict[str, Any]:
     payload = {
         "object_id": obj_id,
         "title": title,
@@ -81,6 +81,7 @@ def payload_from_obj_and_coords(obj_id, coords, title, desc, address, img_url, t
         "description": desc,
         "address": address,
         "image_url": img_url,
+        "location_link": link,
         # "tags": ["19e eeuw", "lol"]
     }
     if tags is not None:
@@ -112,9 +113,10 @@ def payload_from_object(obj_id: str, obj: Dict, openai_key: str, maps_client: go
         img_url = get_img_url_from_obj(obj, image_width=400)
         if coords is not None:
             payload_desc = desc + '\n' + explanation
-            payload = payload_from_obj_and_coords(obj_id, coords, title, payload_desc, formatted_address, img_url)
+            payload = payload_from_obj_and_coords(obj_id, coords, title, payload_desc, formatted_address, img_url,
+                                                  'ChatGPT')
             return payload
     except Exception as e:
         print(e)
-        raise e
+        # raise e
         return None
