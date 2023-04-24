@@ -29,7 +29,8 @@ mongorestore <PATH_TO_UNZIPPED_DIR>/onceuponai/obj_location_links.bson --db once
 
 ## Run
 
-From the `backend/` folder: `uvicorn main:app --reload`. You should see something like this:
+From the `backend/` folder (and after activating the conda environment with `conda activate gentenv`): 
+run `uvicorn main:app --reload`. You should see something like this:
 ```
 INFO:     Will watch for changes in these directories: ['/Users/rubenc/Documents/rapps/OUAI-pt2/LDES-API/backend']
 INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
