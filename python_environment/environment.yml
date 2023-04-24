@@ -8,10 +8,5 @@ dependencies:
   - numpy=1.23.1
   - plotly=5.10.0
   - httpx=0.23.0
-  - influxdb-client=1.31.0
-  - streamlit=1.15.2
   - ciso8601=2.2.0
-  - pip
-  - pip:
-     - streamlit-authenticator==0.2.1
   
