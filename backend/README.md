@@ -8,11 +8,10 @@ In terminal/command prompt:
 # better to use conda than pip because geopandas has C dependencies
 conda create -n gentenv python=3.10
 conda activate gentenv
-pip install pandas numpy openai tqdm httpx googlemaps
-pip install "fastapi[all]" 
-pip install pymongo
-# you can skip this for now, but we will need it later
-conda install geopandas -c conda-forge
+# install both geopandas and googlemaps with conda from the conda-forge channel, otherwise
+#  mismatch causes issues: https://stackoverflow.com/questions/72231927/fiona-importerror-library-not-loaded-rpath-libpoppler-91-dylib
+conda install geopandas pandas googlemaps ipython -c conda-forge
+pip install openai tqdm httpx "fastapi[all]" pymongo
 ```
 
 Install and run MongoDB community server, e.g. on Mac (M1):
