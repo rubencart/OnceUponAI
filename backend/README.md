@@ -26,6 +26,14 @@ Import the DB (download and unzip the [zip from discord](https://discord.com/cha
 mongorestore <PATH_TO_UNZIPPED_DIR>/onceuponai/obj_location_links.bson --db onceuponai --collection obj_location_links
 ```
 
+You need a file named `.env` in `backend/config/.env` with some settings:
+```
+GENT_HOODS_SHP_FILE="/Users/rubenc/Documents/rapps/OUAI-pt2/stadswijken-gent/stadswijken-gent.shp"
+```
+GENT_HOODS_SHP_FILE should point to the path where you downloaded the 
+[shapefile with Gent's neighborhoods](https://data.stad.gent/explore/dataset/stadswijken-gent/export/) 
+(choose Shapefile, we need a file ending with `.shp`).
+
 ## Run
 
 From the `backend/` folder: `uvicorn main:app --reload`. You should see something like this:
