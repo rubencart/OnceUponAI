@@ -12,7 +12,6 @@ import { useRouter } from "next/router";
 import CenteredPageContainer from "@/components/CenteredPageContainer";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
-import pois from "@/components/pois.json";
 import { RouteContext } from "@/context/RouteContext";
 
 const ChatWrapper = styled.div`
@@ -94,6 +93,27 @@ export const getServerSideProps = async ({ locale }) => ({
   },
 });
 
+async function createWalk(nbLocations, messages) {
+  // TODO: Replace http://127.0.0.1:8000/ with host once deployed
+  const response = await fetch("http://127.0.0.1:8000/api/walk", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      nb_locations: nbLocations,
+      messages: messages,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create walk");
+  }
+
+  const data = await response.json();
+  return data;
+}
+
 export default function Chat() {
   const { t } = useTranslation();
   const router = useRouter();
@@ -135,8 +155,10 @@ export default function Chat() {
     },
   ];
 
-  function goToRoute() {
-    // TODO: Replace pois with objects from route generating API call
+  async function goToRoute() {
+    // TODO: Add messages as param
+    let pois = await createWalk(10, []);
+    console.log("Created walk with pois:", pois);
     setRouteObjects(pois);
     router.push("/start-your-tour/route");
   }
