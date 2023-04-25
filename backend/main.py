@@ -1,12 +1,25 @@
+import itertools
+from functools import lru_cache
 from typing import List
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pymongo import MongoClient
 from pymongo.database import Database
 
+import config
+import geo
+
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class Message(BaseModel):
     content: str = ''
@@ -15,6 +28,16 @@ class Message(BaseModel):
 class Conversation(BaseModel):
     messages: List[str] | None = None
     nb_locations: int = 10
+
+
+@lru_cache()
+def get_settings():
+    return config.Settings()
+
+
+@lru_cache()
+def get_hoods_filter():
+    return geo.CenterFilter(get_settings().gent_hoods_shp_file)
 
 
 def get_mongo_db() -> Database:
@@ -39,9 +62,23 @@ async def create_walk(conv: Conversation):
     concat_conv = '\n'.join(m for m in conv.messages)
 
     db = get_mongo_db()
-    random_object_locations = list(db.obj_location_links.aggregate([
-        { "$sample": { "size": conv.nb_locations } },
-    ]))
-    _ = [r.pop('_id') for r in random_object_locations]
+    c_filter = get_hoods_filter()
 
-    return random_object_locations
+    walk = []
+    for i in itertools.count():
+        if i > 100:                        break
+        if len(walk) >= conv.nb_locations: break
+
+        # get random objects from the database
+        random_objects = list(db.obj_location_links.aggregate([
+            { "$sample": { "size": 2 * conv.nb_locations } },
+        ]))
+        _ = [r.pop('_id') for r in random_objects]
+
+        # add them to the walk if they linked to a location in the center of the city
+        random_objects = [
+            d for d in random_objects if c_filter.is_in_center(d['coordinates'])
+        ]
+        walk += random_objects[:conv.nb_locations - len(walk)]
+
+    return walk
