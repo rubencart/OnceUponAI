@@ -14,7 +14,7 @@ conda install geopandas pandas googlemaps ipython -c conda-forge
 pip install openai tqdm httpx "fastapi[all]" pymongo
 ```
 
-Install and run MongoDB community server, e.g. on Mac (M1):
+Install and run MongoDB community server, e.g. on Mac:
 
 ```
 brew install mongodb-community@6.0
