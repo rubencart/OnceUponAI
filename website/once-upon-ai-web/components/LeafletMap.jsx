@@ -49,7 +49,12 @@ const LeafletMap = ({ pois }) => {
   // }, []);
 
   return (
-    <MapContainer center={[51.05314, 3.72626]} zoom={13} scrollWheelZoom={false} style={{ height: 400, width: "100%" }}>
+    <MapContainer
+      center={[51.05314, 3.72626]}
+      zoom={13}
+      scrollWheelZoom={false}
+      style={{ height: 600, width: "100%", zIndex: "0" }}
+    >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

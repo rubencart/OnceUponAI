@@ -19,20 +19,16 @@ import { MongoClient, ObjectId } from "mongodb";
  * {
  *   "_id": "614f60f1a90e8d8aa09b7fde",
  *   "routeObjects": [
- *     {
- *       "object_id": "aaa",
- *       "coordinates": [1.0101, 5.002],
- *       "description": "lqlqlqlq",
- *       "image_url": "https://loremflickr.com/640/480/gent,art",
- *       "tags": ["19e eeuw", "lol"]
- *     },
- *     {
- *       "object_id": "aaa",
- *       "coordinates": [1.0101, 5.002],
- *       "description": "lqlqlqlq",
- *       "image_url": "https://loremflickr.com/640/480/gent,art",
- *       "tags": ["19e eeuw", "lol"]
- *     }
+ *      {
+ *        "object_id": "550016631",
+ *        "title": "Titel van het object",
+ *        "coordinates": [51.06783069999999, 3.7290914],
+ *        "description": "Een uitleg over het object",
+ *        "address": "9000 Ghent, Belgium",
+ *        "image_url": null,
+ *        "location_link": "ChatGPT",
+ *        "collection": "stam"
+ *      }
  *   ],
  *   "createdAt": "2021-09-24T14:16:33.145Z",
  *   "updatedAt": "2021-09-24T14:16:33.145Z",

@@ -1,5 +1,4 @@
 import Head from "next/head";
-import styled from "@emotion/styled";
 import WidthContainer from "@/components/WidthContainer";
 import PageContainer from "@/components/PageContainer";
 import { IoIosArrowBack } from "react-icons/io";
@@ -19,14 +18,10 @@ import {
   RightBlock,
   Title,
   Description,
-  MapContainer,
-  Artwork,
-  Distance,
-  ArtworkTitle,
-  MoreInfoButton,
   RouteContainer,
   SaveRoutebutton,
 } from "@/components/styled/RouteStyles";
+import Artwork from "@/components/Artwork";
 
 export async function getServerSideProps({ locale, query }) {
   console.log("route query:", query);
@@ -78,21 +73,6 @@ export default function Route({ routeObjects }) {
     console.log("Using objects from context");
     routeObjects = objectsFromContext;
   }
-
-  const Artworks = [
-    {
-      title: "Artwork 1",
-      distance: "0m",
-    },
-    {
-      title: "Artwork 2",
-      distance: "100m",
-    },
-    {
-      title: "Artwork 3",
-      distance: "200m",
-    },
-  ];
 
   const Map = dynamic(() => import("@/components/LeafletMap"), {
     loading: () => <p>A map is loading</p>,
@@ -161,12 +141,8 @@ export default function Route({ routeObjects }) {
               </LeftBlock>
               <RightBlock>
                 <Title>{t("art_pieces")}</Title>
-                {Artworks.map((artwork, index) => (
-                  <Artwork key={index}>
-                    <Distance>{artwork.distance}</Distance>
-                    <ArtworkTitle>{artwork.title}</ArtworkTitle>
-                    <MoreInfoButton>{t("more_info")}</MoreInfoButton>
-                  </Artwork>
+                {routeObjects.map((artwork, index) => (
+                  <Artwork key={index} artwork={artwork} />
                 ))}
               </RightBlock>
             </Content>

@@ -15,18 +15,14 @@ import { MongoClient } from "mongodb";
  * {
  *   "routeObjects": [
  *     {
- *       "object_id": "aaa",
- *       "coordinates": [1.0101, 5.002],
- *       "description": "lqlqlqlq",
- *       "image_url": "https://loremflickr.com/640/480/gent,art",
- *       "tags": ["19e eeuw", "lol"]
- *     },
- *     {
- *       "object_id": "aaa",
- *       "coordinates": [1.0101, 5.002],
- *       "description": "lqlqlqlq",
- *       "image_url": "https://loremflickr.com/640/480/gent,art",
- *       "tags": ["19e eeuw", "lol"]
+ *       "object_id": "550016631",
+ *       "title": "Titel van het object",
+ *       "coordinates": [51.06783069999999, 3.7290914],
+ *       "description": "Een uitleg over het object",
+ *       "address": "9000 Ghent, Belgium",
+ *       "image_url": null,
+ *       "location_link": "ChatGPT",
+ *       "collection": "stam"
  *     }
  *   ]
  * }
@@ -44,6 +40,7 @@ import { MongoClient } from "mongodb";
  * @param {*} req The request object
  * @param {*} res The response object
  */
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(400).json({ message: "Invalid request method" });
