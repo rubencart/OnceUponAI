@@ -26,11 +26,16 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
+  max-width: 35em;
 `;
+
+const Title = styled.h2``;
 
 const Image = styled.img`
   max-height: 400px;
 `;
+
+const Description = styled.p``;
 
 /**
  * artwork: {
@@ -50,9 +55,9 @@ function ArtworkModal({ artwork, showModal, closeModal }) {
   return (
     <ReactModal isOpen={showModal} onRequestClose={closeModal} style={customStyles}>
       <Container>
-        <h2>{artwork.title}</h2>
+        <Title>{artwork.title}</Title>
         <Image src={artwork.image_url} alt={artwork.title} />
-        <p>{artwork.description}</p>
+        <Description>{artwork.description}</Description>
         <p>{artwork.address}</p>
         <button onClick={closeModal}>{t("close_info")}</button>
       </Container>
