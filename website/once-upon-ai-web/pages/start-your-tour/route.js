@@ -19,6 +19,7 @@ import {
   Description,
   RouteContainer,
   SaveRoutebutton,
+  ArtworkSidebar,
 } from "@/components/styled/RouteStyles";
 import Artwork from "@/components/Artwork";
 import QrModal from "@/components/QrModal";
@@ -154,9 +155,11 @@ export default function Route({ routeObjects }) {
               </LeftBlock>
               <RightBlock>
                 <Title>{t("art_pieces")}</Title>
+                <ArtworkSidebar className='artwork-container' >
                 {routeObjects.map((artwork, index) => (
                   <Artwork key={index} artwork={artwork} />
                 ))}
+                </ArtworkSidebar>
               </RightBlock>
             </Content>
           </Container>

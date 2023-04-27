@@ -95,3 +95,24 @@ a {
 p {
   line-height: 1.6;
 }
+
+
+
+.poi-marker-non-active{
+  filter: hue-rotate(0deg);
+  transition : all ease-in 1s;   
+}
+
+.poi-marker-active{
+  filter: hue-rotate(90deg);
+  transition : all ease-in 1s;   
+}
+
+.artwork-container{
+  overflow-y: scroll;
+}
+
+.poi-sidebar-active{
+  transition: transform 2s ease;
+  transform: scale(1.1) !important;
+}

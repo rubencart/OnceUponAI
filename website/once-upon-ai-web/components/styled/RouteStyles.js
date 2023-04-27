@@ -22,9 +22,10 @@ export const BackButton = styled(Link)`
 `;
 
 export const Content = styled.div`
-  display: flex;
+  display: grid;
   gap: 32px;
-
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: minmax(0, max-content);  
   @media (max-width: 768px) {
     flex-direction: column;
   }
@@ -35,13 +36,26 @@ export const LeftBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  grid-row: 1 / span 2;
 `;
 
 export const RightBlock = styled.div`
   flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto; /* Define the height of the first row based on its content */
+  flex-direction: column;
+  gap: 16px; 
+  max-height: 100%;
+`;
+
+export const ArtworkSidebar = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  overflow: scroll;
+  max-height: 743px;
 `;
 
 export const Title = styled.h2`
