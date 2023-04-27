@@ -4,7 +4,6 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from "next-i18next";
 
 const StyledFooter = styled.footer`
-  /* background-color: #ececec; */
   padding: 1rem 2rem;
   text-align: center;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
@@ -21,6 +20,7 @@ const NavList = styled.ul`
   display: flex;
   list-style: none;
   gap: 1.5rem;
+  align-items: center;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -29,15 +29,15 @@ const NavList = styled.ul`
 `;
 
 const NavLink = styled.a`
-  color: #333;
+  color: white;
   text-decoration: none;
 `;
 
 export default function Footer() {
   const { t } = useTranslation();
   const navItems = [
-    { name: "privacy_policy", path: "/privacy-policy" },
-    { name: "terms_and_conditions", path: "/terms-and-conditions" },
+    // { name: "privacy_policy", path: "/privacy-policy" }, // TODO: Add?
+    // { name: "terms_and_conditions", path: "/terms-and-conditions" }, // TODO: Add?
     { name: "nav_about", path: "/about-nerdlab" },
     { name: "nav_faq", path: "/faq-help" },
   ];

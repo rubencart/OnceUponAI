@@ -79,7 +79,7 @@ const Sidebar = styled.div`
 `;
 
 const FaqItem = styled.div`
-  margin: 8px 0;
+  margin: 16px 0;
 
   h2,
   p {
