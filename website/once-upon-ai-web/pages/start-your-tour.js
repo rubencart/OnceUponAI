@@ -27,12 +27,39 @@ const ContentContainer = styled.div`
 `;
 
 const StartChat = styled(Link)`
-  border: 1px solid black;
-  padding: 8px 16px;
-
+  position: relative;
+  border: 1.5px solid white;
+  padding: 8px 32px;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
   &:hover {
     opacity: 0.67;
     transform: scale(0.95);
+  }
+  &:before,
+  &:after {
+    content: "";
+    aspect-ratio: 1 / 1;
+    height: calc(3px + 100%);
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    border: 1.5px solid white;
+    position: absolute;
+    box-sizing: border-box;
+  }
+  &:after {
+    right: 0;
+    transform: translate(50%, 0.5px);
+  }
+  &:before {
+    left: 0;
+    transform: translate(-50%, 0.5px);
   }
 `;
 
@@ -56,7 +83,7 @@ export default function StartYourTour() {
       <CenteredPageContainer>
         <WidthContainer>
           <CenterContainer>
-            <Image src="/robot.svg" width={300} height={200} alt="Robot Image" />
+            <Image src="/jos.png" width={300} height={200} alt="Robot Image" />
             <ContentContainer>
               <h1>{t("chatbot_route_intro_title")}</h1>
               <p>{t("chatbot_route_intro_description")}</p>
