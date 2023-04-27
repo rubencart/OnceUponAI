@@ -15,7 +15,14 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 1. Install FireFox https://www.mozilla.org/nl/firefox/new/
 2. Run this command in the commandline: 
-"C:\Program Files\Mozilla Firefox\firefox.exe" -kiosk -private-window https://once-upon-ai-git-web-development-onceuponai.vercel.app/en  TODO: use the production link
+
+```
+"C:\Program Files\Mozilla Firefox\firefox.exe" -kiosk -private-window https://once-upon-ai-git-web-development-onceuponai.vercel.app/en
+```
+
+TODO: use the production link
+
+
 3. You can save this command line in a Windows Link. Once saved, the link can be reused to quickly start up the kiosk
 
 ![image](https://user-images.githubusercontent.com/66962646/234967161-8224430b-c101-47ee-b5b2-281b4b5e208c.png)
