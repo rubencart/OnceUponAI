@@ -60,5 +60,9 @@
   "close_info": "Sluit info",
 
   "save-route": "Route Opslaan",
-  "saved": "Opgeslagen!"
+  "saved": "Opgeslagen!",
+  "saving": "Opslaan...",
+  "route_saved": "Route opgeslagen",
+  "route_link_explanation": "Ga naar de link onderaan of scan de QR-code met je mobiel.",
+  "close": "Sluit"
 }

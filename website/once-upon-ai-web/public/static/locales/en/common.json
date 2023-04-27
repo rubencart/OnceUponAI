@@ -60,5 +60,9 @@
   "close_info": "Close info",
 
   "save-route": "Save Route",
-  "saved": "Saved!"
+  "saved": "Saved!",
+  "saving": "Saving...",
+  "route_saved": "Route saved",
+  "route_link_explanation": "Browse to the link below or scan the QR-code with your phone.",
+  "close": "Close"
 }
