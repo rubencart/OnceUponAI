@@ -23,14 +23,14 @@
   "index_step_4_title": "Scan the QR codes",
   "index_step_4_description": "Work in Progress. The QR codes will give you more information about objects you may encounter in the city. This will also give you access to certain routes.",
 
-  "index_faq_1_question": "Why should I use ArtGentBot?",
+  "index_faq_1_question": "Why should I use Jos?",
   "index_faq_1_answer": "Jos offers a unique and personalized way to explore Gent's art scene. By chatting with you, the AI-powered bot tailors the art tour to your preferences, creating a memorable and engaging experience that showcases the city's rich artistic heritage.",
 
   "index_faq_2_question": "How does Jos work?",
   "index_faq_2_answer": "Jos uses GPT, an advanced AI language model, to engage you in a conversation and learn about your preferences. Based on your input, it selects artworks from an extensive database and creates a custom walking route that includes QR code hotspots for additional information.",
 
   "index_faq_3_question": "What is ChatGPT?",
-  "index_faq_3_answer": "ChatGPT is an AI language model developed by OpenAI. It can understand and generate human-like text, making it ideal for applications such as chatbots. ArtGentBot is built using ChatGPT to provide a seamless, interactive, and engaging user experience.",
+  "index_faq_3_answer": "ChatGPT is an AI language model developed by OpenAI. It can understand and generate human-like text, making it ideal for applications such as chatbots. Jos is built using ChatGPT to provide a seamless, interactive, and engaging user experience.",
 
   "index_faq_4_question": "Is my personal data safe with Jos?",
   "index_faq_4_answer": "We value your privacy and take all necessary measures to protect your personal information. Jos only uses your preferences to create a personalized art tour, and we do not store any sensitive personal data.",
