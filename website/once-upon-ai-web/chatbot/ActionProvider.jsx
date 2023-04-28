@@ -1,6 +1,7 @@
 import React from "react";
 
 let allMessages = [];
+let communication = [];
 let questions = [
   "the joy of living in the city of Ghent.",
   "different topics that the user may like about Ghent.",
@@ -11,7 +12,7 @@ let questions = [
 
 
 function getAllMessages() {
-  return allMessages;
+  return communication;
 }
 export { getAllMessages };
 
@@ -67,6 +68,8 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
 		console.log("Message:", message);
     const response = await sendMessageToChatbot(message);
     console.log("Response:", response);
+    conversation.push(response);
+    conversation.push(message);
     const botMessage = createChatBotMessage(response);
     addResponse(botMessage);
   };
@@ -75,12 +78,15 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     // console.log('questionNumber' + questionNumber)
     message += "Respond briefly but enthousiast to " + message + ", which is an answer to " + questions[questionNumber-1] ;
     message += "Ask a question about " + questions[questionNumber];
-		message += "\n Use a maximum of 30 words. You already greeted the user. Don't write a welcome to Ghent message."
+		message += "\n Use a maximum of 30 words. You already greeted the user. Don't write a welcome to Ghent message. Answer in Dutch."
     console.log("Message:", message);
     const response = await sendMessageToChatbot(message);
     console.log("Response:", response);
     const botMessage = createChatBotMessage(response);
     addResponse(botMessage);
+    conversation.push(message);
+    conversation.push(response);
+    
   };
 
   const handleLastMessage = async () => {
