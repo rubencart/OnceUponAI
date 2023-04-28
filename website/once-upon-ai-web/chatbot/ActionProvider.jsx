@@ -1,7 +1,7 @@
 import React from "react";
 
 let allMessages = [];
-let communication = [];
+let conversation = [];
 let questions = [
   "the joy of living in the city of Ghent.",
   "different topics that the user may like about Ghent.",
@@ -12,7 +12,7 @@ let questions = [
 
 
 function getAllMessages() {
-  return communication;
+  return conversation;
 }
 export { getAllMessages };
 
