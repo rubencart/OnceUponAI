@@ -10,21 +10,47 @@ export const Container = styled.div`
 
 export const BackButton = styled(Link)`
   border: 1px solid black;
-  padding: 8px 16px;
   display: inline-flex;
   align-items: center;
   align-self: flex-start;
-
+  position: relative;
+  border: 1.5px solid white;
+  padding: 8px 32px;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
   &:hover {
     opacity: 0.67;
     transform: scale(0.95);
   }
+  &:before,
+  &:after {
+    content: "";
+    aspect-ratio: 1 / 1;
+    height: calc(3px + 100%);
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    border: 1.5px solid white;
+    position: absolute;
+    box-sizing: border-box;
+  }
+  &:after {
+    right: 0;
+    transform: translate(50%, 0px);
+  }
+  &:before {
+    left: 0;
+    transform: translate(-50%, 0px);
+  }
 `;
 
 export const Content = styled.div`
-  display: flex;
+  display: grid;
   gap: 32px;
-
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: minmax(0, max-content);  
   @media (max-width: 768px) {
     flex-direction: column;
   }
@@ -35,13 +61,26 @@ export const LeftBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  grid-row: 1 / span 2;
 `;
 
 export const RightBlock = styled.div`
   flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto; /* Define the height of the first row based on its content */
+  flex-direction: column;
+  gap: 16px; 
+  max-height: 100%;
+`;
+
+export const ArtworkSidebar = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  overflow: scroll;
+  max-height: 743px;
 `;
 
 export const Title = styled.h2`

@@ -42,6 +42,10 @@ const Division = styled.h2`
   padding: 8px 32px;
   width: 100vw;
   text-align: center;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
   &:before,
   &:after {
     content: "";
@@ -69,6 +73,11 @@ const StartGuide = styled(Link)`
   padding: 8px 32px;
   box-sizing: border-box;
   position: relative;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+  
   &:hover {
     opacity: 0.67;
     transform: scale(0.95);

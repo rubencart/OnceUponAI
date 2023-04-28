@@ -174,7 +174,7 @@ export default function Chat() {
       <CenteredPageContainer>
         <WidthContainer>
           <ChatWrapper>
-            <RobotImage src="/robot.svg" width={250} height={250} alt="Robot Image" />
+            <RobotImage src="/jos.png" width={250} height={250} alt="Robot Image" />
             <ChatbotContainer>
               <Chatbot config={updatedConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
               {hasFinishedChatting && (
