@@ -14,7 +14,8 @@ let context = [
   Over the years, Jos became one of the most beloved tour guides in Ghent, known for his deep knowledge of the city, his engaging personality, and his ability to connect with people from all walks of life. He built a loyal following of repeat customers, many of whom considered him a dear friend and trusted advisor.
   Despite his success, Jos never lost his passion for learning and exploring new things. He continued to read voraciously, attend lectures and workshops, and seek out new experiences throughout the city and beyond. To this day, he remains a beloved fixture of the Ghent community, always ready with a smile, a story, and a wealth of knowledge to share with visitors and locals alike.
   
-  Welcome a visitor to Ghent. Ask there interests and invit them to visit places related to their interests.
+  Welcome a visitor to Ghent. Ask there interests and invit them to visit places related to their interests. You should be informal.
+  Use 'Hello moatje' or 'Hello koeketiene' as greeting sometimes.
   
   Use short answers and keep every answer under 100 tokens.` },
 ];
@@ -42,11 +43,11 @@ export default async function handler(req, res) {
   //   // max_tokens: 100,
   // });
 
-  function addPromptToContext(text) {
+  function addPromptToContext(text) {  
+    if (context.length > 5) {
+      context.pop();
+    }
     context.push({ role: "user", content: text });
-    // if (context.length > 5) {
-    //   context.shift();
-    // }
   }
 
   try {
@@ -64,7 +65,7 @@ export default async function handler(req, res) {
         model: "gpt-3.5-turbo",
         messages: context,
         max_tokens: 100,
-        temperature: 0.3,
+        temperature: 0.9,
       }),
     });
 

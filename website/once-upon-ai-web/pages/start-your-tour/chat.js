@@ -13,6 +13,8 @@ import CenteredPageContainer from "@/components/CenteredPageContainer";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { RouteContext } from "@/context/RouteContext";
+import Keyboard from 'react-simple-keyboard';
+import 'react-simple-keyboard/build/css/index.css';
 
 const ChatWrapper = styled.div`
   display: flex;
@@ -150,6 +152,7 @@ async function createWalk(nbLocations, messages) {
 }
 
 export default function Chat() {
+  // let keyboard = useRef();
   const { t } = useTranslation();
   const router = useRouter();
   const { setRouteObjects } = useContext(RouteContext);
@@ -201,6 +204,14 @@ export default function Chat() {
     console.log("Context from gpt:", getAllMessages());
   }
 
+  const onChange = (input) => {
+    console.log("Input changed", input);
+  }
+
+  const onKeyPress = (button) => {
+    console.log("Button pressed", button);
+  }
+
   return (
     <div>
       <Head>
@@ -238,6 +249,12 @@ export default function Chat() {
             </Sidebar>
           </ChatWrapper>
         </WidthContainer>
+        {/* <Keyboard
+        keyboardRef={r => (keyboard = r)}
+        // layoutName={state.layoutName}
+        onChange={onChange}
+        onKeyPress={onKeyPress}
+      /> */}
       </CenteredPageContainer>
     </div>
   );

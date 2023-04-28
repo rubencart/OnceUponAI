@@ -4,11 +4,11 @@ let first_question = true;
 
 // TODO: Change amount or implementation when we decide the conversation
 let messageCount = 0;
-let maxMessagesCount = 6;
+let maxMessagesCount = 5;
 
 const MessageParser = ({ children, actions }) => {
   const parse = (message) => {
-		messageCount++;
+		
 
     if (first_question) {
       actions.handleName(message);
@@ -16,6 +16,7 @@ const MessageParser = ({ children, actions }) => {
     } else if (messageCount == maxMessagesCount) {
 			actions.handleLastMessage();
     } else {
+      messageCount++;
       // Otherwise pass the message to get our GPT response
       actions.handleGPT(message, messageCount);
     }
