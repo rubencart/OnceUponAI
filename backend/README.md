@@ -10,8 +10,16 @@ conda create -n gentenv python=3.10
 conda activate gentenv
 # install both geopandas and googlemaps with conda from the conda-forge channel, otherwise
 #  mismatch causes issues: https://stackoverflow.com/questions/72231927/fiona-importerror-library-not-loaded-rpath-libpoppler-91-dylib
-conda install geopandas pandas googlemaps ipython -c conda-forge
-pip install openai tqdm httpx "fastapi[all]" pymongo
+conda install geopandas pandas googlemaps ipython spacy -c conda-forge
+pip install openai tqdm httpx "fastapi[all]" pymongo annoy
+python -m spacy download nl_core_news_lg
+```
+If you already had the environment but not spacy and annoy: 
+```
+conda activate gentenv
+conda install -c conda-forge spacy
+python -m spacy download nl_core_news_lg
+pip install annoy
 ```
 
 Install and run MongoDB community server, e.g. on Mac:
@@ -20,19 +28,18 @@ Install and run MongoDB community server, e.g. on Mac:
 brew install mongodb-community@6.0
 brew services start mongodb-community@6.0
 ```
+Download the content of [this google drive directory](https://drive.google.com/drive/folders/1gdy3sU5oIQ1EZq1QDigOFh19UXSZLig5?usp=share_link).
+Unzip `db.zip`, this will create a `onceuponai` folder, import the DB as follows.
+```
+mongorestore <PATH_TO>/onceuponai/obj_location_links.bson --db onceuponai --collection obj_location_links
+```
+(If you do not want to import the DB again you can run the updates yourself: first `api_exploration/in_center_to_db.py`
+and then `api_exploration/approx_nn_word_embs.py`.)
 
-Import the DB (download and unzip the [zip from discord](https://discord.com/channels/885643708173778954/994676748111327332/1099350376416821299)).
-```
-mongorestore <PATH_TO_UNZIPPED_DIR>/onceuponai/obj_location_links.bson --db onceuponai --collection obj_location_links
-```
+Move the `.env` file to `backend/config/.env`, and change `GENT_HOODS_SHP_FILE` to the location of the 
+`stadswijken-gent/stadswijken-gent.shp` file included in the google drive directory (you also need the other `stadswijken-gent.XXX` files).
 
-You need a file named `.env` in `backend/config/.env` with some settings:
-```
-GENT_HOODS_SHP_FILE="/Users/rubenc/Documents/rapps/OUAI-pt2/stadswijken-gent/stadswijken-gent.shp"
-```
-GENT_HOODS_SHP_FILE should point to the path where you downloaded the 
-[shapefile with Gent's neighborhoods](https://data.stad.gent/explore/dataset/stadswijken-gent/export/) 
-(choose Shapefile, we need a file ending with `.shp`).
+Change `APPROX_NN_FILE` to the location of the `test.ann` file.
 
 ## Run
 
@@ -54,7 +61,7 @@ Then browse to `http://127.0.0.1:8000` and you should see `{"message":"Hello Wor
 Or send a post request to `http://127.0.0.1:8000/api/walk` with as data: `{'nb_locations': 2, 'messages': []}`.
 ```python
 import requests
-requests.post('http://127.0.0.1:8000/api/walk', json={'nb_locations': 2, 'messages': []}).json()
+requests.post('http://127.0.0.1:8000/api/walk', json={'nb_locations': 2, 'messages': ['Ik hou van prinsessen', 'ik ook']}).json()
 ```
 You should get a result like this:
 ```python
@@ -91,5 +98,5 @@ Docs:
 - https://www.mongodb.com/basics/create-database
 - https://www.mongodb.com/docs/manual/tutorial/insert-documents/
 - https://www.mongodb.com/languages/python
-- 
-
+- https://stackoverflow.com/questions/71586725/efficient-way-for-computing-the-similarity-of-multiple-documents-using-spacy
+- https://github.com/spotify/annoy
