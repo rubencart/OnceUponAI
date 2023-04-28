@@ -119,7 +119,7 @@ export default function Chat() {
   const router = useRouter();
   const { setRouteObjects } = useContext(RouteContext);
 
-  const [hasFinishedChatting, setHasFinishedChatting] = useState(true);
+  const [hasFinishedChatting, setHasFinishedChatting] = useState(false);
 
   // FIXME: Not sure if this is the best way to call the func but it works
   const updatedConfig = {
