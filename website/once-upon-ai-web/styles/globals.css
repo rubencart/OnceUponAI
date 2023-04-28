@@ -100,11 +100,19 @@ p {
 
 .poi-marker-non-active{
   filter: hue-rotate(0deg);
+  -webkit-transition: all ease-in 1s;
+  -moz-transition: all ease-in 1s;
+  -ms-transition: all ease-in 1s;
+  -o-transition: all ease-in 1s;
   transition : all ease-in 1s;   
 }
 
 .poi-marker-active{
   filter: hue-rotate(90deg);
+  -webkit-transition: all ease-in 1s;
+  -moz-transition: all ease-in 1s;
+  -ms-transition: all ease-in 1s;
+  -o-transition: all ease-in 1s;
   transition : all ease-in 1s;   
 }
 

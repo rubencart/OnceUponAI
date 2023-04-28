@@ -9,7 +9,7 @@ const StyledFooter = styled.footer`
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
-
+	align-items: center;
   * {
     font-size: 0.85rem;
   }
@@ -19,9 +19,8 @@ const SponsorDiv = styled.div`
   display: flex;
   gap: 1.5rem;
   align-items: center;
-  max-height: 50px;
-  flex-shrink: 10;
-
+	justify-content: center;
+	height: 50px;
   @media (max-width: 768px) {
     flex-direction: column;
     text-align: right;
@@ -58,9 +57,9 @@ export default function Footer() {
   return (
     <StyledFooter>
       <Title href="/">Once Upon AI by Nerdlab</Title>
-      <SponsorDiv>
-        <img src="/logo-europa.png" alt="logo-europa" style={{ height: "100%", borderRadius: "50px" }} />
-        <img src="/logo-collectie.jpg" alt="logo-europa" style={{ height: "100%", borderRadius: "50px" }} />
+      <SponsorDiv> 
+        <a href="https://uia-initiative.eu/en" target="_blank" style={{ height: "100%"}}><img src="/logo-europa.png" alt="logo-collectie" style={{ height: "100%", borderRadius: "50px" }}/></a>
+        <a href="https://www.collectie.gent/" target="_blank" style={{ height: "100%"}}><img src="/logo-collectie.jpg" alt="logo-europa" style={{ height: "100%", borderRadius: "50px" }}/></a>
       </SponsorDiv>
       <MenuItems>
         <NavList>

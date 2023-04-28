@@ -46,14 +46,49 @@ const StopChatting = styled(Link)`
 `;
 
 const StartRoute = styled.button`
-  border: 1px solid black;
-  padding: 8px 16px;
+  font-family: "Mazius Review Extra", sans-serif;
+  background-color: transparent;
+  color: white;
   margin-top: 8px;
+  box-sizing: border-box;
+  position: relative;
+  border: 1.5px solid white;
+  padding: 8px 32px;
+  text-align: center;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
 
   &:hover {
     opacity: 0.67;
     transform: scale(0.95);
   }
+  &:before,
+  &:after {
+    content: "";
+    aspect-ratio: 1 / 1;
+    height: calc(3px + 100%);
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    border: 1.5px solid white;
+    position: absolute;
+    box-sizing: border-box;
+  }
+  &:after {
+    right: 0;
+    transform: translate(50%, -9.5px);
+  }
+  &:before {
+    left: 0;
+    transform: translate(-50%, -9.5px);
+  }
+  
+
+  
+
+
 `;
 
 const RobotImage = styled(Image)`

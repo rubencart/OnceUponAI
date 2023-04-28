@@ -34,7 +34,7 @@ export default function BackgroundCanvas() {
     let  color = 255;
 
 		const drawGradient = (x, y) => {
-			console.log(CanvasWidth, CanvasHeight);
+			// console.log(CanvasWidth, CanvasHeight);
 			ctx.fillStyle = 'rgba(78,119,191,1)';
 			ctx.fillRect(0, 0, CanvasWidth, CanvasHeight);
 			// x = Math.round(x);
@@ -83,7 +83,7 @@ export default function BackgroundCanvas() {
 					//setTimeout(bounceBack, 100)
 				}
 			};
-			requestAnimationFrame(bounceBack);
+			// requestAnimationFrame(bounceBack);
 		};
 		const getMousePos = (canvas, evt) => {
 			var rect = canvas.getBoundingClientRect(), // abs. size of element
