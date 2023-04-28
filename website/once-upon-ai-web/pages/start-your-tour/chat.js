@@ -211,7 +211,9 @@ export default function Chat() {
   const onKeyPress = (button) => {
     console.log("Button pressed", button);
   }
-
+  if(hasFinishedChatting){
+    document.querySelector('.react-chatbot-kit-chat-input').disabled = true;
+  }
   return (
     <div>
       <Head>
