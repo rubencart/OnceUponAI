@@ -213,7 +213,12 @@ export default function Chat() {
   }
   if(hasFinishedChatting){
     document.querySelector('.react-chatbot-kit-chat-input').disabled = true;
+    document.querySelector('.react-chatbot-kit-chat-btn-send').disabled = true;
   }
+  // else if(document !== undefined){
+  //   document.querySelector('.react-chatbot-kit-chat-input').disabled = false;
+  //   document.querySelector('.react-chatbot-kit-chat-btn-send').disabled = false;
+  // }
   return (
     <div>
       <Head>
