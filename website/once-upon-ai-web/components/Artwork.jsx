@@ -17,6 +17,7 @@ const Container = styled.div`
   padding: 16px;
   box-sizing: border-box;
   text-align: center;
+  transition: transform 2s ease;
 
   &:before {
     content: "";
@@ -75,11 +76,11 @@ export default function Artwork({ artwork }) {
 
   // TODO: Calculate distance and sort & display?
   return (
-    <Container imageUrl={artwork.image_url}>
+    <Container imageUrl={artwork.image_url}  data-id={artwork.object_id} className='artwork-element'>
       {/* <Distance>{artwork.distance}</Distance> */}
       <ArtworkTitle>{artwork.title}</ArtworkTitle>
       {/* {artwork.description.trim() !== "" && <p>{shortDescription}</p>} */}
-      <MoreInfoButton onClick={openModal}>{t("more_info")}</MoreInfoButton>
+      <MoreInfoButton onClick={openModal} data-button-id={artwork.object_id}>{t("more_info")}</MoreInfoButton>
       <ArtworkModal artwork={artwork} showModal={showModal} closeModal={closeModal} />
     </Container>
   );

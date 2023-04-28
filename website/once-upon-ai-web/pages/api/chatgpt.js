@@ -62,7 +62,8 @@ export default async function handler(req, res) {
     if (response.ok) {
       const data = await response.json();
       const generatedMessage = data.choices[0].message.content.trim(); // ChatGPT response
-      res.status(200).json({ message: generatedMessage });
+      let contentArray = context.filter((item) => item.role !== "system").map((item) => item.content);
+      res.status(200).json({ message: generatedMessage, allMessages: contentArray });
     } else {
       res.status(response.status).json({ error: response.statusText });
     }

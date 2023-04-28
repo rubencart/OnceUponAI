@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import { useTranslation } from "next-i18next";
 import ReactModal from "react-modal";
+import QRCode from "qrcode.react";
+import Link from "next/link";
 
 const customStyles = {
   content: {
@@ -24,45 +26,42 @@ ReactModal.setAppElement("#__next");
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
   max-width: 35em;
+  color: black;
+  text-align: center;
+  max-width: 30rem;
 `;
 
 const Title = styled.h2``;
 
-const Image = styled.img`
-  max-height: 400px;
+const Subtitle = styled.h3`
+  max-width: 15rem;
 `;
 
-const Description = styled.p``;
+const RouteLink = styled(Link)`
+  color: black;
+`;
 
-/**
- * artwork: {
- *   "object_id": "550016631",
- *   "title": "Titel van het object",
- *   "coordinates": [51.06783069999999, 3.7290914],
- *   "description": "Een uitleg over het object",
- *   "address": "9000 Ghent, Belgium",
- *   "image_url": null,
- *   "location_link": "ChatGPT",
- *   "collection": "stam"
- * }
- */
-function ArtworkModal({ artwork, showModal, closeModal }) {
+const CloseButton = styled.button`
+  padding: 8px 32px;
+`;
+
+function QrModal({ link, showModal, closeModal }) {
   const { t } = useTranslation();
 
   return (
     <ReactModal isOpen={showModal} onRequestClose={closeModal} style={customStyles}>
       <Container>
-        <Title>{artwork.title}</Title>
-        {artwork.image_url && <Image src={artwork.image_url} alt={artwork.title} />}
-        <Description>{artwork.description}</Description>
-        <p>{artwork.address}</p>
-        <button onClick={closeModal}>{t("close_info")}</button>
+        <Title>{t("route_saved")}</Title>
+        <Subtitle>{t("route_link_explanation")}</Subtitle>
+        <QRCode value={link} size={128} fgColor="#000000" bgColor="#ffffff" />
+        <RouteLink href={link}>{link}</RouteLink>
+        <CloseButton onClick={closeModal}>{t("close")}</CloseButton>
       </Container>
     </ReactModal>
   );
 }
 
-export default ArtworkModal;
+export default QrModal;

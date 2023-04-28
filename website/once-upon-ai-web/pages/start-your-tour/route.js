@@ -2,7 +2,6 @@ import Head from "next/head";
 import WidthContainer from "@/components/WidthContainer";
 import PageContainer from "@/components/PageContainer";
 import { IoIosArrowBack } from "react-icons/io";
-import Link from "next/link";
 import dynamic from "next/dynamic";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
@@ -20,8 +19,10 @@ import {
   Description,
   RouteContainer,
   SaveRoutebutton,
+  ArtworkSidebar,
 } from "@/components/styled/RouteStyles";
 import Artwork from "@/components/Artwork";
+import QrModal from "@/components/QrModal";
 
 export async function getServerSideProps({ locale, query }) {
   console.log("route query:", query);
@@ -66,7 +67,12 @@ export default function Route({ routeObjects }) {
 
   const { routeObjects: objectsFromContext } = useContext(RouteContext);
   const [saveButtonText, setSaveButtonText] = useState(t("save-route"));
+  const [isSavingRoute, setIsSavingRoute] = useState(false);
   const [savedRouteId, setSavedRouteId] = useState("");
+
+  const [showModal, setShowModal] = useState(true);
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
 
   // Objects fetched from db using a specific routeId take precedence over objects in context
   if (!routeObjects) {
@@ -81,29 +87,35 @@ export default function Route({ routeObjects }) {
 
   async function onSaveRoute(routeObjects) {
     // Only save route once
-    if (routeObjects.length == 0 || savedRouteId) return;
+    if (routeObjects.length == 0 || savedRouteId || isSavingRoute) return;
 
-    console.log("saving routeObjects:", routeObjects);
+    try {
+      setIsSavingRoute(true);
+      console.log("saving routeObjects:", routeObjects);
 
-    const res = await fetch("/api/create-route", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ routeObjects }),
-    });
+      const res = await fetch("/api/create-route", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ routeObjects }),
+      });
 
-    if (!res.ok) {
-      // TODO: Show error message on screen
-      const error = await res.json();
-      throw new Error(error.message);
+      if (!res.ok) {
+        // TODO: Show error message on screen
+        const error = await res.json();
+        throw new Error(error.message);
+      }
+
+      const { message, routeId } = await res.json();
+      console.log(message, routeId);
+
+      setSavedRouteId(routeId);
+      setSaveButtonText(t("saved"));
+      openModal();
+    } finally {
+      setIsSavingRoute(false);
     }
-
-    const { message, routeId } = await res.json();
-    console.log(message, routeId);
-
-    setSavedRouteId(routeId);
-    setSaveButtonText(t("saved"));
   }
 
   function getSavedRouteLink() {
@@ -131,19 +143,23 @@ export default function Route({ routeObjects }) {
                 <Description>{t("walking_route_description")}</Description>
                 <RouteContainer>
                   {router.query.routeId == null && (
-                    <SaveRoutebutton onClick={() => onSaveRoute(routeObjects)}>{saveButtonText}</SaveRoutebutton>
+                    <SaveRoutebutton onClick={() => onSaveRoute(routeObjects)}>
+                      {isSavingRoute ? t("saving") : saveButtonText}
+                    </SaveRoutebutton>
                   )}
                   {router.query.routeId == null && savedRouteId && (
-                    <Link href={getSavedRouteLink()}>Route link: {getSavedRouteLink()}</Link>
+                    <QrModal link={getSavedRouteLink()} showModal={showModal} closeModal={closeModal} />
                   )}
                   <Map pois={routeObjects} />
                 </RouteContainer>
               </LeftBlock>
               <RightBlock>
                 <Title>{t("art_pieces")}</Title>
+                <ArtworkSidebar className='artwork-container' >
                 {routeObjects.map((artwork, index) => (
                   <Artwork key={index} artwork={artwork} />
                 ))}
+                </ArtworkSidebar>
               </RightBlock>
             </Content>
           </Container>

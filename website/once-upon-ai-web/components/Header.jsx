@@ -30,8 +30,8 @@ const Header = () => {
 
   const navItems = [
     { name: "nav_start_tour", path: "/start-your-tour" },
-    { name: "nav_discover_artworks", path: "/discover-artworks" },
-    { name: "nav_about", path: "/about-nerdlab" },
+    // { name: "nav_discover_artworks", path: "/discover-artworks" }, // TODO: Add, if needed, at a later stage
+    { name: "nav_about", path: "https://nerdlab.be/" },
     { name: "nav_faq", path: "/faq-help" },
   ];
 

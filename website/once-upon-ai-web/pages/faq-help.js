@@ -4,6 +4,7 @@ import WidthContainer from "../components/WidthContainer";
 import CenteredPageContainer from "@/components/CenteredPageContainer";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import FAQAccordion from "@/components/FAQAccordion";
 
 const CenterContainer = styled.div`
   display: flex;
@@ -31,29 +32,6 @@ export const getServerSideProps = async ({ locale }) => ({
 export default function FaqHelp() {
   const { t } = useTranslation();
 
-  const FaqItems = [
-    {
-      title: t("index_faq_1_question"),
-      description: t("index_faq_1_answer"),
-    },
-    {
-      title: t("index_faq_2_question"),
-      description: t("index_faq_2_answer"),
-    },
-    {
-      title: t("index_faq_3_question"),
-      description: t("index_faq_3_answer"),
-    },
-    {
-      title: t("index_faq_4_question"),
-      description: t("index_faq_4_answer"),
-    },
-    {
-      title: t("index_faq_5_question"),
-      description: t("index_faq_5_answer"),
-    },
-  ];
-
   return (
     <div>
       <Head>
@@ -65,15 +43,8 @@ export default function FaqHelp() {
       <CenteredPageContainer>
         <WidthContainer>
           <CenterContainer>
-            <h2>{t("faq_and_help")}</h2>
-            <div>
-              {FaqItems.map((item, index) => (
-                <FaqItem key={index}>
-                  <h2>{item.question}</h2>
-                  <p>{item.answer}</p>
-                </FaqItem>
-              ))}
-            </div>
+            <h1>{t("faq_and_help")}</h1>
+            <FAQAccordion />
           </CenterContainer>
         </WidthContainer>
       </CenteredPageContainer>

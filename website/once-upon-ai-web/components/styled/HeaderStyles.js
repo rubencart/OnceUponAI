@@ -73,6 +73,7 @@ export const NavList = styled.ul`
   display: flex;
   list-style: none;
   gap: 1.5rem;
+  align-items: center;
 
   @media (max-width: 768px) {
     display: ${(props) => (props.isOpen ? "flex" : "none")};

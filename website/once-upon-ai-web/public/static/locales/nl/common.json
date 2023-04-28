@@ -23,17 +23,17 @@
   "index_step_4_title": "Scan de QR-codes",
   "index_step_4_description": "Work in Progress. De QR-codes zullen je meer informatie geven over objecten die je toevallig in de stad kan tegenkomen. Hiermee krijg je dan ook toegang tot bepaalde routes.",
 
-  "index_faq_1_question": "Waarom?",
-  "index_faq_1_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+  "index_faq_1_question": "Waarom zou ik Jos gebruiken?",
+  "index_faq_1_answer": "Jos biedt een unieke en gepersonaliseerde manier om de kunstscene van Gent te verkennen. Door met jou te chatten, stemt de AI-gestuurde bot de kunstroute af op jouw voorkeuren, waardoor een memorabele en boeiende ervaring ontstaat die het rijke artistieke erfgoed van de stad laat zien.",
 
-  "index_faq_2_question": "Hoe werkt dit?",
-  "index_faq_2_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+  "index_faq_2_question": "Hoe werkt Jos?",
+  "index_faq_2_answer": "Jos gebruikt GPT, een geavanceerd AI-taalmodel, om met je in gesprek te gaan en meer te weten te komen over je voorkeuren. Op basis van jouw input selecteert het kunstwerken uit een uitgebreide database en stelt het een aangepaste wandelroute samen, inclusief QR-code-hotspots voor aanvullende informatie.",
 
   "index_faq_3_question": "Wat is ChatGPT?",
-  "index_faq_3_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+  "index_faq_3_answer": "ChatGPT is een AI-taalmodel dat is ontwikkeld door OpenAI. Het kan mensachtige tekst begrijpen en genereren, waardoor het ideaal is voor toepassingen zoals chatbots. Jos is gebouwd met behulp van ChatGPT om een naadloze, interactieve en boeiende gebruikerservaring te bieden.",
 
-  "index_faq_4_question": "Is mijn persoonlijke data veilig bij jullie?",
-  "index_faq_4_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+  "index_faq_4_question": "Zijn mijn persoonlijke gegevens veilig bij Jos?",
+  "index_faq_4_answer": "We hechten veel waarde aan je privacy en nemen alle nodige maatregelen om je persoonlijke informatie te beschermen. Jos gebruikt alleen je voorkeuren om een gepersonaliseerde kunstroute te creëren en slaat geen gevoelige persoonlijke gegevens op.",
 
   "index_faq_5_question": "Andere vragen?",
   "index_faq_5_answer": "Contacteer de makers van dit project, dit kan via de Discord van Nerdlab",
@@ -42,23 +42,27 @@
   "start_guide": "Start de gids",
   "how_does_it_work": "Hoe werkt het?",
   "chatbot_route_intro_title": "Hallo, mijn naam is Jos!",
-  "chatbot_route_intro_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum. Aliquam erat volutpat. Sed aliquam ligula massa, sit amet ultricies leo fringilla vitae.",
-  "chatbot_route_intro_start_button": "Start met praten",
+  "chatbot_route_intro_description": "Ga mee op een gepersonaliseerde kunstreis door Gent! Chat met mij, Jos, om je voorkeuren te delen. Ik stel een unieke wandelroute samen met intrigerende kunstwerken en boeiende details. Laten we je kunstavontuur in Gent onvergetelijk maken!",
+  "chatbot_route_intro_start_button": "Begin met chatten",
 
   "chat_with_jos": "Chat met Jos",
 
   "start_route": "Start Route",
-  "start_again": "Begin opnieuw",
+  "start_again": "Start opnieuw",
   "stop_talking": "Stop met praten",
 
   "route": "Route",
-  "back_to_beginning": "Terug naar begin",
+  "back_to_beginning": "Start opnieuw",
   "walking_route_title": "Wandelroute",
-  "walking_route_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida, justo a posuere tincidunt, enim odio ullamcorper odio, nec sollicitudin libero quam ut velit. Cras bibendum feugiat massa, vitae malesuada tellus bibendum a.",
+  "walking_route_description": "Ontdek je gepersonaliseerde wandelroute met unieke kunstwerken van Gent, gebaseerd op jouw interesses. Volg de route, leer over elk kunstwerk en klik op 'Opnieuw beginnen' als je opnieuw wilt beginnen of je voorkeuren wilt aanpassen.",
   "art_pieces": "Kunstwerken",
   "more_info": "Meer info",
   "close_info": "Sluit info",
 
   "save-route": "Route Opslaan",
-  "saved": "Opgeslagen!"
+  "saved": "Opgeslagen!",
+  "saving": "Opslaan...",
+  "route_saved": "Route opgeslagen",
+  "route_link_explanation": "Ga naar de link onderaan of scan de QR-code met je mobiel.",
+  "close": "Sluit"
 }

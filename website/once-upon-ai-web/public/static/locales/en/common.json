@@ -23,27 +23,27 @@
   "index_step_4_title": "Scan the QR codes",
   "index_step_4_description": "Work in Progress. The QR codes will give you more information about objects you may encounter in the city. This will also give you access to certain routes.",
 
-  "index_faq_1_question": "Why?",
-  "index_faq_1_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+  "index_faq_1_question": "Why should I use Jos?",
+  "index_faq_1_answer": "Jos offers a unique and personalized way to explore Gent's art scene. By chatting with you, the AI-powered bot tailors the art tour to your preferences, creating a memorable and engaging experience that showcases the city's rich artistic heritage.",
 
-  "index_faq_2_question": "How does this work?",
-  "index_faq_2_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+  "index_faq_2_question": "How does Jos work?",
+  "index_faq_2_answer": "Jos uses GPT, an advanced AI language model, to engage you in a conversation and learn about your preferences. Based on your input, it selects artworks from an extensive database and creates a custom walking route that includes QR code hotspots for additional information.",
 
   "index_faq_3_question": "What is ChatGPT?",
-  "index_faq_3_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+  "index_faq_3_answer": "ChatGPT is an AI language model developed by OpenAI. It can understand and generate human-like text, making it ideal for applications such as chatbots. Jos is built using ChatGPT to provide a seamless, interactive, and engaging user experience.",
 
-  "index_faq_4_question": "Is my personal data safe?",
-  "index_faq_4_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+  "index_faq_4_question": "Is my personal data safe with Jos?",
+  "index_faq_4_answer": "We value your privacy and take all necessary measures to protect your personal information. Jos only uses your preferences to create a personalized art tour, and we do not store any sensitive personal data.",
 
   "index_faq_5_question": "Other questions?",
-  "index_faq_5_answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum.",
+  "index_faq_5_answer": "Contact the creators of Once Upon AI, this can be done through Nerdlab's Discord.",
 
   "ai_generated_routes": "AI generated Ghent walks",
   "start_guide": "Start the guide",
   "how_does_it_work": "How does it work?",
   "chatbot_route_intro_title": "Hello, my name is Jos!",
-  "chatbot_route_intro_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu nisi bibendum risus iaculis vestibulum. Aliquam erat volutpat. Sed aliquam ligula massa, sit amet ultricies leo fringilla vitae.",
-  "chatbot_route_intro_start_button": "Start chatting",
+  "chatbot_route_intro_description": "Embark on a personalized art journey through Gent! Chat with me, Jos, to share your preferences. I'll create a unique walking route with intriguing artworks and fascinating details. Let's make your Gent art adventure unforgettable!",
+  "chatbot_route_intro_start_button": "Start Chatting",
 
   "chat_with_jos": "Chat with Jos",
 
@@ -52,13 +52,17 @@
   "stop_talking": "Stop talking",
 
   "route": "Route",
-  "back_to_beginning": "Back to beginning",
+  "back_to_beginning": "Restart",
   "walking_route_title": "Walking route",
-  "walking_route_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida, justo a posuere tincidunt, enim odio ullamcorper odio, nec sollicitudin libero quam ut velit. Cras bibendum feugiat massa, vitae malesuada tellus bibendum a.",
+  "walking_route_description": "Discover your personalized walking route, featuring Ghent's unique art pieces based on your interests. Follow the route, learn about each artwork, and click 'Restart' if you'd like to begin anew or modify your preferences.",
   "art_pieces": "Art pieces",
   "more_info": "More info",
   "close_info": "Close info",
 
   "save-route": "Save Route",
-  "saved": "Saved!"
+  "saved": "Saved!",
+  "saving": "Saving...",
+  "route_saved": "Route saved",
+  "route_link_explanation": "Browse to the link below or scan the QR-code with your phone.",
+  "close": "Close"
 }

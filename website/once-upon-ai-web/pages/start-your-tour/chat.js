@@ -2,7 +2,7 @@ import Head from "next/head";
 import Chatbot from "react-chatbot-kit";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import ActionProvider from "@/chatbot/ActionProvider";
+import ActionProvider, { getAllMessages } from "@/chatbot/ActionProvider";
 import MessageParser from "@/chatbot/MessageParser";
 import chatbotConfig from "@/chatbot/chatbotConfig";
 import WidthContainer from "@/components/WidthContainer";
@@ -79,7 +79,7 @@ const Sidebar = styled.div`
 `;
 
 const FaqItem = styled.div`
-  margin: 8px 0;
+  margin: 16px 0;
 
   h2,
   p {
@@ -156,11 +156,14 @@ export default function Chat() {
   ];
 
   async function goToRoute() {
-    // TODO: Add messages as param
-    let pois = await createWalk(10, []);
+    let pois = await createWalk(getAllMessages());
     console.log("Created walk with pois:", pois);
     setRouteObjects(pois);
     router.push("/start-your-tour/route");
+  }
+
+  function logContext() {
+    console.log("Context from gpt:", getAllMessages());
   }
 
   return (
@@ -174,7 +177,7 @@ export default function Chat() {
       <CenteredPageContainer>
         <WidthContainer>
           <ChatWrapper>
-            <RobotImage src="/robot.svg" width={250} height={250} alt="Robot Image" />
+            <RobotImage src="/jos.png" width={250} height={250} alt="Robot Image" />
             <ChatbotContainer>
               <Chatbot config={updatedConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
               {hasFinishedChatting && (
@@ -186,6 +189,8 @@ export default function Chat() {
                 </>
               )}
               {!hasFinishedChatting && <StopChatting href="/start-your-tour">{t("stop_talking")}</StopChatting>}
+              {/* Change to true to test logging context */}
+              {false && <button onClick={logContext}>Log context</button>}
             </ChatbotContainer>
             <Sidebar>
               <h1>{t("faq_title_long")}</h1>
