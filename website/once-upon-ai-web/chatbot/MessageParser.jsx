@@ -8,16 +8,16 @@ let maxMessagesCount = 6;
 
 const MessageParser = ({ children, actions }) => {
   const parse = (message) => {
-    messageCount++;
+		messageCount++;
 
     if (first_question) {
       actions.handleName(message);
       first_question = false;
     } else if (messageCount == maxMessagesCount) {
-      actions.handleLastMessage();
+			actions.handleLastMessage();
     } else {
       // Otherwise pass the message to get our GPT response
-      actions.handleGPT(message);
+      actions.handleGPT(message, messageCount);
     }
   };
 

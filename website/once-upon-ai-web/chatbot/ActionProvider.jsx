@@ -24,7 +24,7 @@ async function sendMessageToChatbot(prompt) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ prompt: prompt }),
+      body: JSON.stringify({ prompt: prompt  }),
     });
 
     if (response.ok) {
@@ -52,12 +52,34 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     console.log("test: ", botMessage);
   };
 
-  const handleName = (message) => {
-    const botMessage = createChatBotMessage("Hallo " + message + "! Fijn je te ontmoeten! Waarmee kan ik je helpen?");
+  const handleName = async (message) => {
+    // const botMessage = createChatBotMessage("Hallo " + message + "! Fijn je te ontmoeten! Waarmee kan ik je helpen?");
+    // addResponse(botMessage);
+		message = 'Use max 25 words to greet the user with the name '+ message + ' propose to do a city tour by asking 5 interesting questions about the city. Ask the questions one by one, start with number one.';
+		console.log("Message:", message);
+    const response = await sendMessageToChatbot(message);
+    console.log("Response:", response);
+    const botMessage = createChatBotMessage(response);
     addResponse(botMessage);
   };
 
-  const handleGPT = async (message) => {
+  const handleGPT = async (message, questionNumber) => {
+		if(questionNumber == 1){
+			message = "Ask question about the weather in the city of Ghent.";
+		}
+		else if(questionNumber == 2){
+			message = "Ask a question about the history of the city of Ghent.";
+		}
+		else if(questionNumber == 3){
+			message = "Ask a question about the culture of the city of Ghent.";
+		}
+		else if(questionNumber == 4){
+			message = "Ask a question about the food in the city of Ghent.";
+		}
+		else if(questionNumber == 5){
+			message = "Ask a question about the nightlife in the city of Ghent.";
+		}
+		message += "\n Use a maximum of 30 words."
     console.log("Message:", message);
     const response = await sendMessageToChatbot(message);
     console.log("Response:", response);

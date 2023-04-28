@@ -3,13 +3,9 @@ import { createChatBotMessage } from "react-chatbot-kit";
 const init_message = "Hey! Mijn naam is Jos ik ben je gids voor vandaag, hoe heet jij?"
 
 const MyAvatar = (props) => {
-  return <div class="react-chatbot-kit-chat-bot-avatar-container"><p class="react-chatbot-kit-chat-bot-avatar-letter">Jos</p></div>
+  return <div className="react-chatbot-kit-chat-bot-avatar-container"><p className="react-chatbot-kit-chat-bot-avatar-letter">Jos</p></div>
 }
-{/* <div class="react-chatbot-kit-chat-bot-avatar-container"><p class="react-chatbot-kit-chat-bot-avatar-letter">C</p></div> */}
-{/* <img src="/" alt="Jos" style={{height: '50px', aspectRatio: '1/1'}}/>; */}
-const CustomHeader = () => {
-  return <div style="" class="react-chatbot-kit-chat-header">Conversation with Jos</div>
-}
+
 const chatbotConfig = {
   botName: "Jos",
   initialMessages: [createChatBotMessage(init_message)],
