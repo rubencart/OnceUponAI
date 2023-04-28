@@ -1,5 +1,12 @@
 import React from "react";
 
+let allMessages = [];
+
+function getAllMessages() {
+  return allMessages;
+}
+export { getAllMessages };
+
 async function sendMessageToChatbot(prompt) {
   try {
     // const gpt3_response = await fetch("/api/gpt3", {
@@ -23,6 +30,7 @@ async function sendMessageToChatbot(prompt) {
     if (response.ok) {
       const data = await response.json();
       const generatedMessage = data.message;
+      allMessages = data.allMessages;
       console.log("Generated message:", generatedMessage);
       return generatedMessage;
     } else {

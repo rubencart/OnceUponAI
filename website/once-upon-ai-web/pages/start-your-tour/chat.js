@@ -2,7 +2,7 @@ import Head from "next/head";
 import Chatbot from "react-chatbot-kit";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import ActionProvider from "@/chatbot/ActionProvider";
+import ActionProvider, { getAllMessages } from "@/chatbot/ActionProvider";
 import MessageParser from "@/chatbot/MessageParser";
 import chatbotConfig from "@/chatbot/chatbotConfig";
 import WidthContainer from "@/components/WidthContainer";
@@ -119,7 +119,7 @@ export default function Chat() {
   const router = useRouter();
   const { setRouteObjects } = useContext(RouteContext);
 
-  const [hasFinishedChatting, setHasFinishedChatting] = useState(false);
+  const [hasFinishedChatting, setHasFinishedChatting] = useState(true);
 
   // FIXME: Not sure if this is the best way to call the func but it works
   const updatedConfig = {
@@ -156,11 +156,14 @@ export default function Chat() {
   ];
 
   async function goToRoute() {
-    // TODO: Add messages as param
-    let pois = await createWalk(10, []);
+    let pois = await createWalk(getAllMessages());
     console.log("Created walk with pois:", pois);
     setRouteObjects(pois);
     router.push("/start-your-tour/route");
+  }
+
+  function logContext() {
+    console.log("Context from gpt:", getAllMessages());
   }
 
   return (
@@ -186,6 +189,8 @@ export default function Chat() {
                 </>
               )}
               {!hasFinishedChatting && <StopChatting href="/start-your-tour">{t("stop_talking")}</StopChatting>}
+              {/* Change to true to test logging context */}
+              {false && <button onClick={logContext}>Log context</button>}
             </ChatbotContainer>
             <Sidebar>
               <h1>{t("faq_title_long")}</h1>
