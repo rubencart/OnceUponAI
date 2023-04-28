@@ -19,9 +19,9 @@ const SponsorDiv = styled.div`
   display: flex;
   gap: 1.5rem;
   align-items: center;
-  justify-content: center;
   max-height: 50px;
   flex-shrink: 10;
+
   @media (max-width: 768px) {
     flex-direction: column;
     text-align: right;
@@ -59,8 +59,8 @@ export default function Footer() {
     <StyledFooter>
       <Title href="/">Once Upon AI by Nerdlab</Title>
       <SponsorDiv>
-        <img src="/logo-europa.png" alt="logo-europa" style={{height: '100%', borderRadius: '50px'}}/>
-        <img src="/logo-collectie.jpg" alt="logo-europa" style={{height: '100%', borderRadius: '50px'}}/>
+        <img src="/logo-europa.png" alt="logo-europa" style={{ height: "100%", borderRadius: "50px" }} />
+        <img src="/logo-collectie.jpg" alt="logo-europa" style={{ height: "100%", borderRadius: "50px" }} />
       </SponsorDiv>
       <MenuItems>
         <NavList>
