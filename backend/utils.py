@@ -8,8 +8,8 @@ def get_settings() -> config.Settings:
     return config.Settings()
 
 
-def obj_to_str(obj):
+def obj_to_str(obj, add_descr=True):
     res = obj['title']
-    if obj['description'].strip() != '':
+    if add_descr and obj['description'].strip() != '':
         res += f". {obj['description']}"
     return res

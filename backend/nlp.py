@@ -12,7 +12,8 @@ import utils
 @lru_cache
 def get_spacy() -> Language:
     nlp = spacy.load("nl_core_news_lg",
-                     disable=['morphologizer', 'tagger', 'parser', 'lemmatizer', 'attribute_ruler', 'ner'])
+                     disable=['morphologizer', 'tagger', 'parser', 'lemmatizer', 'attribute_ruler', 'ner']
+                     )
     return nlp
 
 
