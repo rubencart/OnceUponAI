@@ -132,10 +132,11 @@ export const getServerSideProps = async ({ locale }) => ({
 
 async function createWalk(messages) {
   // TODO: Replace http://127.0.0.1:8000/ with host once deployed
-  const response = await fetch("http://127.0.0.1:8000/api/walk", {
+  const response = await fetch("http://127.0.0.1:8000/api/walk/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": true,
     },
     body: JSON.stringify({
       messages: messages,

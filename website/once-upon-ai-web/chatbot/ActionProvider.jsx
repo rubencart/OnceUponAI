@@ -64,12 +64,13 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
   const handleName = async (message) => {
     // const botMessage = createChatBotMessage("Hallo " + message + "! Fijn je te ontmoeten! Met de volgende vragen gaan we een route speciaal voor jouw maken! Wat is je favoriete kleur?");
     // addResponse(botMessage);
+    conversation.push(message);
 		message = 'Use max 25 words to greet the user with the name '+ message + '. Propose to do a city tour and ask about the users interests. Keep writing in Dutch.';
 		console.log("Message:", message);
     const response = await sendMessageToChatbot(message);
     console.log("Response:", response);
-    conversation.push(response);
-    conversation.push(message);
+    // conversation.push(response);
+    // 
     const botMessage = createChatBotMessage(response);
     addResponse(botMessage);
   };
@@ -86,7 +87,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     const botMessage = createChatBotMessage(response);
     addResponse(botMessage);
     
-    conversation.push(response);
+    //  conversation.push(response);
     
   };
 
