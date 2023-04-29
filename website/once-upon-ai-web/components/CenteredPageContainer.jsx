@@ -4,16 +4,21 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 const LayoutContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr auto; // header, content, footer
   min-height: 100vh;
 `;
 
 const MainContent = styled.main`
-  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
 `;
 
-const PageContainer = ({ children }) => {
+const CenteredPageContainer = ({ children }) => {
   return (
     <LayoutContainer>
       <Header />
@@ -23,4 +28,4 @@ const PageContainer = ({ children }) => {
   );
 };
 
-export default PageContainer;
+export default CenteredPageContainer;
