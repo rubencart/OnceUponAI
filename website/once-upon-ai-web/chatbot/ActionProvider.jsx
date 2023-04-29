@@ -76,6 +76,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
 
   const handleGPT = async (message, questionNumber) => {
     // console.log('questionNumber' + questionNumber)
+    conversation.push(message);
     message += "Respond briefly but enthousiast to " + message + ", which is an answer to " + questions[questionNumber-1] ;
     message += "Ask a question about " + questions[questionNumber];
 		message += "\n Use a maximum of 30 words. You already greeted the user. Don't write a welcome to Ghent message. Answer in Dutch."
@@ -84,7 +85,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     console.log("Response:", response);
     const botMessage = createChatBotMessage(response);
     addResponse(botMessage);
-    conversation.push(message);
+    
     conversation.push(response);
     
   };
