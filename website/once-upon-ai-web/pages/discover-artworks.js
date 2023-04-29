@@ -2,6 +2,8 @@ import Head from "next/head";
 import styled from "@emotion/styled";
 import WidthContainer from "../components/WidthContainer";
 import PageContainer from "../components/PageContainer";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 const CenterContainer = styled.div`
   display: flex;
@@ -10,11 +12,19 @@ const CenterContainer = styled.div`
   gap: 32px;
 `;
 
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"])),
+  },
+});
+
 export default function DiscoverArtworks() {
+  const { t } = useTranslation();
+
   return (
     <div>
       <Head>
-        <title>Discover Artworks</title>
+        <title>{t("discover_artworks")}</title>
         <meta name="description" content="Discover Artworks" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -22,7 +32,7 @@ export default function DiscoverArtworks() {
       <PageContainer>
         <WidthContainer>
           <CenterContainer>
-            <h2>Discover Artworks</h2>
+            <h2>{t("discover_artworks")}</h2>
           </CenterContainer>
         </WidthContainer>
       </PageContainer>

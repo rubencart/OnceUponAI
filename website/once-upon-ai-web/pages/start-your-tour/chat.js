@@ -2,27 +2,26 @@ import Head from "next/head";
 import Chatbot from "react-chatbot-kit";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import ActionProvider from "@/chatbot/ActionProvider";
+import ActionProvider, { getAllMessages } from "@/chatbot/ActionProvider";
 import MessageParser from "@/chatbot/MessageParser";
 import chatbotConfig from "@/chatbot/chatbotConfig";
 import WidthContainer from "@/components/WidthContainer";
-import PageContainer from "@/components/PageContainer";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/router";
-
-const CenterContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 80vh;
-`;
+import CenteredPageContainer from "@/components/CenteredPageContainer";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+import { RouteContext } from "@/context/RouteContext";
+import Keyboard from 'react-simple-keyboard';
+import 'react-simple-keyboard/build/css/index.css';
 
 const ChatWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -48,58 +47,221 @@ const StopChatting = styled(Link)`
   }
 `;
 
-const StartRoute = styled(Link)`
-  border: 1px solid black;
-  padding: 8px 16px;
+const StartRoute = styled.button`
+  font-family: "Mazius Review Extra", sans-serif;
+  background-color: transparent;
+  color: white;
   margin-top: 8px;
+  box-sizing: border-box;
+  position: relative;
+  border: 1.5px solid white;
+  padding: 8px 32px;
+  text-align: center;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
 
   &:hover {
     opacity: 0.67;
     transform: scale(0.95);
   }
+  &:before,
+  &:after {
+    content: "";
+    aspect-ratio: 1 / 1;
+    height: calc(3px + 100%);
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    border: 1.5px solid white;
+    position: absolute;
+    box-sizing: border-box;
+  }
+  &:after {
+    right: 0;
+    transform: translate(50%, -9.5px);
+  }
+  &:before {
+    left: 0;
+    transform: translate(-50%, -9.5px);
+  }
+  
+
+  
+
+
 `;
 
-export default function Chat() {
-  const router = useRouter();
+const RobotImage = styled(Image)`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
 
-  // TODO: Implement setHasFinishedChatting in chatbot
+const Sidebar = styled.div`
+  width: 400px;
+  border-left: 1px solid black;
+  padding: 16px;
+  margin-left: 32px;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    border-left: none;
+    border-top: 1px solid black;
+    margin-left: 0;
+  }
+`;
+
+const FaqItem = styled.div`
+  margin: 16px 0;
+
+  h2,
+  p {
+    font-size: 0.9rem;
+  }
+`;
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"])),
+  },
+});
+
+async function createWalk(messages) {
+  // TODO: Replace http://127.0.0.1:8000/ with host once deployed
+  const response = await fetch("http://127.0.0.1:8000/api/walk", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      messages: messages,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create walk");
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+export default function Chat() {
+  // let keyboard = useRef();
+  const { t } = useTranslation();
+  const router = useRouter();
+  const { setRouteObjects } = useContext(RouteContext);
+
   const [hasFinishedChatting, setHasFinishedChatting] = useState(false);
 
+  // FIXME: Not sure if this is the best way to call the func but it works
+  const updatedConfig = {
+    ...chatbotConfig,
+    widgets: [
+      {
+        widgetName: "setHasFinishedChattingTrue",
+        widgetFunc: () => setHasFinishedChatting(true),
+      },
+    ],
+  };
+
+  const FaqItems = [
+    {
+      question: t("index_faq_1_question"),
+      answer: t("index_faq_1_answer"),
+    },
+    {
+      question: t("index_faq_2_question"),
+      answer: t("index_faq_2_answer"),
+    },
+    {
+      question: t("index_faq_3_question"),
+      answer: t("index_faq_3_answer"),
+    },
+    {
+      question: t("index_faq_4_question"),
+      answer: t("index_faq_4_answer"),
+    },
+    {
+      question: t("index_faq_5_question"),
+      answer: t("index_faq_5_answer"),
+    },
+  ];
+
+  async function goToRoute() {
+    let pois = await createWalk(getAllMessages());
+    console.log("Created walk with pois:", pois);
+    setRouteObjects(pois);
+    router.push("/start-your-tour/route");
+  }
+
+  function logContext() {
+    console.log("Context from gpt:", getAllMessages());
+  }
+
+  const onChange = (input) => {
+    console.log("Input changed", input);
+  }
+
+  const onKeyPress = (button) => {
+    console.log("Button pressed", button);
+  }
+  if(hasFinishedChatting){
+    document.querySelector('.react-chatbot-kit-chat-input').disabled = true;
+    document.querySelector('.react-chatbot-kit-chat-btn-send').disabled = true;
+  }
+  // else if(document !== undefined){
+  //   document.querySelector('.react-chatbot-kit-chat-input').disabled = false;
+  //   document.querySelector('.react-chatbot-kit-chat-btn-send').disabled = false;
+  // }
   return (
     <div>
       <Head>
-        <title>Chat met Jos</title>
+        <title>{t("chat_with_jos")}</title>
         <meta name="description" content="Chat met Jos" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <PageContainer>
+      <CenteredPageContainer>
         <WidthContainer>
-          <CenterContainer>
-            <ChatWrapper>
-              <Image src="./../robot.svg" width={300} height={200} alt="Robot Image" />
-              <ChatbotContainer>
-                <Chatbot config={chatbotConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
-                {hasFinishedChatting && (
-                  <>
-                    <StartRoute href="/start-your-tour/route">Start Route</StartRoute>
-                    <StopChatting href="/start-your-tour/chat" onClick={() => router.reload()}>
-                      Begin opnieuw
-                    </StopChatting>
-                  </>
-                )}
-                {!hasFinishedChatting && (
-                  // TODO: Remove "Start Route" button
-                  <>
-                    <StartRoute href="/start-your-tour/route">Start Route</StartRoute>
-                    <StopChatting href="/start-your-tour">Stop met praten</StopChatting>
-                  </>
-                )}
-              </ChatbotContainer>
-            </ChatWrapper>
-          </CenterContainer>
+          <ChatWrapper>
+            <RobotImage src="/jos.png" width={250} height={250} alt="Robot Image" />
+            <ChatbotContainer>
+              <Chatbot config={updatedConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
+              {hasFinishedChatting && (
+                <>
+                  <StartRoute onClick={goToRoute}>{t("start_route")}</StartRoute>
+                  <StopChatting href="/start-your-tour/chat" onClick={() => router.reload()}>
+                    {t("start_again")}
+                  </StopChatting>
+                </>
+              )}
+              {!hasFinishedChatting && <StopChatting href="/start-your-tour">{t("stop_talking")}</StopChatting>}
+              {/* Change to true to test logging context */}
+              {false && <button onClick={logContext}>Log context</button>}
+            </ChatbotContainer>
+            <Sidebar>
+              <h1>{t("faq_title_long")}</h1>
+              {FaqItems.map((item, index) => (
+                <FaqItem key={index}>
+                  <h2>{item.question}</h2>
+                  <p>{item.answer}</p>
+                </FaqItem>
+              ))}
+            </Sidebar>
+          </ChatWrapper>
         </WidthContainer>
-      </PageContainer>
+        {/* <Keyboard
+        keyboardRef={r => (keyboard = r)}
+        // layoutName={state.layoutName}
+        onChange={onChange}
+        onKeyPress={onKeyPress}
+      /> */}
+      </CenteredPageContainer>
     </div>
   );
 }

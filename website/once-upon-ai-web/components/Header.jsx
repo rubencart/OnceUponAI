@@ -11,6 +11,8 @@ import {
 } from "./styled/HeaderStyles";
 import styled from "@emotion/styled";
 import Hamburger from "hamburger-react";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslation } from "next-i18next";
 
 const Hide = styled.div`
   @media (min-width: 768px) {
@@ -19,6 +21,7 @@ const Hide = styled.div`
 `;
 
 const Header = () => {
+  const { t } = useTranslation();
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   const handleHamburgerClick = () => {
@@ -26,10 +29,10 @@ const Header = () => {
   };
 
   const navItems = [
-    { name: "Start Your Tour", path: "/start-your-tour" },
-    { name: "Discover Artworks", path: "/discover-artworks" },
-    { name: "About Nerdlab", path: "/about-nerdlab" },
-    { name: "FAQ & Help", path: "/faq-help" },
+    { name: "nav_start_tour", path: "/start-your-tour" },
+    // { name: "nav_discover_artworks", path: "/discover-artworks" }, // TODO: Add, if needed, at a later stage
+    { name: "nav_about", path: "https://nerdlab.be/" },
+    { name: "nav_faq", path: "/faq-help" },
   ];
 
   return (
@@ -45,9 +48,11 @@ const Header = () => {
           <NavList isOpen={isNavOpen}>
             {navItems.map((item, index) => (
               <NavItem key={index}>
-                <NavLink href={item.path}>{item.name}</NavLink>
+                <NavLink href={item.path}>{t(item.name)}</NavLink>
               </NavItem>
             ))}
+
+            <LanguageSwitcher />
           </NavList>
         </MenuItems>
       </HeaderContainer>
