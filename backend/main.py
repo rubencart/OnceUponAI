@@ -1,15 +1,18 @@
 import itertools
+import time
 from functools import lru_cache
-from typing import List
+from typing import List, Tuple
 
+import googlemaps
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pymongo import MongoClient
 from pymongo.database import Database
 
-import config
 import geo
+import nlp
+import utils
 
 app = FastAPI()
 
@@ -21,23 +24,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class Message(BaseModel):
-    content: str = ''
-
 
 class Conversation(BaseModel):
-    messages: List[str] | None = None
-    nb_locations: int = 10
+    messages: List[str] = ['Ik zou graag een kerk zien', 'oke een kapel dan']
+    nb_locations: int = 5
+    # cur_location: geo.Coordinates = geo.Coordinates(51.05378169999999, 3.7359673)
+    cur_location: Tuple[float, float] | None = None
 
 
 @lru_cache()
-def get_settings():
-    return config.Settings()
+def get_hoods_filter() -> geo.CenterFilter:
+    return geo.CenterFilter(utils.get_settings().gent_hoods_shp_file)
 
 
 @lru_cache()
-def get_hoods_filter():
-    return geo.CenterFilter(get_settings().gent_hoods_shp_file)
+def get_gmaps_client() -> googlemaps.Client:
+    return googlemaps.Client(key=utils.get_settings().google_maps_key,)
 
 
 def get_mongo_db() -> Database:
@@ -50,8 +52,8 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.post("/api/walk/")
-async def create_walk(conv: Conversation):
+@app.post("/api/walk/old/")
+async def create_walk_old(conv: Conversation):
     """
         Usage:
             import requests
@@ -62,23 +64,80 @@ async def create_walk(conv: Conversation):
     concat_conv = '\n'.join(m for m in conv.messages)
 
     db = get_mongo_db()
-    c_filter = get_hoods_filter()
+    center_filter = get_hoods_filter()
 
+    # get objects from DB
     walk = []
+    nb_objects_from_db = 100 * conv.nb_locations
     for i in itertools.count():
-        if i > 100:                        break
-        if len(walk) >= conv.nb_locations: break
+        if i > 50:                          break
+        if len(walk) >= nb_objects_from_db: break
 
         # get random objects from the database
         random_objects = list(db.obj_location_links.aggregate([
-            { "$sample": { "size": 2 * conv.nb_locations } },
+            # that do have an image_url
+            {
+                "$match": {
+                    "image_url": {
+                        "$ne": None
+                    }
+                }
+            },
+            { "$sample": { "size": nb_objects_from_db } },
         ]))
         _ = [r.pop('_id') for r in random_objects]
 
         # add them to the walk if they linked to a location in the center of the city
         random_objects = [
-            d for d in random_objects if c_filter.is_in_center(d['coordinates'])
+            d for d in random_objects if center_filter(d['coordinates'])
         ]
-        walk += random_objects[:conv.nb_locations - len(walk)]
+        walk += random_objects[:nb_objects_from_db - len(walk)]
+
+    # order them into a walking route
+    # skip for now
+    # walk = await geo.find_shortest_route(get_gmaps_client(), walk,
+    #                                      geo.Coordinates(*conv.cur_location))
+
+    print(len(walk))
+    start = time.time()
+    walk = await nlp.top_txt_matching_filter(concat_conv, walk, n=conv.nb_locations)
+    print(time.time() - start)
 
     return walk
+
+
+@app.post("/api/walk/")
+async def create_walk(conv: Conversation):
+    """
+        Usage:
+            import requests
+            requests.post('http://127.0.0.1:8000/api/walk', json={'nb_locations': 10, 'messages': []}).json()
+    :param conv:
+    :return:
+    """
+    db = get_mongo_db()
+
+    # get the object indices whose title and description are closest to the conversation
+    concat_conv = '\n'.join(m for m in conv.messages)
+    # if no messages, take a random object as starting point (otherwise would return always
+    #   the same for requests without messages)
+    if not concat_conv.strip():
+        random_obj = next(db.obj_location_links.aggregate([{"$sample": {"size": 1}}]))
+        concat_conv = utils.obj_to_str(random_obj)
+    nearest_neighbors = await nlp.top_txt_matching_ann(concat_conv, n=conv.nb_locations)
+
+    # retrieve the objects from the DB
+    walk = db.obj_location_links.find(
+        filter={'ann_word_emb_idx': {'$in': nearest_neighbors}},
+        projection={"_id": 0, 'in_center': 0, 'ann_word_emb_idx': 0},      # exclude the _id field since it is not JSON serializable
+    )
+
+    # note: only objects with an image_url and a location in the center are included in the
+    #   nearest neighbor search
+
+    # order them into a walking route
+    # skip for now
+    # walk = await geo.find_shortest_route(get_gmaps_client(), walk,
+    #                                      geo.Coordinates(*conv.cur_location))
+
+    return list(walk)
