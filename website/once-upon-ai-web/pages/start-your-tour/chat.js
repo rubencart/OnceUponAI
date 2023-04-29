@@ -130,7 +130,7 @@ export const getServerSideProps = async ({ locale }) => ({
   },
 });
 
-async function createWalk(nbLocations, messages) {
+async function createWalk(messages) {
   // TODO: Replace http://127.0.0.1:8000/ with host once deployed
   const response = await fetch("http://127.0.0.1:8000/api/walk", {
     method: "POST",
@@ -138,7 +138,6 @@ async function createWalk(nbLocations, messages) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      nb_locations: nbLocations,
       messages: messages,
     }),
   });
