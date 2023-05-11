@@ -37,6 +37,12 @@ sudo systemctl start mongodb
 
 Fix if timeout arrives
 
+That shall be fault due to user permissions in .sock file, You may have to change the owner to monogdb user.
+
+sudo chown -R mongodb:mongodb /var/lib/mongodb
+sudo chown mongodb:mongodb /tmp/mongodb-27017.sock
+
+
 ```
 sudo chown mongodb:mongodb /tmp/mongodb-27017.sock
 ```
