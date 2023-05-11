@@ -123,19 +123,17 @@ async def create_walk(conv: Conversation):
     # concat_conv = 'test'
     # if no messages, take a random object as starting point (otherwise would return always
     #   the same for requests without messages)
-    # if not concat_conv.strip():
-    random_obj = next(db.obj_location_links3.aggregate([{"$sample": {"size": 1}}]))
-    concat_conv += ' ' + utils.obj_to_str(random_obj, add_descr=False)
-
+    if not concat_conv.strip():
+        random_obj = next(db.obj_location_links3.aggregate([{"$sample": {"size": 1}}]))
+        concat_conv += ' ' + utils.obj_to_str(random_obj, add_descr=False)
     nearest_neighbors = await nlp.top_txt_matching_ann(concat_conv, n=conv.nb_locations)
     print(nearest_neighbors)
     # retrieve the objects from the DB
-    walk = db.obj_location_links3.find(
+    walk =  db.obj_location_links3.find(
         filter={'ann_word_emb_idx': {'$in': nearest_neighbors}},
         projection={"_id": 0, 'in_center': 0, 'ann_word_emb_idx': 0},      # exclude the _id field since it is not JSON serializable
     )
     walk = list(walk)
-
     # note: only objects with an image_url and a location in the center are included in the
     #   nearest neighbor search
 

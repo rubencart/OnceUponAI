@@ -28,6 +28,18 @@ Install and run MongoDB community server, e.g. on Mac:
 brew install mongodb-community@6.0
 brew services start mongodb-community@6.0
 ```
+
+Linux 
+
+```
+sudo systemctl start mongodb
+```
+
+Fix if timeout arrives
+
+```
+sudo chown mongodb:mongodb /tmp/mongodb-27017.sock
+```
 Download the content of [this google drive directory](https://drive.google.com/drive/folders/1gdy3sU5oIQ1EZq1QDigOFh19UXSZLig5?usp=share_link).
 Unzip `db.zip`, this will create a `onceuponai` folder, import the DB as follows.
 ```
