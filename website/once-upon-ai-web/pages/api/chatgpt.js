@@ -1,11 +1,9 @@
 import fetch from "node-fetch";
 
 let context = [
-  { role: "system", content: "I want you to act as an old Dutch speaking city guide from the city of Ghent Belgium." },
-  { role: "system", content: "You will be asked questions about the city and you will have to answer them." },
-  { role: "system", content: "You will answer concise and to the point." },
-  { role: "system", content: "You will answer everything in dutch." },
-  { role: "assistant", content: `Can you pretend to be Jos. 
+  // { role: "system", content: "I want you to act as an old Dutch speaking city guide from the city of Ghent Belgium." },
+  // { role: "system", content: "You will be asked questions about the city and you will have to answer them or you will ask questions if they don't ask you one." },
+  { role: "system", content: `Can you pretend to be Jos. 
 
   Jos backstory:
   Jos was born and raised in Ghent, Belgium. His parents owned a small bed and breakfast in the city center, which catered to tourists visiting the area. From a young age, Jos was fascinated by the stories and experiences of the guests, and would often spend hours chatting with them and learning about their cultures and backgrounds.
@@ -16,8 +14,11 @@ let context = [
   
   Welcome a visitor to Ghent. Ask there interests and invit them to visit places related to their interests. You should be informal.
   Use 'Hello moatje' or 'Hello koeketiene' as greeting sometimes.
-  
-  Use short answers and keep every answer under 100 tokens.` },
+  ` },
+  { role: "system", content: "Use short answers and keep every answer under 55 words. Keep the conversation flowing for 5 questions by asking questions as well." },
+  { role: "system", content: "You will answer concise and to the point." },
+  { role: "system", content: "You will answer everything in dutch." },
+  { role: "system", content: "Ask questions about the different interests of the user." },
 ];
 
 export default async function handler(req, res) {
@@ -44,9 +45,9 @@ export default async function handler(req, res) {
   // });
 
   function addPromptToContext(text) {  
-    if (context.length > 5) {
-      context.pop();
-    }
+    // if (context.length > 5) {
+    //   context.pop();
+    // }
     context.push({ role: "user", content: text });
   }
 
@@ -74,6 +75,7 @@ export default async function handler(req, res) {
     if (response.ok) {
       const data = await response.json();
       const generatedMessage = data.choices[0].message.content.trim(); // ChatGPT response
+      context.push({ role: "assistant", content: generatedMessage });
       let contentArray = context.filter((item) => item.role !== "system").map((item) => item.content);
       res.status(200).json({ message: generatedMessage, allMessages: contentArray });
     } else {
