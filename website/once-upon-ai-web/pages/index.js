@@ -26,6 +26,11 @@ const TitleContainer = styled.div`
 
 const Title = styled.h1`
   font-size: calc(3rem + 5vw);
+  margin: 0px 16px;
+
+  @media (max-width: 768px) {
+    text-align: center;
+  }
 `;
 
 const Subtitle = styled.h2`
