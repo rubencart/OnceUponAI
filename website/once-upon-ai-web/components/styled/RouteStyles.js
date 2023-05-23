@@ -16,10 +16,12 @@ export const BackButton = styled(Link)`
   position: relative;
   border: 1.5px solid white;
   padding: 8px 32px;
+  overflow: hidden;
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
   transition: all 1s ease;
+
   &:hover {
     opacity: 0.67;
     transform: scale(0.95);
@@ -50,7 +52,7 @@ export const Content = styled.div`
   display: grid;
   gap: 32px;
   grid-template-columns: 1fr 1fr;
-  grid-auto-rows: minmax(0, max-content);  
+  grid-auto-rows: minmax(0, max-content);
   @media (max-width: 768px) {
     flex-direction: column;
   }
@@ -70,7 +72,7 @@ export const RightBlock = styled.div`
   grid-template-columns: 1fr;
   grid-template-rows: 1fr auto; /* Define the height of the first row based on its content */
   flex-direction: column;
-  gap: 16px; 
+  gap: 16px;
   max-height: 100%;
 `;
 

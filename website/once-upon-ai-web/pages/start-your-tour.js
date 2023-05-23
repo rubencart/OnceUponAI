@@ -33,10 +33,12 @@ const StartChat = styled(Link)`
   display: inline-flex;
   align-items: center;
   align-self: flex-start;
+  overflow: hidden;
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
   transition: all 1s ease;
+
   &:hover {
     opacity: 0.67;
     transform: scale(0.95);
