@@ -53,8 +53,10 @@ export const Content = styled.div`
   gap: 32px;
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: minmax(0, max-content);
+
   @media (max-width: 768px) {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    grid-auto-rows: minmax(0, max-content);
   }
 `;
 
@@ -74,6 +76,10 @@ export const RightBlock = styled.div`
   flex-direction: column;
   gap: 16px;
   max-height: 100%;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const ArtworkSidebar = styled.div`
