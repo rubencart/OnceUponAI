@@ -13,6 +13,7 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     color: "black",
     maxWidth: "90%",
+    maxHeight: "80vh",
   },
   overlay: {
     backgroundColor: "rgba(0,0,0,0.4)",
@@ -23,13 +24,12 @@ const customStyles = {
 ReactModal.setAppElement("#__next");
 
 const Container = styled.div`
-  /* background-color: red; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
   max-width: 35em;
-  max-height: 90vh;
+  max-height: 75vh;
   overflow: auto;
 
   scrollbar-width: none; /* For Firefox */
@@ -47,22 +47,23 @@ const Image = styled.img`
 
 const Description = styled.p``;
 
-const CloseButton = styled.button`
+const CloseButtonX = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
   background-color: rgba(0, 0, 0, 0.4);
   border: none;
   color: white;
-  font-size: 2rem;
+  font-size: 1.5rem;
   z-index: 10000;
   cursor: pointer;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+  padding: 5px;
 `;
 
 /**
@@ -82,12 +83,13 @@ function ArtworkModal({ artwork, showModal, closeModal }) {
 
   return (
     <ReactModal isOpen={showModal} onRequestClose={closeModal} style={customStyles}>
-      <CloseButton onClick={closeModal}>&times;</CloseButton>
+      <CloseButtonX onClick={closeModal}>&times;</CloseButtonX>
       <Container>
         <Title>{artwork.title}</Title>
         {artwork.image_url && <Image src={artwork.image_url} alt={artwork.title} />}
         <Description>{artwork.description}</Description>
         <p>{artwork.address}</p>
+        <button onClick={closeModal}>{t("close_info")}</button>
       </Container>
     </ReactModal>
   );
