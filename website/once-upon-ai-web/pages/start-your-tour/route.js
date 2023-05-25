@@ -23,8 +23,8 @@ import {
 } from "@/components/styled/RouteStyles";
 import Artwork from "@/components/Artwork";
 import QrModal from "@/components/QrModal";
-import { getRouteById, saveRoute } from "./route-api";
-import { useModal } from "./route-hooks";
+import { getRouteById, saveRoute } from "@/utils/route-api";
+import { useModal } from "@/utils/route-hooks";
 
 export async function getServerSideProps({ locale, query }) {
   console.log("route query:", query);
