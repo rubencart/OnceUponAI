@@ -4,6 +4,7 @@ import ReactModal from "react-modal";
 
 const customStyles = {
   content: {
+    position: "relative",
     top: "50%",
     left: "50%",
     right: "auto",
@@ -22,11 +23,20 @@ const customStyles = {
 ReactModal.setAppElement("#__next");
 
 const Container = styled.div`
+  /* background-color: red; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
   max-width: 35em;
+  max-height: 90vh;
+  overflow: auto;
+
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  &::-webkit-scrollbar {
+    width: 0px; /* For Chrome, Safari, and Opera */
+  }
 `;
 
 const Title = styled.h2``;
@@ -36,6 +46,24 @@ const Image = styled.img`
 `;
 
 const Description = styled.p``;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  z-index: 10000;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+`;
 
 /**
  * artwork: {
@@ -54,12 +82,12 @@ function ArtworkModal({ artwork, showModal, closeModal }) {
 
   return (
     <ReactModal isOpen={showModal} onRequestClose={closeModal} style={customStyles}>
+      <CloseButton onClick={closeModal}>&times;</CloseButton>
       <Container>
         <Title>{artwork.title}</Title>
         {artwork.image_url && <Image src={artwork.image_url} alt={artwork.title} />}
         <Description>{artwork.description}</Description>
         <p>{artwork.address}</p>
-        <button onClick={closeModal}>{t("close_info")}</button>
       </Container>
     </ReactModal>
   );
