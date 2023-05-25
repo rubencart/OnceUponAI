@@ -26,6 +26,11 @@ const TitleContainer = styled.div`
 
 const Title = styled.h1`
   font-size: calc(3rem + 5vw);
+  margin: 0px 16px;
+
+  @media (max-width: 768px) {
+    text-align: center;
+  }
 `;
 
 const Subtitle = styled.h2`
@@ -42,10 +47,12 @@ const Division = styled.h2`
   padding: 8px 32px;
   width: 100vw;
   text-align: center;
+  overflow: hidden;
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
   transition: all 1s ease;
+
   &:before,
   &:after {
     content: "";
@@ -77,7 +84,7 @@ const StartGuide = styled(Link)`
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
   transition: all 1s ease;
-  
+
   &:hover {
     opacity: 0.67;
     transform: scale(0.95);

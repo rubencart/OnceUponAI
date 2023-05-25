@@ -96,32 +96,29 @@ p {
   line-height: 1.6;
 }
 
-
-
-.poi-marker-non-active{
+.poi-marker-non-active {
   filter: hue-rotate(0deg);
   -webkit-transition: all ease-in 1s;
   -moz-transition: all ease-in 1s;
   -ms-transition: all ease-in 1s;
   -o-transition: all ease-in 1s;
-  transition : all ease-in 1s;   
+  transition: all ease-in 1s;
 }
 
-.poi-marker-active{
+.poi-marker-active {
   filter: hue-rotate(90deg);
   -webkit-transition: all ease-in 1s;
   -moz-transition: all ease-in 1s;
   -ms-transition: all ease-in 1s;
   -o-transition: all ease-in 1s;
-  transition : all ease-in 1s;   
+  transition: all ease-in 1s;
 }
 
-.artwork-container{
+.artwork-container {
   overflow-y: scroll;
 }
 
-.poi-sidebar-active{
+.poi-sidebar-active {
   transition: transform 2s ease;
   transform: scale(1.1) !important;
 }
-

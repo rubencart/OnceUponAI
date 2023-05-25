@@ -4,6 +4,7 @@ import ReactModal from "react-modal";
 
 const customStyles = {
   content: {
+    position: "relative",
     top: "50%",
     left: "50%",
     right: "auto",
@@ -12,6 +13,7 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     color: "black",
     maxWidth: "90%",
+    maxHeight: "80vh",
   },
   overlay: {
     backgroundColor: "rgba(0,0,0,0.4)",
@@ -27,6 +29,14 @@ const Container = styled.div`
   align-items: flex-start;
   gap: 16px;
   max-width: 35em;
+  max-height: 75vh;
+  overflow: auto;
+
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  &::-webkit-scrollbar {
+    width: 0px; /* For Chrome, Safari, and Opera */
+  }
 `;
 
 const Title = styled.h2``;
@@ -36,6 +46,25 @@ const Image = styled.img`
 `;
 
 const Description = styled.p``;
+
+const CloseButtonX = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  z-index: 10000;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  padding: 5px;
+`;
 
 /**
  * artwork: {
@@ -54,6 +83,7 @@ function ArtworkModal({ artwork, showModal, closeModal }) {
 
   return (
     <ReactModal isOpen={showModal} onRequestClose={closeModal} style={customStyles}>
+      <CloseButtonX onClick={closeModal}>&times;</CloseButtonX>
       <Container>
         <Title>{artwork.title}</Title>
         {artwork.image_url && <Image src={artwork.image_url} alt={artwork.title} />}

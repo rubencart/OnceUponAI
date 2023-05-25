@@ -34,15 +34,6 @@ const Container = styled.div`
   }
 `;
 
-const Distance = styled.span`
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: 4px 8px;
-  font-size: 0.8rem;
-`;
-
 const ArtworkTitle = styled.h3`
   margin: auto;
   align-self: center;
@@ -74,13 +65,13 @@ export default function Artwork({ artwork }) {
   //   const shortDescription = artwork.description.substring(0, 50) + "...";
   //   console.log("artwork.description", artwork.description);
 
-  // TODO: Calculate distance and sort & display?
   return (
-    <Container imageUrl={artwork.image_url}  data-id={artwork.object_id} className='artwork-element'>
-      {/* <Distance>{artwork.distance}</Distance> */}
+    <Container imageUrl={artwork.image_url} data-id={artwork.object_id} className="artwork-element">
       <ArtworkTitle>{artwork.title}</ArtworkTitle>
       {/* {artwork.description.trim() !== "" && <p>{shortDescription}</p>} */}
-      <MoreInfoButton onClick={openModal} data-button-id={artwork.object_id}>{t("more_info")}</MoreInfoButton>
+      <MoreInfoButton onClick={openModal} data-button-id={artwork.object_id}>
+        {t("more_info")}
+      </MoreInfoButton>
       <ArtworkModal artwork={artwork} showModal={showModal} closeModal={closeModal} />
     </Container>
   );

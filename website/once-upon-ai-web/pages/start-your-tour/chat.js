@@ -13,8 +13,8 @@ import CenteredPageContainer from "@/components/CenteredPageContainer";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { RouteContext } from "@/context/RouteContext";
-import Keyboard from 'react-simple-keyboard';
-import 'react-simple-keyboard/build/css/index.css';
+import Keyboard from "react-simple-keyboard";
+import "react-simple-keyboard/build/css/index.css";
 
 const ChatWrapper = styled.div`
   display: flex;
@@ -57,6 +57,7 @@ const StartRoute = styled.button`
   border: 1.5px solid white;
   padding: 8px 32px;
   text-align: center;
+  overflow: hidden;
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
@@ -86,11 +87,6 @@ const StartRoute = styled.button`
     left: 0;
     transform: translate(-50%, -9.5px);
   }
-  
-
-  
-
-
 `;
 
 const RobotImage = styled(Image)`
@@ -206,14 +202,14 @@ export default function Chat() {
 
   const onChange = (input) => {
     console.log("Input changed", input);
-  }
+  };
 
   const onKeyPress = (button) => {
     console.log("Button pressed", button);
-  }
-  if(hasFinishedChatting){
-    document.querySelector('.react-chatbot-kit-chat-input').disabled = true;
-    document.querySelector('.react-chatbot-kit-chat-btn-send').disabled = true;
+  };
+  if (hasFinishedChatting) {
+    document.querySelector(".react-chatbot-kit-chat-input").disabled = true;
+    document.querySelector(".react-chatbot-kit-chat-btn-send").disabled = true;
   }
   // else if(document !== undefined){
   //   document.querySelector('.react-chatbot-kit-chat-input').disabled = false;
@@ -233,9 +229,9 @@ export default function Chat() {
             <RobotImage src="/jos.png" width={250} height={250} alt="Robot Image" />
             <ChatbotContainer>
               <Chatbot config={updatedConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
+              <StartRoute onClick={goToRoute}>{t("start_route")}</StartRoute>
               {hasFinishedChatting && (
                 <>
-                  <StartRoute onClick={goToRoute}>{t("start_route")}</StartRoute>
                   <StopChatting href="/start-your-tour/chat" onClick={() => router.reload()}>
                     {t("start_again")}
                   </StopChatting>

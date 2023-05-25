@@ -10,6 +10,8 @@ export const HeaderWrapper = styled.header`
   align-items: center;
   border: 1.5px solid white;
   position: relative;
+  overflow: hidden;
+
   &:after {
     right: 0;
     transform: translate(50%);

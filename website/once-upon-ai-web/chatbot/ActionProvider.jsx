@@ -62,33 +62,23 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
   };
 
   const handleName = async (message) => {
-    // const botMessage = createChatBotMessage("Hallo " + message + "! Fijn je te ontmoeten! Met de volgende vragen gaan we een route speciaal voor jouw maken! Wat is je favoriete kleur?");
-    // addResponse(botMessage);
-    conversation.push(message);
+		conversation.push(message);
 		message = 'Use max 25 words to greet the user with the name '+ message + '. Propose to do a city tour and ask about the users interests. Keep writing in Dutch.';
-		console.log("Message:", message);
     const response = await sendMessageToChatbot(message);
-    console.log("Response:", response);
-    // conversation.push(response);
-    // 
     const botMessage = createChatBotMessage(response);
     addResponse(botMessage);
   };
 
   const handleGPT = async (message, questionNumber) => {
-    // console.log('questionNumber' + questionNumber)
-    conversation.push(message);
-    message += "Respond briefly but enthousiast to " + message + ", which is an answer to " + questions[questionNumber-1] ;
-    message += "Ask a question about " + questions[questionNumber];
-		message += "\n Use a maximum of 30 words. You already greeted the user. Don't write a welcome to Ghent message. Answer in Dutch."
+		conversation.push(message);
+    // message += "Respond briefly but enthousiast to " + message + ", which is an answer to " + questions[questionNumber-1] ;
+    // message += "Ask a question about " + questions[questionNumber];
+		// message += "\n Use a maximum of 50 words. Answer in Dutch."
     console.log("Message:", message);
     const response = await sendMessageToChatbot(message);
     console.log("Response:", response);
     const botMessage = createChatBotMessage(response);
     addResponse(botMessage);
-    
-    //  conversation.push(response);
-    
   };
 
   const handleLastMessage = async () => {

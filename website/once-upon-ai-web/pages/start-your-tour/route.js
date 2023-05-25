@@ -23,6 +23,8 @@ import {
 } from "@/components/styled/RouteStyles";
 import Artwork from "@/components/Artwork";
 import QrModal from "@/components/QrModal";
+import { getRouteById, saveRoute } from "@/utils/route-api";
+import { useModal } from "@/utils/route-hooks";
 
 export async function getServerSideProps({ locale, query }) {
   console.log("route query:", query);
@@ -42,25 +44,6 @@ export async function getServerSideProps({ locale, query }) {
   };
 }
 
-async function getRouteById(id) {
-  console.log("Fetching route from: ", `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-route?routeId=${id}`);
-
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/get-route?routeId=${id}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (!res.ok) {
-    // TODO: Handle error
-    throw new Error(res.statusText);
-  }
-
-  const data = await res.json();
-  return data;
-}
-
 export default function Route({ routeObjects }) {
   const { t } = useTranslation();
   const router = useRouter();
@@ -70,9 +53,7 @@ export default function Route({ routeObjects }) {
   const [isSavingRoute, setIsSavingRoute] = useState(false);
   const [savedRouteId, setSavedRouteId] = useState("");
 
-  const [showModal, setShowModal] = useState(true);
-  const openModal = () => setShowModal(true);
-  const closeModal = () => setShowModal(false);
+  const { showModal, openModal, closeModal } = useModal(false);
 
   // Objects fetched from db using a specific routeId take precedence over objects in context
   if (!routeObjects) {
@@ -91,23 +72,8 @@ export default function Route({ routeObjects }) {
 
     try {
       setIsSavingRoute(true);
-      console.log("saving routeObjects:", routeObjects);
+      const { message, routeId } = await saveRoute(routeObjects);
 
-      const res = await fetch("/api/create-route", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ routeObjects }),
-      });
-
-      if (!res.ok) {
-        // TODO: Show error message on screen
-        const error = await res.json();
-        throw new Error(error.message);
-      }
-
-      const { message, routeId } = await res.json();
       console.log(message, routeId);
 
       setSavedRouteId(routeId);
@@ -155,10 +121,10 @@ export default function Route({ routeObjects }) {
               </LeftBlock>
               <RightBlock>
                 <Title>{t("art_pieces")}</Title>
-                <ArtworkSidebar className='artwork-container' >
-                {routeObjects.map((artwork, index) => (
-                  <Artwork key={index} artwork={artwork} />
-                ))}
+                <ArtworkSidebar className="artwork-container">
+                  {routeObjects.map((artwork, index) => (
+                    <Artwork key={index} artwork={artwork} />
+                  ))}
                 </ArtworkSidebar>
               </RightBlock>
             </Content>

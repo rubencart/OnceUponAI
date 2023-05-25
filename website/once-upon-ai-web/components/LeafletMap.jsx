@@ -6,19 +6,12 @@ import GeolocationButton from "./GeolocationButton";
 import Poi from "./Poi";
 
 // Classes used by Leaflet to position controls
-const POSITION_CLASSES = {
-  bottomleft: "leaflet-bottom leaflet-left",
-  bottomright: "leaflet-bottom leaflet-right",
-  topleft: "leaflet-top leaflet-left",
-  topright: "leaflet-top leaflet-right",
-};
-
-const getLocations = async () => {
-  const response = await fetch("./test.json");
-  const data = await response.json();
-  setLocations(data);
-  return data;
-};
+// const POSITION_CLASSES = {
+//   bottomleft: "leaflet-bottom leaflet-left",
+//   bottomright: "leaflet-bottom leaflet-right",
+//   topleft: "leaflet-top leaflet-left",
+//   topright: "leaflet-top leaflet-right",
+// };
 
 const LeafletMap = ({ pois }) => {
   const [locations, setLocations] = useState([]);
@@ -41,12 +34,6 @@ const LeafletMap = ({ pois }) => {
       </Marker>
     );
   };
-  // useEffect(() => {
-  //   fetch('./test.json')
-  //     .then(response => response.json())
-  //     .then(data => setLocations(data))
-  //     .catch(error => console.error(error));
-  // }, []);
 
   return (
     <MapContainer
