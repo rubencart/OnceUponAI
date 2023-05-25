@@ -233,9 +233,9 @@ export default function Chat() {
             <RobotImage src="/jos.png" width={250} height={250} alt="Robot Image" />
             <ChatbotContainer>
               <Chatbot config={updatedConfig} messageParser={MessageParser} actionProvider={ActionProvider} />
+              <StartRoute onClick={goToRoute}>{t("start_route")}</StartRoute>
               {hasFinishedChatting && (
                 <>
-                  <StartRoute onClick={goToRoute}>{t("start_route")}</StartRoute>
                   <StopChatting href="/start-your-tour/chat" onClick={() => router.reload()}>
                     {t("start_again")}
                   </StopChatting>
