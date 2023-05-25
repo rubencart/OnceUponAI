@@ -13,6 +13,8 @@ import Poi from "./Poi";
 //   topright: "leaflet-top leaflet-right",
 // };
 
+
+
 const LeafletMap = ({ pois }) => {
   const [locations, setLocations] = useState([]);
   const LocationMarker = () => {
@@ -56,7 +58,7 @@ const LeafletMap = ({ pois }) => {
         position="topright"
         title={"Get Location"}
         markerPosition={[20.27, -157]}
-        description="This is a custom description!"
+        description="Get your location!"
       />
     </MapContainer>
   );

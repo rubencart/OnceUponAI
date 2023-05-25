@@ -122,3 +122,46 @@ p {
   transition: transform 2s ease;
   transform: scale(1.1) !important;
 }
+
+.leaflet-control-zoom-in, .leaflet-control-zoom-out {
+  font-family: "Mazius Review Extra", sans-serif;
+          background-color: transparent !important;
+          color: black;
+          box-sizing: border-box;
+          position: relative;
+          border: 1.5px solid black;
+          text-align: center;
+          -webkit-transition: all 1s ease;
+          -moz-transition: all 1s ease;
+          -o-transition: all 1s ease;
+          transition: all 1s ease;
+
+          /* &:hover {
+            opacity: 0.67;
+            transform: scale(0.95);
+          }
+          &:before,
+          &:after {
+            content: "";
+            aspect-ratio: 1 / 1;
+            height: calc(3px + 100%);
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+            border: 1.5px solid black;
+            position: absolute;
+            box-sizing: border-box;
+          }
+          &:after {
+            right: 0;
+            transform: translate(50%, -9.5px);
+          }
+          &:before {
+            left: 0;
+            transform: translate(-50%, -9.5px); */
+}
+
+.leaflet-control-zoom { 
+  border: none !important;  
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65) !important;
+}
