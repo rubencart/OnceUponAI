@@ -1,5 +1,7 @@
 import itertools
+import os
 import time
+from contextlib import asynccontextmanager
 from functools import lru_cache
 from typing import List, Tuple
 
@@ -14,7 +16,19 @@ import geo
 import nlp
 import utils
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # If it doesn't exist yet, download the nearest neighbor file from DigitalOcean Spaces
+    if not os.path.isfile(utils.get_settings().approx_nn_file):
+        print('Downloading test.ann file...')
+        await utils.download_ann_file()
+        print('Downloaded test.ann file!')
+    yield
+    # Clean up the file?
+    # ml_models.clear()
+
+app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

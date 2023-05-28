@@ -11,7 +11,7 @@ conda activate gentenv
 # install both geopandas and googlemaps with conda from the conda-forge channel, otherwise
 #  mismatch causes issues: https://stackoverflow.com/questions/72231927/fiona-importerror-library-not-loaded-rpath-libpoppler-91-dylib
 conda install geopandas pandas googlemaps ipython spacy -c conda-forge
-pip install openai tqdm httpx "fastapi[all]" pymongo annoy
+pip install openai tqdm httpx "fastapi[all]" pymongo annoy boto3
 python -m spacy download nl_core_news_lg
 ```
 If you already had the environment but not spacy and annoy: 

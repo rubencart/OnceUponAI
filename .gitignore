@@ -135,3 +135,5 @@ api_exploration/output/
 api_exploration/output/*
 api_exploration/data/
 .DS_Store
+backend/config/.env
+backend/config/.local_env
