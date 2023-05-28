@@ -73,6 +73,13 @@ mongodump --host localhost --db onceuponai --collection obj_location_links
 mongorestore --db onceuponai --collection obj_location_links --uri="mongodb+srv://backendadmin:<PASSWORD>@cluster0.ds0adrm.mongodb.net" ../../output/dump/onceuponai/obj_location_links.bson
 ```
 
+### Set up DigitalOcean Web App
+
+```
+pip install tqdm httpx "fastapi[all]" pymongo annoy boto3 spacy "uvicorn[standard]" gunicorn python-dotenv
+python -m spacy download nl_core_news_lg
+```
+
 ## Run
 
 From the `backend/` folder (and after activating the conda environment with `conda activate gentenv`): 

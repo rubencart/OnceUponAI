@@ -5,14 +5,14 @@ from contextlib import asynccontextmanager
 from functools import lru_cache
 from typing import List, Tuple
 
-import googlemaps
+# import googlemaps
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pymongo import MongoClient
 from pymongo.database import Database
 
-import geo
+# import geo
 import nlp
 import utils
 
@@ -47,13 +47,13 @@ class Conversation(BaseModel):
 
 
 @lru_cache()
-def get_hoods_filter() -> geo.CenterFilter:
+def get_hoods_filter():
     return geo.CenterFilter(utils.get_settings().gent_hoods_shp_file)
 
 
-@lru_cache()
-def get_gmaps_client() -> googlemaps.Client:
-    return googlemaps.Client(key=utils.get_settings().google_maps_key,)
+# @lru_cache()
+# def get_gmaps_client() -> googlemaps.Client:
+#     return googlemaps.Client(key=utils.get_settings().google_maps_key,)
 
 
 def get_mongo_db() -> Database:
