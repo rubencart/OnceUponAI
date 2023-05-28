@@ -8,6 +8,7 @@ if __name__ == '__main__':
 
     # get objs from database
     db = MongoClient('localhost', 27017).onceuponai
+    print(db.obj_location_links.count_documents({}))
     objs = list(db.obj_location_links.aggregate([
         # that do have an image_url
         {
@@ -33,7 +34,8 @@ if __name__ == '__main__':
     def to_str(obj):
         res = obj['title']
         if obj['description'].strip() != '':
-            res += f". {obj['description']}"
+            desc = obj['description'].replace('Het CLIP AI model heeft dit object gelinkt met deze locatie: ', '')
+            res += f". {desc}"
         return res
 
     obj_docs = nlp.pipe([to_str(obj) for obj in objs], batch_size=50)
@@ -43,19 +45,19 @@ if __name__ == '__main__':
     # spacy embeddings have dim 300
     dim = 300
 
-    t = AnnoyIndex(dim, 'angular')
+    t = AnnoyIndex(dim, 'euclidean')
     index_map = {}
     for i, (obj_d, obj) in tqdm(enumerate(zip(obj_docs, objs))):
         index_map[i] = (obj['object_id'], obj['_id'])
         t.add_item(i, obj_d.vector)
         db.obj_location_links.update_one({'_id': obj['_id']}, {'$set': {'ann_word_emb_idx': i}})
 
-    t.build(100)  # nb of trees
-    t.save('output/test.ann')
+    t.build(500)  # nb of trees
+    t.save('../output/test.ann')
 
-    u = AnnoyIndex(dim, 'angular')
-    u.load('output/test.ann')  # super fast, will just mmap the file
+    u = AnnoyIndex(dim, 'euclidean')
+    u.load('../output/test.ann')  # super fast, will just mmap the file
     nns = u.get_nns_by_vector(nlp('test').vector, 5)
-    print(nns)  # will find the 1000 nearest neighbors
+    print(nns)
     print([objs[i] for i in nns])
     print('done')

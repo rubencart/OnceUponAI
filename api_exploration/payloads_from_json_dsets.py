@@ -33,7 +33,7 @@ if __name__ == '__main__':
     for i, (obj_id, obj) in tqdm(enumerate(sorted(all_objs, key=lambda x: random.random()))):
         # if len(pls) >= 25 or i > 50 or found_for_col > 5: break
         try:
-            payload = utils.payload_from_object(obj_id, obj, openai_key, gmaps)
+            payload = utils.gpt_payload_from_object(obj_id, obj, openai_key, gmaps)
             if payload is not None:
                 cnt += 1
                 tot_cnt += 1
@@ -42,12 +42,12 @@ if __name__ == '__main__':
             print(e)
             continue
 
-        if cnt > 100:
+        if cnt > 1000:
             p = f'/cw/liir/NoCsBack/testliir/rubenc/OUAI-pt2/LDES-API/api_exploration/output/gpt_payloads_{tot_cnt}.json'
             with open(p, 'w') as f:
                 json.dump(pls, f)
             print('saved payloads to %s' % p)
             cnt = 0
-            pls = []
+            # pls = []
 
     print('done')
