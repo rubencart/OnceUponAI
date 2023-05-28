@@ -19,8 +19,7 @@ def get_spacy() -> Language:
 
 @lru_cache()
 def get_annoy() -> AnnoyIndex:
-    u = AnnoyIndex(300, 'angular')
-    print(utils.get_settings().approx_nn_file)
+    u = AnnoyIndex(300, 'euclidean')
     u.load(utils.get_settings().approx_nn_file)
     return u
 
@@ -45,5 +44,5 @@ async def top_txt_matching_ann(conv: str, n: int = 10) -> List[int]:
     nlp = get_spacy()
     ann_index = get_annoy()
     conv_doc = nlp(conv)
-    nearest_neighbors = ann_index.get_nns_by_vector(conv_doc.vector, n=n, search_k=1000)
+    nearest_neighbors = ann_index.get_nns_by_vector(conv_doc.vector, n=n, search_k=5000)
     return nearest_neighbors

@@ -59,6 +59,14 @@ Move the `.env` file to `backend/config/.env`, and change `GENT_HOODS_SHP_FILE` 
 
 Change `APPROX_NN_FILE` to the location of the `test.ann` file.
 
+### Export DB
+
+To export the Mongo DB as a .bson file that you can import as explained above, do the following from the folder
+where you want to create the backup.
+```
+mongodump --host localhost --db onceuponai --collection obj_location_links
+```
+
 ## Run
 
 From the `backend/` folder (and after activating the conda environment with `conda activate gentenv`): 
@@ -118,3 +126,6 @@ Docs:
 - https://www.mongodb.com/languages/python
 - https://stackoverflow.com/questions/71586725/efficient-way-for-computing-the-similarity-of-multiple-documents-using-spacy
 - https://github.com/spotify/annoy
+
+TODO:
+- tags toevoegen, check bv `Gent: Zandberg: obelisk, 1899`, 'archiefgent_670029625'

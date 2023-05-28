@@ -99,7 +99,7 @@ def coordinates_from_address(address: str, maps_client: googlemaps.client.Client
     return None, address
 
 
-def payload_from_object(obj_id: str, obj: Dict, openai_key: str, maps_client: googlemaps.client.Client) -> Optional[Dict]:
+def gpt_payload_from_object(obj_id: str, obj: Dict, openai_key: str, maps_client: googlemaps.client.Client) -> Optional[Dict]:
     # {
     #     'object_id': obj_id,
     #     'title': obj['MensgemaaktObject.titel']['@value'],
@@ -111,6 +111,7 @@ def payload_from_object(obj_id: str, obj: Dict, openai_key: str, maps_client: go
         address, explanation = chat_gpt_address_from_txt(title, desc, openai_key)
         coords, formatted_address = coordinates_from_address(address, maps_client)
         img_url = get_img_url_from_obj(obj, image_width=400)
+        # todo in_center, see in_center_to_db.py file
         if coords is not None:
             payload_desc = desc + '\n' + explanation
             payload = payload_from_obj_and_coords(obj_id, coords, title, payload_desc, formatted_address, img_url,
