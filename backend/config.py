@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     openai_key: str = ""
     google_maps_key: str = ""
     approx_nn_file: str = ""
+    mongo_uri: str = ""
 
     class Config:
         env_file = "./config/.env"

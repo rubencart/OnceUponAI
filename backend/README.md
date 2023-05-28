@@ -67,6 +67,12 @@ where you want to create the backup.
 mongodump --host localhost --db onceuponai --collection obj_location_links
 ```
 
+### Upload DB to MongoDB Atlas server
+
+```
+mongorestore --db onceuponai --collection obj_location_links --uri="mongodb+srv://backendadmin:<PASSWORD>@cluster0.ds0adrm.mongodb.net" ../../output/dump/onceuponai/obj_location_links.bson
+```
+
 ## Run
 
 From the `backend/` folder (and after activating the conda environment with `conda activate gentenv`): 
@@ -126,6 +132,7 @@ Docs:
 - https://www.mongodb.com/languages/python
 - https://stackoverflow.com/questions/71586725/efficient-way-for-computing-the-similarity-of-multiple-documents-using-spacy
 - https://github.com/spotify/annoy
+- https://dev.to/ndrohith/deploy-a-containerised-fast-api-application-in-digital-ocean-25ik
 
 TODO:
 - tags toevoegen, check bv `Gent: Zandberg: obelisk, 1899`, 'archiefgent_670029625'

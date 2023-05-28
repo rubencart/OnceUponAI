@@ -43,7 +43,8 @@ def get_gmaps_client() -> googlemaps.Client:
 
 
 def get_mongo_db() -> Database:
-    client = MongoClient('localhost', 27017)
+    # client = MongoClient('localhost', 27017)
+    client = MongoClient(utils.get_settings().mongo_uri)
     return client.onceuponai
 
 

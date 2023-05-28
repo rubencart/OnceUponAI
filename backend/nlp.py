@@ -19,7 +19,7 @@ def get_spacy() -> Language:
 
 @lru_cache()
 def get_annoy() -> AnnoyIndex:
-    u = AnnoyIndex(300, 'euclidean')
+    u = AnnoyIndex(300, 'angular')
     u.load(utils.get_settings().approx_nn_file)
     return u
 

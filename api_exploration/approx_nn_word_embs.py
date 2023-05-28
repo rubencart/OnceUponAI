@@ -5,6 +5,7 @@ from pymongo import MongoClient
 from tqdm import tqdm
 
 if __name__ == '__main__':
+    USE_TITLE_ONLY = True
 
     # get objs from database
     db = MongoClient('localhost', 27017).onceuponai
@@ -33,7 +34,7 @@ if __name__ == '__main__':
 
     def to_str(obj):
         res = obj['title']
-        if obj['description'].strip() != '':
+        if not USE_TITLE_ONLY and obj['description'].strip() != '':
             desc = obj['description'].replace('Het CLIP AI model heeft dit object gelinkt met deze locatie: ', '')
             res += f". {desc}"
         return res
@@ -45,7 +46,7 @@ if __name__ == '__main__':
     # spacy embeddings have dim 300
     dim = 300
 
-    t = AnnoyIndex(dim, 'euclidean')
+    t = AnnoyIndex(dim, 'angular')
     index_map = {}
     for i, (obj_d, obj) in tqdm(enumerate(zip(obj_docs, objs))):
         index_map[i] = (obj['object_id'], obj['_id'])
@@ -55,7 +56,7 @@ if __name__ == '__main__':
     t.build(500)  # nb of trees
     t.save('../output/test.ann')
 
-    u = AnnoyIndex(dim, 'euclidean')
+    u = AnnoyIndex(dim, 'angular')
     u.load('../output/test.ann')  # super fast, will just mmap the file
     nns = u.get_nns_by_vector(nlp('test').vector, 5)
     print(nns)
